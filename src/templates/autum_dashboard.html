@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "Dash_2.html" %}
 {% load static %}
 <!-- Three columns of text below the carousel -->
 
@@ -10,21 +10,33 @@ Welcome |
 {% block row %}
   <div class="row">
     <div class="col-lg-4">
-      <img class="img-circle" src={%static "img/opt.jpg"%} alt="Generic placeholder image" width="240" height="200">
-      <h2>Cost Optimization</h2>
+      <img class="img-square" src={%static "img/opt.jpg"%} alt="Generic placeholder image" width="240" height="200">
+      <h4>AWS</h4>
 
 
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="img-sqaure" src={%static "img/cloud2.jpg"%} alt="Generic placeholder image" width="240" height="200">
-      <h2>Continous Delivery</h2>
+      <h4>Google App Engine</h4>
 
 
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-      <img class="img-circle" src={%static "img/cloud3.jpg"%} alt="Generic placeholder image" width="240" height="200">
+      <img class="img-square" src={%static "img/cloud3.jpg"%} alt="Generic placeholder image" width="240" height="200">
 
-      <h2>Universal Self Service</h2>
+      <h4>Microsoft Azure</h4>
+
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="img-square" src={%static "img/cloud3.jpg"%} alt="Generic placeholder image" width="240" height="200">
+
+      <h4>Rackspace</h4>
+
+    </div><!-- /.col-lg-4 -->
+    <div class="col-lg-4">
+      <img class="img-square" src={%static "img/cloud3.jpg"%} alt="Generic placeholder image" width="240" height="200">
+
+      <h4>IBM Softlayer</h4>
 
     </div><!-- /.col-lg-4 -->
   </div><!-- /.row -->
