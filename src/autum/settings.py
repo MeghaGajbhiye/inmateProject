@@ -35,12 +35,18 @@ EMAIL_USE_TLS= True
 # Application definition
 
 INSTALLED_APPS = (
+    #django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Third Party Apps
+    'crispy_forms',
+    'registration',
+    #My Apps
     'cloud',
 )
 
@@ -116,3 +122,12 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env","media_root")
+
+
+#Crispy form tags settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+
+#Django-Registration-Redux Settings 
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True

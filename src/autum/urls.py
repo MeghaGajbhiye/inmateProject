@@ -1,17 +1,17 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from cloud.views import home
+from cloud.views import home, contact
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     # Examples:
     url(r'^$', home, name='home'),
-    url(r'^contact/$', 'cloud.views.contact', name='contact'),
-
+    url(r'^contact/', contact, name= 'contact'), 
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/', include('registration.backends.default.urls')),
 ]
 
 if settings.DEBUG:

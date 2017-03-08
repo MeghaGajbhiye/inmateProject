@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from .forms import SignUpForm
 from django.template import RequestContext
 from .forms import ContactForm, SignUpForm
 from django.conf import settings
@@ -63,6 +62,6 @@ def contact(request):
 	context = {
 	"form" : form, 
 	}
-	return render_to_response("forms.html", context,context_instance=RequestContext(request))
+	return render_to_response("forms.html", context, context_instance=RequestContext(request))
 
 
