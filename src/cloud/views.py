@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from .forms import SignUpForm
 from django.template import RequestContext
 from .forms import ContactForm, SignUpForm
 from django.conf import settings
@@ -41,6 +42,8 @@ def home(request):
 	return render_to_response("home.html", context, context_instance=RequestContext(request))
 
 
+
+
 def contact(request):
 	form = ContactForm(request.POST or None)
 	if form.is_valid(): 
@@ -62,6 +65,9 @@ def contact(request):
 	context = {
 	"form" : form, 
 	}
-	return render_to_response("forms.html", context, context_instance=RequestContext(request))
+	return render_to_response("forms.html", context,context_instance=RequestContext(request))
 
 
+
+def dashboard(request):
+	return render_to_response("Dash_2.html",)
