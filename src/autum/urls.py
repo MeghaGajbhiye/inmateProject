@@ -8,6 +8,7 @@ urlpatterns = [
     # Examples:
     url(r'^$', home, name='home'),
     url(r'^contact/$', 'cloud.views.contact', name='contact'),
+    url(r'^dashboard/$','cloud.views.dashboard',name='dashboard'),
 
     # url(r'^blog/', include('blog.urls')),
 

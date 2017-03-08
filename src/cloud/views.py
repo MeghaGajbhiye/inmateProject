@@ -42,6 +42,8 @@ def home(request):
 	return render_to_response("home.html", context, context_instance=RequestContext(request))
 
 
+
+
 def contact(request):
 	form = ContactForm(request.POST or None)
 	if form.is_valid(): 
@@ -66,3 +68,6 @@ def contact(request):
 	return render_to_response("forms.html", context,context_instance=RequestContext(request))
 
 
+
+def dashboard(request):
+	return render_to_response("Dash_2.html",)
