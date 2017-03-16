@@ -12,8 +12,7 @@ Welcome |
     <div class="col-lg-4">
       <img class="img-circle" src={%static "img/opt.jpg"%} alt="Generic placeholder image" width="240" height="200">
       <h2>Cost Optimization</h2>
-
-
+      
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
       <img class="img-sqaure" src={%static "img/cloud2.jpg"%} alt="Generic placeholder image" width="240" height="200">
@@ -43,13 +42,3 @@ Welcome |
   </footer>
 {% endblock %}
 
-{% block content %}
-
-<h1>{{template_title}}</h1>
-
-<form method = 'POST' action = ''> {% csrf_token %}
-	{{form.as_p}}
-	<input class = 'btn btn-primary' type = 'submit' value = 'Sign In'/>
-	<form/>
-
-	{% endblock %}
