@@ -71,3 +71,18 @@ def contact(request):
 
 def dashboard(request):
 	return render_to_response("Dash_2.html",)
+
+def aws(request):
+	return render_to_response("AWS_CP.html",)
+
+def azure(request):
+	return render_to_response("Azure_CP.html",)
+
+def google(request):
+	return render_to_response("Google_CP.html",)
+
+def ibm(request):
+	return render_to_response("IBM_CP.html",)
+
+def rackspace(request):
+	return render_to_response("Rackspace.html",)
