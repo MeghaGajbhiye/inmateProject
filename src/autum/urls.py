@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^dashboard/ibm/$','cloud.views.ibm',name='ibm'),
     url(r'^dashboard/google/$','cloud.views.google',name='google'),
     url(r'^dashboard/rackspace/$','cloud.views.rackspace',name='rackspace'),
+    url(r'^about/$','cloud.views.about',name='about'),
     
 
     # url(r'^blog/', include('blog.urls')),

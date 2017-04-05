@@ -3,11 +3,15 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from .forms import SignUpForm
 from django.template import RequestContext
-from .forms import ContactForm, SignUpForm
+from .forms import ContactForm, SignUpForm, AWSForm, GoogleForm, AzureForm, RackspaceForm, IBMForm
 from django.conf import settings
 from django.core.mail import send_mail
 
 # Create your views here.
+
+def about(request):
+	return render_to_response("about.html",)
+
 
 def home(request):
 	title = "Welcome"
@@ -36,6 +40,11 @@ def home(request):
 		context = {
 			"template_title": "Thank You!"
 		}
+
+	if request.user.is_authenticated() and request.user.is_staff:
+		context = {
+		"queryset": [123,456]
+		} 
 	# return request(request, "home.html", {})
 	# return request(request,"home.html",{})
 	# return HttpResponse('My first view.')
@@ -73,16 +82,36 @@ def dashboard(request):
 	return render_to_response("Dash_2.html",)
 
 def aws(request):
-	return render_to_response("AWS_CP.html",)
+	form = AWSForm()
+	context = {
+	"form" : form,
+	}
+	return render_to_response("AWS_CP.html", context, context_instance = RequestContext(request))
 
 def azure(request):
-	return render_to_response("Azure_CP.html",)
+	form = AzureForm()
+	context ={
+	"form" : form,
+	}
+	return render_to_response("Azure_CP.html", context, context_instance = RequestContext(request))
 
 def google(request):
-	return render_to_response("Google_CP.html",)
+	form =GoogleForm()
+	context = {
+	"form" : form,
+	}
+	return render_to_response("Google_CP.html", context, context_instance = RequestContext(request))
 
 def ibm(request):
-	return render_to_response("IBM_CP.html",)
+	form = IBMForm()
+	context = {
+	"form" : form,
+	}
+	return render_to_response("IBM_CP.html", context, context_instance = RequestContext(request))
 
 def rackspace(request):
-	return render_to_response("Rackspace.html",)
+	form = RackspaceForm()
+	context = {
+	"form" : form,
+	}
+	return render_to_response("Rackspace.html", context, context_instance = RequestContext(request))

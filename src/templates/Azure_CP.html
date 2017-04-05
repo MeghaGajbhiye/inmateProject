@@ -43,12 +43,13 @@
 
       <form class="form-signin">
         <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
-        <h2 class="form-signin-heading">Microsoft Cloud Provider Sign Up</h2>
+        <h2 class="form-signin-heading">Microsoft Cloud Provider Sign Up</h2>{% csrf_token %}
+        {{form.as_p}}
         
-        <label for="inputPassword" class="sr-only">Enrollment #</label>
+        <!--label for="inputPassword" class="sr-only">Enrollment #</label>
         <input type="enrollment#" id="inputEnrollment#" class="form-control" placeholder="Enrollment #" required>
         <label for="inputPassword" class="sr-only">API Key</label>
-        <input type="api_key" id="inputApiKey" class="form-control" placeholder="API_Key" required>
+        <input type="api_key" id="inputApiKey" class="form-control" placeholder="API_Key" required-->
 
         
         <div class="checkbox">
