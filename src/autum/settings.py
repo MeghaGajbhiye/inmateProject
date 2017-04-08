@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'autum.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'autum',
+        'NAME': 'autum1',
         'USER': 'root',
         'PASSWORD': 'cloud',
         # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',

@@ -1,15 +1,5 @@
 from django import forms
-from .models import AWS
-
-def get_zone():
-	# user = models.Foreignkey(settings.AUTH_USER_MODEL, blank = False, null = False)
-	# print logged_user
-	aws_access_key_id = 'AKIAJKLGF55A33R3KTMQ'
-	aws_secret_access_key = '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'
-	ec2 = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
-	aws_secret_access_key=aws_secret_access_key)
-	data = ec2.get_all_zones()
-	return data
+from models import AWS
 
 class AWSForm(forms.ModelForm):
 	class Meta:

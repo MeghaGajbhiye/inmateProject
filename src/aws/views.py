@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from models import AWS
 from .forms import AWSForm
 import boto
 
@@ -14,6 +15,11 @@ def aws(request):
 # Create your views here.
 
 def aws_home(request):
+	user_id = request.user.id
+	print user_id
+	aws_model = AWS()
+	print aws_model.all()
+	# user_Data = request.user_Data
 	jsonList = []
 	aws_access_key_id = 'AKIAJKLGF55A33R3KTMQ'
 	aws_secret_access_key = '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'
