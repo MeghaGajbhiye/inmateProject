@@ -9,11 +9,12 @@ urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^contact/$', 'cloud.views.contact', name='contact'),
     url(r'^dashboard/$','cloud.views.dashboard',name='dashboard'),
-    url(r'^aws/$','cloud.views.aws',name='aws'),
-    url(r'^dashboard/azure/$','cloud.views.azure',name='azure'),
-    url(r'^dashboard/ibm/$','cloud.views.ibm',name='ibm'),
-    url(r'^dashboard/google/$','cloud.views.google',name='google'),
-    url(r'^dashboard/rackspace/$','cloud.views.rackspace',name='rackspace'),
+    url(r'^aws/$','aws.views.aws',name='aws'),
+    url(r'^AWS_Home/$','aws.views.aws_home',name='aws'),
+    url(r'^azure/$','azure.views.azure',name='azure'),
+    url(r'^ibm/$','ibm.views.ibm',name='ibm'),
+    url(r'^google/$','google.views.google',name='google'),
+    url(r'^rackspace/$','rackspace.views.rackspace',name='rackspace'),
     url(r'^about/$','cloud.views.about',name='about'),
     
 

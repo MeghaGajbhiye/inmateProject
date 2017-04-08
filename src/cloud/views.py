@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from .forms import SignUpForm
 from django.template import RequestContext
-from .forms import ContactForm, SignUpForm, AWSForm, GoogleForm, AzureForm, RackspaceForm, IBMForm
+from .forms import ContactForm, SignUpForm
 from django.conf import settings
 from django.core.mail import send_mail
 
@@ -80,38 +80,3 @@ def contact(request):
 
 def dashboard(request):
 	return render_to_response("Dash_2.html",)
-
-def aws(request):
-	form = AWSForm()
-	context = {
-	"form" : form,
-	}
-	return render_to_response("AWS_CP.html", context, context_instance = RequestContext(request))
-
-def azure(request):
-	form = AzureForm()
-	context ={
-	"form" : form,
-	}
-	return render_to_response("Azure_CP.html", context, context_instance = RequestContext(request))
-
-def google(request):
-	form =GoogleForm()
-	context = {
-	"form" : form,
-	}
-	return render_to_response("Google_CP.html", context, context_instance = RequestContext(request))
-
-def ibm(request):
-	form = IBMForm()
-	context = {
-	"form" : form,
-	}
-	return render_to_response("IBM_CP.html", context, context_instance = RequestContext(request))
-
-def rackspace(request):
-	form = RackspaceForm()
-	context = {
-	"form" : form,
-	}
-	return render_to_response("Rackspace.html", context, context_instance = RequestContext(request))

@@ -49,6 +49,10 @@ INSTALLED_APPS = (
     #'djdatadog',
     #My Apps
     'cloud',
+    'aws',
+    'azure',
+    'ibm',
+    'rackspace',
 )
 
 MIDDLEWARE_CLASSES = (
