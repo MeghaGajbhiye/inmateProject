@@ -1,10 +1,13 @@
 from django import forms
 from models import AWS
 
+
 class AWSForm(forms.ModelForm):
-	class Meta:
-		model = AWS
-		fields = ['aws_access_key', 'aws_secret_key', 'account_id']
+    class Meta:
+        model = AWS
+        fields = ['aws_access_key', 'aws_secret_key', 'account_id']
+
+
 
 # class AWSHomeForm(forms.ModelForm):
 # 	class Meta:
@@ -17,5 +20,3 @@ class AWSForm(forms.ModelForm):
 # class AWSHomeForm(forms.ModelForm):
 # 	class Meta:
 # 		model = AWS
-		
-
