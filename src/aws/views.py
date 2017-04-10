@@ -7,7 +7,18 @@ import boto
 
 
 def aws(request):
-    form = AWSForm()
+    aws_object = AWS()
+    user_id = request.user.id
+    form = AWSForm(request.POST or None)
+    if form.is_valid():
+        aws_key = form.cleaned_data['aws_access_key']
+        aws_secret = form.cleaned_data['aws_secret_key']
+        instance = form.save(commit=False)
+        aws_instance = aws_object.objects.create(id = user_id)
+        aws_instance.save()
+        instance.save()
+        print aws_key, aws_secret
+    print "form is not valid"
     context = {
         "form": form,
     }
@@ -15,8 +26,7 @@ def aws(request):
 
 
 def aws_home(request):
-    if request.method == 'POST':
-
+    # if request.method == 'POST':
     user_id = request.user.id
     print user_id
     aws_model = AWS()

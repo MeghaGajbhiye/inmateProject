@@ -3,7 +3,10 @@ from django.conf import settings
 from  django.contrib.auth.models import User
 
 class AWS(models.Model):
-    user = models.ForeignKey(User, default = '')
+    #
+    # user = User.objects.get(id = user_id)
+    # print ("User is %r" %(User))
+    id = models.ForeignKey(User, default = '', primary_key=True)
     aws_access_key = models.CharField(max_length=120, blank=True, null=True)
     aws_secret_key = models.CharField(max_length=120, blank=True, null=True)
     account_id = models.CharField(max_length=120, blank=True, null=True)
