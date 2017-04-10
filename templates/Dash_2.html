@@ -1,0 +1,159 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+   <title>{% block head_title %}{% endblock %} AUTUM</title>
+
+  {% include 'head_css.html' %}
+    </head>
+<!-- NAVBAR
+  ================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        {# verbatim #}
+        {% include 'navbar.html' %}
+        
+      </div>
+    </div>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <ul class="dropdown-menu">
+                    <li><a href="User Registration.html">Support</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="Admin.html">Register</a></li>
+                   
+                </ul>
+           
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Monitor</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Instances</a></li>
+            <li class="active"><a href="#">Cloud Service Providers</a>
+              <ul>
+                <li class="active"><a href="/AWS_Home">AWS</a></li>
+                <li class="active"><a href="/azure">Azure</a></li>
+                <li class="active"><a href="/google">Google App Engine</a></li>
+                <li class="active"><a href="/ibm">IBM Cloud</a></li>
+                <li class="active"><a href="/rackspace">Rackspace</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Migrate</a></li>
+          </ul>
+         
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Dashboard</h1>
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <img class="img-circle" src={%static "img/aws.png"%} alt="Generic placeholder image" width="280" height="200">
+              
+              <h4> AWS </h4>
+              
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <img class="img-circle" src={%static "img/images.png"%} alt="Generic placeholder image" width="240" height="200">
+            
+              <h4>Google App Engine</h4>
+            
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <img class="img-circle" src={%static "img/azure.jpg"%} alt="Generic placeholder image" width="240" height="200">
+              <h4>Microsoft Azure</h4>
+              
+            </div>
+           
+           <div class="col-xs-6 col-sm-3 placeholder">
+               <img class="img-circle" src={%static "img/rack.jpg"%} alt="Generic placeholder image" width="240" height="200">
+              <h4>Rackspace</h4>
+              
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+               <img class="img-circle" src={%static "img/ibm.png"%} alt="Generic placeholder image" width="240" height="200">
+              <h4>IBM Soft Layer</h4>
+              
+            </div>
+            </div>
+          </div>
+<div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+     
+         
+        </div>
+      </div>
+    </div>
+    <div class="container marketing">
+
+    {% block row %}
+    {% endblock %}
+    
+    {% block content %}
+    {% endblock %}
+  </div><!-- /.container -->
+
+
+  {% include 'javascript.html' %}
+  </body>
+  </html>
+
+
+    
