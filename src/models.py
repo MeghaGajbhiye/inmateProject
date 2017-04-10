@@ -79,7 +79,7 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Aws(models.Model):
-    user = models.ForeignKey(AuthUser)
+    user = models.ForeignKey(AuthUser, primary_key=True)
     aws_access_key = models.CharField(max_length=120, blank=True, null=True)
     aws_secret_key = models.CharField(max_length=120, blank=True, null=True)
     account_id = models.CharField(max_length=120, blank=True, null=True)
@@ -163,8 +163,15 @@ class DjangoSite(models.Model):
         db_table = 'django_site'
 
 
+class Google(models.Model):
+    project_id = models.CharField(max_length=120, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'google'
+
+
 class Ibm(models.Model):
-    id = models.ForeignKey(AuthUser, db_column='id', primary_key=True)
     api_key = models.CharField(max_length=120, blank=True, null=True)
 
     class Meta:

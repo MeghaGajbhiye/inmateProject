@@ -14,7 +14,7 @@ def aws(request):
         aws_key = form.cleaned_data['aws_access_key']
         aws_secret = form.cleaned_data['aws_secret_key']
         instance = form.save(commit=False)
-        aws_instance = aws_object.objects.create(id = user_id)
+        aws_instance = aws_object.objects.create(user_id = user_id)
         aws_instance.save()
         instance.save()
         print aws_key, aws_secret
