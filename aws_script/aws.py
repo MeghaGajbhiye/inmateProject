@@ -1,7 +1,7 @@
 from django.conf import settings
 import boto
-aws_access_key_id = 'AKIAJKLGF55A33R3KTMQ'
-aws_secret_access_key = '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'
+aws_access_key_id = ''
+aws_secret_access_key = ''
 ec2 = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
 aws_secret_access_key=aws_secret_access_key)
 
