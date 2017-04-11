@@ -1,0 +1,11 @@
+AWS_ACCESS_KEY_ID = "AKIAI6ISOQQD66FZ7EPQ"
+AWS_SECRET_ACCESS_KEY= "7s5AJVVZIP9Ja54Gp0/Q0ytPaybpX+2RcTLQJOmy"
+
+
+#datadog
+DATADOG_API_KEY = "apikey"
+DATADOG_APP_KEY = "appkey"
+DATADOG_APP_NAME = "appname" #name your metrics will be tagged with
+DATADOG_HOST = "yourddhost" #for statsd metrics
+DATADOG_PORT = "8125" #for statsd metrics
+DJ_DATADOG_DEBUG = True #for local development
