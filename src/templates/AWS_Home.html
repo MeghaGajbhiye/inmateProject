@@ -41,11 +41,13 @@
 
     <div class="container">
 
-      <form class="form-signin" method ="POST">{% csrf_token %}
+      <form class="form-signin">
         <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
         <h2 class="form-signin-heading">Enter your information: </h2>{% csrf_token %}
-            {{form.as_p}}
-
+        {% for zone in data %}
+          <li>{{ zone|safe }}</li>
+        {% endfor %}
+        
         <!--label for="inputPassword" class="sr-only">Access Key</label>
         <input type="access_key" id="inputAccessKey" class="form-control" placeholder="Access_Key" required>
         <label for="inputPassword" class="sr-only">Secret Key</label>
