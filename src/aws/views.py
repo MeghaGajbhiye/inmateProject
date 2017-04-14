@@ -30,6 +30,7 @@ def aws(request):
     return render_to_response("AWS_CP.html", context, context_instance = RequestContext(request))
 
 
+
 def aws_home(request):
     # if request.method == 'POST':
     user_id = request.user.id
