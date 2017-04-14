@@ -44,8 +44,9 @@ def aws_home(request):
     user_Data = {}
     # checking all zones
     # data	= list(ec2.get_all_zones())
-    data = list(boto.ec2.regions())
-    print data
+    list_data = list(boto.ec2.regions())
+    print list_data
+    data = {key: i for i , key in enumerate(list_data)}
     form = AWSHomeForm(my_choices = data)
     context = {
     "form" : form,

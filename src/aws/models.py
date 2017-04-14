@@ -19,7 +19,7 @@ class AWS(models.Model):
     user_id = models.CharField(max_length=120, blank=True, primary_key=True)
     aws_access_key = models.CharField(max_length=120, blank=True, null=True)
     aws_secret_key = models.CharField(max_length=120, blank=True, null=True)
-    account_id = models.CharField(max_length=120, blank=True, null=True)
+    # account_id = models.CharField(max_length=120, blank=True, null=True)
 
     class Meta:
         # managed = True
