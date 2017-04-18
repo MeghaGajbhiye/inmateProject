@@ -37,22 +37,24 @@ def aws_home(request):
     print user_id
     # aws_model = AWS()
     # print aws_model.all()
-    aws_access_key_id = 'AKIAJKLGF55A33R3KTMQ'
-    aws_secret_access_key = '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'
+    aws_access_key_id = ''
+    aws_secret_access_key = ''
     ec2 = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
     aws_secret_access_key=aws_secret_access_key)
     parsed_data = []
     user_Data = {}
     # checking all zones
     # data	= list(ec2.get_all_zones())
-    list_data = list(boto.ec2.regions())
-    print list_data
-    data = {key: i for i , key in enumerate(list_data)}
-    form = AWSHomeForm(my_choices = data)
+    # list_data = list(boto.ec2.regions())
+    # dict_data = dict(list_data)
+    # print list_data
+    list_data = [1, 2, 3, 4, 5]
+    # data = {key: i for i , key in enumerate(list_data)}
+    form = AWSHomeForm(my_choices = list_data)
     context = {
     "form" : form,
     }
-    return render_to_response("AWS_Home.html", context , context_instance = RequestContext(request))
+    return render_to_response("aws_home.html", context, context_instance = RequestContext(request))
 
 
 

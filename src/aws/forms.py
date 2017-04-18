@@ -48,5 +48,6 @@ class AWSForm(forms.ModelForm):
 class AWSHomeForm(forms.Form):
     def __init__(self,*args, **kwargs):
         choices = kwargs.pop('my_choices')
+        # print (choices)
         super(AWSHomeForm, self).__init__(*args, **kwargs)
         self.fields["aws_zone"] = forms.ChoiceField(choices=choices)

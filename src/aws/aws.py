@@ -49,8 +49,8 @@ class AWS:
 
 
     def launch_instance(self):
-        ec2 = boto3.client('ec2', aws_access_key_id=get_acccess_key(),
-                           aws_secret_access_key=get_secret_key())
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
                                     InstanceType='m4.xlarge', Monitoring={'Enabled': True})
         print (ec2_out)
@@ -59,30 +59,31 @@ class AWS:
 
 
     def describe_security_groups(self):
-        ec2 = boto3.client('ec2', aws_access_key_id=get_acccess_key(),
-                           aws_secret_access_key=get_secret_key())
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_security_groups()
         for security_group in ec2_out['SecurityGroups']:
             print (security_group['GroupName'])
 
     def describe_subnets(self):
-        ec2 = boto3.client('ec2', aws_access_key_id=get_acccess_key(),
-                           aws_secret_access_key=get_secret_key())
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_subnets()
         for subnet in ec2_out['Subnets']:
             print (subnet['SubnetId'])
 
     def describe_images(self):
-        ec2 = boto3.client('ec2', aws_access_key_id=get_acccess_key(),
-                           aws_secret_access_key=get_secret_key())
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_images()
         for image in ec2_out['Images']:
             image_id = image['ImageId']
             # image_os = image['Name']
-            print (image_id, image_os)
+            print image_id
+            # print (image_id, image_os)
 
 
 if __name__ == "__main__":
-    aws = AWS("AKIAJRQMACIVSVREZ6OA", "ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy")
+    aws = AWS("", "")
     aws.cloudwatchmonitoring()
 
