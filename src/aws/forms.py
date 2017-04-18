@@ -50,4 +50,5 @@ class AWSHomeForm(forms.Form):
         choices = kwargs.pop('my_choices')
         # print (choices)
         super(AWSHomeForm, self).__init__(*args, **kwargs)
-        self.fields["aws_zone"] = forms.ChoiceField(choices=choices)
+        # self.fields["aws_zone"] = forms.ChoiceField(choices=choices)
+        self.fields["aws_zone"] =choices

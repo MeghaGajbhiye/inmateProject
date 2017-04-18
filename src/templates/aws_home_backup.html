@@ -41,10 +41,10 @@
 
     <div class="container">
 
-      <form class="form-signin" method = "POST">
+      <form class="form-signin" method ="POST">{% csrf_token %}
         <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
-        <h2 class="form-signin-heading">AWS Cloud Provider Sign Up</h2>{% csrf_token %}
-        {{form.as_p}}
+        <h2 class="form-signin-heading">Enter your information: </h2>{% csrf_token %}
+            {{form.as_p}}
 
         <!--label for="inputPassword" class="sr-only">Access Key</label>
         <input type="access_key" id="inputAccessKey" class="form-control" placeholder="Access_Key" required>
@@ -54,7 +54,7 @@
         <input type="account#" id="inputAccount#" class="form-control" placeholder="Account#" required-->
 
 
-
+        
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
@@ -70,10 +70,10 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
      {% block row %}
     {% endblock %}
-
+    
     {% block content %}
     {% endblock %}
-
+  
 
 
   {% include 'javascript.html' %}
