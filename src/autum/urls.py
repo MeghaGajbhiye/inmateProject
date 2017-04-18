@@ -6,6 +6,7 @@ from cloud.views import home, contact, dashboard, about
 from aws.views import aws, aws_home
 from azure.views import azure
 from ibm.views import ibm
+
 from google.views import google
 from rackspace.views import rackspace
 

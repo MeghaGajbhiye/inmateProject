@@ -1,4 +1,4 @@
-{%include Dash_2.html %}
+{%include CP_final.html %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -32,15 +32,15 @@
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
   </head>
+
   <title>{% block head_title %}{% endblock %} AUTUM <img src={%static "autum.jpg" %}></img></title>
  <div class="navbar-wrapper">
       <div class="container">
         {# verbatim #}
         {% include carousel.css %}
-
-
+        </div>
       </div>
-    </div>
+
 <!-- NAVBAR
 ================================================== -->
   <body>
@@ -61,9 +61,9 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Dashboard</a></li>
-                <li><a href="#">AWS Registered</a></li>
-
-
+                <li><a href="#">Google Registered</a></li>
+                
+                  
                 </li>
               </ul>
             </div>
@@ -74,10 +74,13 @@
     </div>
 
 
-
+   
       </div>
+  </div>
+</div>
+ </div>
        <h1> Enter your Information </h1>
-       <td><h2> Enter your Zone
+       <td><h2> Enter your Zone 
       <select id="selectzone">
          <option>Select a zone</option>
       </select>
@@ -152,13 +155,9 @@ function myFunction() {
       </footer>
 
     </div><!-- /.container -->
-{% block row %}
-    {% endblock %}
-
-    {% block content %}
-    {% endblock %}
 
 
-    {%include javascript.html %}
+   
+ {%include javascript.html %}
   </body>
 </html>

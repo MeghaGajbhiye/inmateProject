@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-   <title>{% block head_title %}{% endblock %} AUTUM</title>
+   <title>{% block head_title %}{% endblock %} AUTUM <img src={%static "img/autum.jpg" %}</title>
 
   {% include 'head_css.html' %}
     </head>
@@ -57,16 +58,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img></a>
+          <a class="navbar-brand" href="#">AUTUM <img src = {%static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="/Dash_2">Dashboard</a></li>
             <li><a href="#">Settings</a></li>
             <ul class="dropdown-menu">
-                    <li><a href="User Registration.html">Support</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="Admin.html">Register</a></li>
+                    <li><a href="/support">Support</a></li>
+                    
                    
                 </ul>
            
@@ -83,19 +83,11 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Monitor</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Instances</a></li>
-            <li class="active"><a href="#">Cloud Service Providers</a>
-              <ul>
-                <li class="active"><a href="/AWS_Home">AWS</a></li>
-                <li class="active"><a href="/azure">Azure</a></li>
-                <li class="active"><a href="/google">Google App Engine</a></li>
-                <li class="active"><a href="/ibm">IBM Cloud</a></li>
-                <li class="active"><a href="/rackspace">Rackspace</a></li>
-              </ul>
+            <li><a href="/monitor">Monitor</a></li>
+            <li><a href="/instance">Instances</a></li>
+            <li class="active"><a href="/CP_final">Cloud Service Providers</a>
             </li>
-            <li><a href="#">Migrate</a></li>
+            <li><a href="/migration">Migrate</a></li>
           </ul>
          
         </div>
@@ -104,33 +96,41 @@
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
-               <img class="img-circle" src={%static "img/aws.png"%} alt="Generic placeholder image" width="280" height="200">
+               <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+              <script type="text/javascript">
+             google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Price in $', 'Service providers'],
+          ['AWS',  300],
+          ['Azure',  200],
+          ['Google',  150],
+          ['IBM',  230],
+        ['Rackspace', 50]]);
+
+        var options = {
+          title: 'Price chart',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+    <div id="curve_chart" style="width: 500px; height: 300px"></div>
+              <h3>Price Graph</h3>
               
-              <h4> AWS </h4>
               
             </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-               <img class="img-circle" src={%static "img/images.png"%} alt="Generic placeholder image" width="240" height="200">
             
-              <h4>Google App Engine</h4>
             
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-               <img class="img-circle" src={%static "img/azure.jpg"%} alt="Generic placeholder image" width="240" height="200">
-              <h4>Microsoft Azure</h4>
+            
               
-            </div>
-           
-           <div class="col-xs-6 col-sm-3 placeholder">
-               <img class="img-circle" src={%static "img/rack.jpg"%} alt="Generic placeholder image" width="240" height="200">
-              <h4>Rackspace</h4>
-              
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-               <img class="img-circle" src={%static "img/ibm.png"%} alt="Generic placeholder image" width="240" height="200">
-              <h4>IBM Soft Layer</h4>
-              
-            </div>
+            
             </div>
           </div>
 <div class="container marketing">

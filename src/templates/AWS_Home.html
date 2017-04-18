@@ -32,9 +32,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <title>{% block head_title %}{% endblock %} AUTUM</title>
+  <title>{% block head_title %}{% endblock %}</title>
 
-  {% include 'head_css.html' %}
+  {% include 'signin_css.html' %}
     </head>
 
   <body>
@@ -42,32 +42,144 @@
     <div class="container">
 
       <form class="form-signin" method ="POST">{% csrf_token %}
-        <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
-        <h2 class="form-signin-heading">Enter your information: </h2>{% csrf_token %}
+        <h1> AUTUM <img src = {%static "autum.jpg" %} style="width:25px;height:25px"> </img> </h1>
+        <h2 class="form-signin-heading">AWS Registered </h2>{% csrf_token %}
             {{form.as_p}}
+      </div>
+       <h1> Enter your Information </h1>
+       <td><h2> Enter your Zone
+       <select id="selectzone">
+         <option>Select a zone</option>
+       </select>
+       <td><h2> Enter your region
+        <select id="selectregion">
+          <option>Select a region</option>
+        </select>
+        <td><h2> Enter an image
+          <select id="selectimage">
+            <option>Select an image</option>
+            <td><h2> Enter Minimum Count</h2>
+        <input type="text" size="4" value="Min_Count">
+        <td><h2> Enter Maximum Count
+        <input type="text" size="4" value="Max_Count">
+        <td><h2> Enter Key Name
+        <input type="text" size="12" value="Key_Name">
+        <td><h2> Enter Instance Type
+        <input type="text" size="12" value="Inst_Type">
+        <td><h2> Monitoring Status
+        <select id="check status">
+        <option>CheckStatus</option>
+        </select>
+    <script type="text/javascript">
+var myobject = {
+  ValueA : 'es-us-1',
+  ValueB : 'es-us-2',
+  ValueC : 'es-us-3',
+  ValueD : 'es-us-4',
+};
 
-        <!--label for="inputPassword" class="sr-only">Access Key</label>
-        <input type="access_key" id="inputAccessKey" class="form-control" placeholder="Access_Key" required>
-        <label for="inputPassword" class="sr-only">Secret Key</label>
-        <input type="secret_key" id="inputSecretKey" class="form-control" placeholder="Secret_Key" required>
-<label for="inputPassword" class="sr-only">Account #</label>
-        <input type="account#" id="inputAccount#" class="form-control" placeholder="Account#" required-->
+var select = document.getElementById("selectzone");
+for(index in myobject) {
+  select.options[select.options.length] = new Option(myobject[index], index);
+}
 
+</script>
+  <script>
+var myobject1 = {
+  ValueA : 'Virginia_US',
+  ValueB : 'Dallas_US',
+  ValueC : 'Hongkong_China',
+  ValueD : 'Europe_UK',
+};
+
+var select = document.getElementById("selectregion");
+for(index in myobject1) {
+  select.options[select.options.length] = new Option(myobject1[index], index);
+}
+
+</script>
+
+  <script type="text/javascript">
+var myobject2 = {
+  ValueA : 'image-1',
+  ValueB : 'image-2',
+  ValueC : 'image-3',
+  ValueD : 'image-4',
+};
+
+var select = document.getElementById("selectimage");
+for(index in myobject2) {
+  select.options[select.options.length] = new Option(myobject2[index], index);
+}
+
+</script>
+
+
+ <script type="text/javascript">
+var myobject2 = {
+  ValueA : 'Enable',
+  ValueB : 'Disable',
+};
+var select = document.getElementById("check status");
+for(index in myobject2) {
+  select.options[select.options.length] = new Option(myobject2[index], index);
+}
+
+</script>
+<td><h2><button onclick="myFunction()">Update</button></h2>
+<p id="zone"></p>
+<p id="region"></p>
+<p id="image"></p>
+<p id="min_count"></p>
+<p id="max_count"></p>
+<p id="key_name"></p>
+<p id="inst_type"></p>
+<p id="monitoring"></p>
+<script>
+function myFunction() {
+  document.getElementById("zone").innerHTML = "Zone selected";
+  document.getElementById("region").innerHTML = "Region selected";
+  document.getElementById("image").innerHTML = "Image selected";
+  document.getElementById("min_count").innerHTML = "min_count selected";
+  document.getElementById("max_count").innerHTML = "max_count selected";
+  document.getElementById("key_name").innerHTML = "key_name selected";
+  document.getElementById("inst_type").innerHTML = "inst_type selected";
+  document.getElementById("monitoring").innerHTML = "monitoring selected";
+}
+</script>
+
+<script type="text/javascript">
+  function myFunction() {
+    $('.ajaxProgress').show();
+    $.ajax({
+      type: "POST",
+      url: "aws_home",
+      dataType: "json",
+      async: true,
+      data : {
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        zone: $('#zone').val() 
+      },
+
+      success: function (.json){
+        $('#output').html(json.message);
+        $('.ajaxProgress').hide();
+      }
+      
+
+
+    });
+  }
+
+</script>
 
         
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
       </form>
 
     </div> <!-- /container -->
 
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    
      {% block row %}
     {% endblock %}
     

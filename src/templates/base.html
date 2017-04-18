@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
   <meta name="author" content="">
   <link rel="icon" href="../../favicon.ico">
 
-  <title>{% block head_title %}{% endblock %} AUTUM</title>
+  
 
   {% include 'head_css.html' %}
     </head>
@@ -40,8 +41,8 @@
           <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <a href ="Main_Image.jpeg">
-                <img src ="Main_Image.jpeg"
+              <a href ={%static "img/Main_Image.jpeg" %}>
+                <img src ={%static "Main_Image.jpeg" %}
                 width = "50%" />
               </a>
             </div>
@@ -51,8 +52,8 @@
           <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
-             <a href ="cloud2.jpg">
-              <img src ="cloud2.jpg"
+             <a href ={%static "img/cloud2.jpg" %}>
+              <img src ={%static "img/cloud2.jpg" %}
               width = "50%" />
             </a> 
           </div>
@@ -62,8 +63,8 @@
         <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
         <div class="container">
           <div class="carousel-caption">
-           <a href ="cloud3.jpg">
-            <img src ="cloud3.jpg"
+           <a href ={%static "img/cloud3.jpg" %}>
+            <img src ={%static "img/cloud3.jpg" %}
             width = "50%" />
           </a>
         </div>
