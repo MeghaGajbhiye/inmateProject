@@ -40,7 +40,7 @@
 
     <div class="container">
 
-      <form class="form-signin" method ="POST">{% csrf_token %}
+      <form class="form-signin" >{% csrf_token %}
         <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
         <h2 class="form-signin-heading">AWS Registered </h2>{% csrf_token %}
             {{form.as_p}}
@@ -84,7 +84,7 @@ var myobject = {
 
 var select = document.getElementById("selectzone");
 for(index in myobject) {
-  select.options[select.options.length] = new Option(myobject[index], index);
+  select.options[select.options.length] = new Option(myobject[index], myobject[index]);
 }
 
 </script>
@@ -98,7 +98,7 @@ var myobject1 = {
 
 var select = document.getElementById("selectregion");
 for(index in myobject1) {
-  select.options[select.options.length] = new Option(myobject1[index], index);
+  select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);
 }
 
 </script>
@@ -113,7 +113,7 @@ var myobject2 = {
 
 var select = document.getElementById("selectimage");
 for(index in myobject2) {
-  select.options[select.options.length] = new Option(myobject2[index], index);
+  select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
 }
 
 </script>
@@ -126,7 +126,7 @@ var myobject2 = {
 };
 var select = document.getElementById("check status");
 for(index in myobject2) {
-  select.options[select.options.length] = new Option(myobject2[index], index);
+  select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
 }
 
 </script>
@@ -157,24 +157,22 @@ function myFunction() {
     $('.ajaxProgress').show();
     $.ajax({
       type: "POST",
-      url: "aws_home",
-      dataType: "json",
+      url: "/aws_home/",
       async: true,
       data : {
         csrfmiddlewaretoken: '{{ csrf_token }}',
-        zone: $('#zone').val()
+        zone: $("#selectzone").val()
       },
-
       success: function(json)
       {
         $('#output').html(json.message);
         $('.ajaxProgress').hide();
-      }
-
-
-
+      },
+        fail: function(){
+            alert("failed")
+        }
     });
-  }
+    }
 
 </script>
 

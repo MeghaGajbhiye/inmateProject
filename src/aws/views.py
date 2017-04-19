@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 import json
 import boto
+from django.views.generic import TemplateView
 
 
 def aws(request):
@@ -17,8 +18,9 @@ def aws(request):
     if form.is_valid():
         aws_key = form.cleaned_data['aws_access_key']
         aws_secret = form.cleaned_data['aws_secret_key']
-        instance = form.save(commit=False)
-        instance.user_id = user_id
+        instance = AWS(user_id = user_id, aws_access_key=aws_key, aws_secret_key=aws_secret)
+        # instance = form.save(commit=False)
+        # instance.user_id = user_id
         # user = User.objects.only('id').get(id = user_id)
         # print user
         # aws_instance = AWS.objects.create(user_id=user)
@@ -34,6 +36,7 @@ def aws(request):
 
 
 def aws_home(request):
+    print "aws_home **************************"
     # if request.method == 'POST':
     # user_id = request.user.id
     # print user_id
@@ -58,8 +61,11 @@ def aws_home(request):
     # }
     # aws_get_keys()
     # test = request.POST.get("zone", "region", "image", "min_count", "max_count", "key_name", "inst_type", "monitoring")
+    if request.is_ajax():
+        print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
+
         test = request.POST.get("zone")
         print test
         response_data = {}
