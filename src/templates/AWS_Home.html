@@ -11,19 +11,23 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Signin Template for Bootstrap</title>
+      <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+{#    <!-- Bootstrap core CSS -->#}
+{#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
+{##}
+{#    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
+{#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
+{##}
+{#    <!-- Custom styles for this template -->#}
+{#    <link href="signin.css" rel="stylesheet">#}
+{##}
+{#    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->#}
+{#    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->#}
+{#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,14 +36,18 @@
     <![endif]-->
   </head>
   <title>{% block head_title %}{% endblock %}</title>
+<<<<<<< HEAD
+=======
 
-  {% include 'head_css.html' %}
+>>>>>>> Seizon-sha-master
+
     </head>
 
   <body>
 
     <div class="container">
 
+<<<<<<< HEAD
       <form class="form-signin" >{% csrf_token %}
         <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
         <h2 class="form-signin-heading">AWS Registered </h2>{% csrf_token %}
@@ -50,6 +58,13 @@
 
 
       </div>
+=======
+      <form class="form-signin" method ="POST">{% csrf_token %}
+        <h1> AUTUM <img src = {%static "autum.jpg" %} style="width:25px;height:25px"> </img> </h1>
+        <h2 class="form-signin-heading">AWS Registered </h2>{% csrf_token %}
+            {{form.as_p}}
+
+>>>>>>> Seizon-sha-master
        <h1> Enter your Information </h1>
        <td><h2> Enter your Zone
        <select id="selectzone">
@@ -62,7 +77,11 @@
         <td><h2> Enter an image
           <select id="selectimage">
             <option>Select an image</option>
+<<<<<<< HEAD
             <td><h2> Enter Minimum Count
+=======
+            <td><h2> Enter Minimum Count</h2>
+>>>>>>> Seizon-sha-master
         <input type="text" size="4" value="Min_Count">
         <td><h2> Enter Maximum Count
         <input type="text" size="4" value="Max_Count">
@@ -84,7 +103,11 @@ var myobject = {
 
 var select = document.getElementById("selectzone");
 for(index in myobject) {
+<<<<<<< HEAD
   select.options[select.options.length] = new Option(myobject[index], myobject[index]);
+=======
+  select.options[select.options.length] = new Option(myobject[index], index);
+>>>>>>> Seizon-sha-master
 }
 
 </script>
@@ -98,7 +121,11 @@ var myobject1 = {
 
 var select = document.getElementById("selectregion");
 for(index in myobject1) {
+<<<<<<< HEAD
   select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);
+=======
+  select.options[select.options.length] = new Option(myobject1[index], index);
+>>>>>>> Seizon-sha-master
 }
 
 </script>
@@ -113,7 +140,11 @@ var myobject2 = {
 
 var select = document.getElementById("selectimage");
 for(index in myobject2) {
+<<<<<<< HEAD
   select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
+=======
+  select.options[select.options.length] = new Option(myobject2[index], index);
+>>>>>>> Seizon-sha-master
 }
 
 </script>
@@ -126,11 +157,19 @@ var myobject2 = {
 };
 var select = document.getElementById("check status");
 for(index in myobject2) {
+<<<<<<< HEAD
   select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
 }
 
 </script>
 <button onclick="myFunction()">Update</button>
+=======
+  select.options[select.options.length] = new Option(myobject2[index], index);
+}
+
+</script>
+<td><h2><button onclick="myFunction()">Update</button></h2>
+>>>>>>> Seizon-sha-master
 <p id="zone"></p>
 <p id="region"></p>
 <p id="image"></p>
@@ -157,6 +196,7 @@ function myFunction() {
     $('.ajaxProgress').show();
     $.ajax({
       type: "POST",
+<<<<<<< HEAD
       url: "/aws_home/",
       async: true,
       data : {
@@ -177,12 +217,39 @@ function myFunction() {
 </script>
 
 
+=======
+      url: "aws_home",
+      dataType: "json",
+      async: true,
+      data : {
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        zone: $('#zone').val() 
+      },
+
+      success: function (json){
+        $('#output').html(json.message);
+        $('.ajaxProgress').hide();
+      }
+      
+
+
+    });
+  }
+
+</script>
+
+        
+>>>>>>> Seizon-sha-master
       </form>
 
     </div> <!-- /container -->
 
 
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> Seizon-sha-master
      {% block row %}
     {% endblock %}
 
