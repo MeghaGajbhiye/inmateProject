@@ -1,8 +1,7 @@
-
+{% include 'base.html' %}
 {% load staticfiles %}
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,12 +12,8 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
-      <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
-{##}
-{#    <!-- Bootstrap core CSS -->#}
+    <!-- Bootstrap core CSS -->
 {#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
 {##}
 {#    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
@@ -26,10 +21,14 @@
 {##}
 {#    <!-- Custom styles for this template -->#}
 {#    <link href="dashboard.css" rel="stylesheet">#}
+{#    <link href="home.css" rel="stylesheet">#}
 {##}
 {#    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->#}
 {#    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->#}
 {#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -37,15 +36,17 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-<title>{% block head_title %}{% endblock %}
-</title>
+  <title>{% block head_title %}{% endblock %} </title>
  <div class="navbar-wrapper">
       <div class="container">
         {# verbatim #}
-{#        {% include carousel.css %}#}
+{#        {% static 'css/dashboard.css' %}#}
+{#        {% static 'css/home.css' %}#}
+        
+
       </div>
- </div>
-        {
+    </div>
+
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -90,42 +91,28 @@
          
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Contact</h1>
-          <div class="jumbotron">
-      <div class="container">
+          <h1 class="page-header">Support</h1>
 
-        <h1>Management</h1>
-          
-        <img src={%static "img/pushpa.jpg" %} width="150" height="150"></img>
-        <h2>Pushparani Venigalla</h2>
-        <h4>pushparani.venigalla@sjsu.edu</h4>
-      
-        
-        <img src={%static "img/megha.jpg" %} width="150" height="150"></img>
-        <h2>Megha Gajibhiye</h2>
-        <h4>megha.gajibhiye@sjsu.edu</h4>
-   
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Email &raquo;</a></p>
-      </div>
-    </div>
-
-
-          
+          <h3>Chat Box coming soon.........!!!</h3>
             
-              
-            
+           
+           
             </div>
           </div>
 <div class="container marketing">
 
       <!-- Three columns of text below the carousel -->
-     
+     {% block row %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
          
         </div>
       </div>
     </div>
 
-    
-    {%include 'javascript.html' %}
+   
+   {%include 'javascript.html' %}
   </body>
 </html>

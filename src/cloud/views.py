@@ -77,4 +77,19 @@ def contact(request):
 
 
 def dashboard(request):
-    return render_to_response("Dash_2.html", )
+    return render_to_response("Dash_2_final.html", )
+
+def acknowledgement(request):
+    return render_to_response("contact.html", )
+
+def support(request):
+    return render_to_response("support.html", )
+
+def migration(request):
+    return render_to_response("migration.html", )
+
+def monitor(request):
+    return render_to_response("monitor.html", )
+
+def cpfinal(request):
+    return render_to_response("CP_final.html", )

@@ -6,7 +6,7 @@ from .forms import AWSForm, AWSHomeForm
 from django.contrib.auth.models import User
 import boto
 import json
-import django.http import HttpResponse
+from django.http import HttpResponse
 
 def aws(request):
     aws_object = AWS()
