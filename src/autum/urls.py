@@ -2,8 +2,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal
-from aws.views import aws, aws_home
+from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
+from aws.views import aws, aws_home, aws_inst
 from azure.views import azure
 from ibm.views import ibm
 
@@ -19,7 +19,8 @@ urlpatterns = [
     # url(r'^cp_final/$', cp_final, name='cp_final'),
     url(r'^cpfinal/$', cpfinal , name='cpfinal'),
     url(r'^aws/$',aws,name='aws'),
-    url(r'^AWS_Zone/$',aws_home,name='aws'),
+    url(r'^aws_home/$',aws_home,name='aws_home'),
+    url(r'^aws_inst/$', aws_inst, name='aws_inst'),
     url(r'^azure/$',azure,name='azure'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^ibm/$',ibm,name='ibm'),
@@ -32,7 +33,7 @@ urlpatterns = [
     url(r'^contact/$',contact,name='contact'),
     url(r'^migration/$',migration,name='migration'),
     url(r'^monitor/$',monitor,name='monitor'),
-
+    url(r'^instance/$', instance, name='instance'),
 
     # url(r'^blog/', include('blog.urls')),
 
