@@ -93,3 +93,6 @@ def monitor(request):
 
 def cpfinal(request):
     return render_to_response("CP_final.html", )
+
+def instance(request):
+    return render_to_response("instance.html", )
