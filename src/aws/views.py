@@ -71,9 +71,10 @@ def aws_home(request):
         min = request.POST.get("min")
         max = request.POST.get("max")
         key_name = request.POST.get("key_name")
-        instance_type = request.POST.get("instance_type")
+        inst_type = request.POST.get("inst_type")
+        check_status = request.POST.get("check_status")
 
-        print zone, region, image, min, max, key_name, instance_type
+        print zone, region, image, min, max, key_name, inst_type, check_status
         # response_data = {}
         # try:
         #     response_data['result'] = 'done!'
@@ -117,88 +118,9 @@ def aws_inst(request):
     if request.method == 'POST':
         print "I am here inside post"
 
-        select_op = request.POST.get("select_op")
+        selectOP = request.POST.get("selectOP")
 
-        print select_op
-
-    return render_to_response("aws_inst.html", {}, context_instance = RequestContext(request))
-    # return HttpResponse(json.dumps(response_data),content_type="application/json")
-
-def aws_home(request):
-    print "aws_home **************************"
-    # if request.method == 'POST':
-    # user_id = request.user.id
-    # print user_id
-    # # aws_model = AWS()
-    # # print aws_model.all()
-    # aws_access_key_id = ''
-    # aws_secret_access_key = ''
-    # ec2 = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
-    # aws_secret_access_key=aws_secret_access_key)
-    # parsed_data = []
-    # user_Data = {}
-    # # checking all zones
-    # # data   = list(ec2.get_all_zones())
-    # list_data = list(boto.ec2.regions())
-    # # dict_data = dict(list_data)
-    # # print list_data
-    # list_data = [(1, 'region1'), (2, 'region2'), (3,'region3')]
-    # # data = {key: i for i , key in enumerate(list_data)}
-    # form = AWSHomeForm(my_choices = list_data)
-    # context = {
-    # "form" : form,
-    # }
-    # aws_get_keys()
-    # test = request.POST.get("zone", "region", "image", "min_count", "max_count", "key_name", "inst_type", "monitoring")
-    if request.is_ajax():
-        print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        zone = request.POST.get("zone")
-        region = request.POST.get("region")
-        image = request.POST.get("image")
-        min = request.POST.get("min")
-        max = request.POST.get("max")
-        key_name = request.POST.get("key_name")
-        inst_type = request.POST.get("inst_type")
-        check_status = request.POST.get("check_status")
-
-        def aws_inst(request):
-            print "aws_inst **************************"
-            # if request.method == 'POST':
-            # user_id = request.user.id
-            # print user_id
-            # # aws_model = AWS()
-            # # print aws_model.all()
-            # aws_access_key_id = ''
-            # aws_secret_access_key = ''
-            # ec2 = boto.connect_ec2(aws_access_key_id=aws_access_key_id,
-            # aws_secret_access_key=aws_secret_access_key)
-            # parsed_data = []
-            # user_Data = {}
-            # # checking all zones
-            # # data   = list(ec2.get_all_zones())
-            # list_data = list(boto.ec2.regions())
-            # # dict_data = dict(list_data)
-            # # print list_data
-            # list_data = [(1, 'region1'), (2, 'region2'), (3,'region3')]
-            # # data = {key: i for i , key in enumerate(list_data)}
-            # form = AWSHomeForm(my_choices = list_data)
-            # context = {
-            # "form" : form,
-            # }
-            # aws_get_keys()
-            # test = request.POST.get("zone", "region", "image", "min_count", "max_count", "key_name", "inst_type", "monitoring")
-            if request.is_ajax():
-                print "it's ajax"
-            if request.method == 'POST':
-                print "I am here inside post"
-                create = request.POST.get("create")
-                update = request.POST.get("update")
-                delete = request.POST.get("delete")
-                retrieve = request.POST.get("retrieve")
-
-        print create, update, delete, retrieve
+        print selectOP
 
     return render_to_response("aws_inst.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")

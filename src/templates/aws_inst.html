@@ -100,20 +100,18 @@
 
         </div>
 
-
+    </div>
         <td>
             <h2> Enter your option</h2>
                 <select id="selectOP">
                     <option>Select operation</option>
                 </select>
-                <p id="select"></p>
+                <p id="selectOP"></p>
 
                 <button onclick="myFunction()">Submit</button>
 
 
-    </div>
-</div>
-</div>
+
 <script type="text/javascript">
     var myobject = {
         ValueA: 'create',
@@ -144,7 +142,7 @@
             async: true,
             data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                select_op: $("#selectOP").val(),
+                selectOP: $("#selectOP").val(),
             },
             success: function (json) {
                 $('#output').html(json.message);
