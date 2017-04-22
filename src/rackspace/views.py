@@ -9,4 +9,21 @@ def rackspace(request):
 	context = {
 	"form" : form,
 	}
-	return render_to_response("Rackspace.html", context, context_instance = RequestContext(request))
+	return render_to_response("rackspace.html", context, context_instance = RequestContext(request))
+
+def rackspace_home(request):
+    print "rackspace_home **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+
+        no_of_inst = request.POST.get("no_of_inst")
+        selectram = request.POST.get("selectram")
+        selectimage = request.POST.get("selectimage")
+
+        print no_of_inst, selectram, selectimage
+
+
+    return render_to_response("rackspace_home.html", {}, context_instance = RequestContext(request))

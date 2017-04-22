@@ -89,20 +89,44 @@
       <select id="selectzone">
          <option>Select a zone</option>
       </select>
-      <td><h2> Enter your region
-        <select id="selectregion">
-          <option>Select a region</option>
-        </select>
-        <td><h2> Enter an image
-          <select id="selectimage">
-            <option>Select an image</option>
-          </select>
+      <td>
+            <h2> Enter Project ID
+                <input type="text" size="4" value="project_id" id="Pro_id">
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Bucket ID
+                <input type="text" size="4" value="bucket_id" id="Buck_id">
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Instance Name
+                <input type="text" size="12" value="inst_Name" id="Inst_name">
+            </h2>
+        </td>
+
     <script type="text/javascript">
 var myobject = {
-  ValueA : 'es-us-1',
-  ValueB : 'es-us-2',
-  ValueC : 'es-us-3',
-  ValueD : 'es-us-4',
+  ValueA: 'us-west1-a',
+ValueB: 'us-west1-b',
+ValueC: 'us-central1-a',
+ValueD: 'us-central1-b',
+ValueE: 'us-central1-c',
+ValueF: 'us-central1-f',
+ValueG: 'us-east1-b',
+ValueH: 'us-east1-c',
+ValueI: 'us-east1-d',
+ValueJ: 'europe-west1-b',
+ValueK: 'europe-west1-c',
+ValueL: 'europe-west1-d',
+ValueM: 'asia-east1-a',
+ValueN: 'asia-east1-b',
+ValueO: 'asia-east1-c',
+ValueP: 'asia-northeast1-a',
+ValueQ: 'asia-northeast1-b',
+ValueR: 'asia-northeast1-c',
+ValueS: 'asia-southeast1-a',
+ValueT: 'asia-southeast1-b',
 };
 
 var select = document.getElementById("selectzone");
@@ -111,46 +135,47 @@ for(index in myobject) {
 }
 
 </script>
-  <script>
-var myobject1 = {
-  ValueA : 'Virginia_US',
-  ValueB : 'Dallas_US',
-  ValueC : 'Hongkong_China',
-  ValueD : 'Europe_UK',
-};
 
-var select = document.getElementById("selectregion");
-for(index in myobject1) {
-  select.options[select.options.length] = new Option(myobject1[index], index);
-}
-
-</script>
-
-  <script type="text/javascript">
-var myobject2 = {
-  ValueA : 'image-1',
-  ValueB : 'image-2',
-  ValueC : 'image-3',
-  ValueD : 'image-4',
-};
-
-var select = document.getElementById("selectimage");
-for(index in myobject2) {
-  select.options[select.options.length] = new Option(myobject2[index], index);
-}
-
-</script>
 <button onclick="myFunction()">Update</button>
 <p id="zone"></p>
-<p id="region"></p>
-<p id="image"></p>
+<p id="pro_id"></p>
+<p id="buck_id"></p>
+    <p id="inst_name"></p>
 <script>
 function myFunction() {
   document.getElementById("zone").innerHTML = "Zone selected";
-  document.getElementById("region").innerHTML = "Region selected";
-  document.getElementById("image").innerHTML = "Image selected";
+  document.getElementById("pro_id").innerHTML = "Region selected";
+  document.getElementById("buck_id").innerHTML = "Image selected";
+  document.getElementById("inst_name").innerHTML = "Image selected";
 }
 </script>
+     <script type="text/javascript">
+        function myFunction() {
+            $('.ajaxProgress').show();
+            $.ajax({
+                type: "POST",
+                url: "/google_home/",
+                async: true,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    zone: $("#selectzone").val(),
+                    Pro_id: $("#Pro_id").val(),
+                    Buck_id: $("#Buck_id").val(),
+                    Inst_name: $("#Inst_name").val(),
+
+                },
+                success: function (json) {
+                    $('#output').html(json.message);
+                    $('.ajaxProgress').hide();
+                },
+                fail: function () {
+                    alert("failed")
+                }
+            });
+        }
+
+    </script>
+
 
 
       <!-- FOOTER -->
