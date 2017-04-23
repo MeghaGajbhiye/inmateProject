@@ -1,4 +1,3 @@
-{%include CP_final.html %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -65,9 +64,6 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Dashboard</a></li>
                 <li><a href="#">Rackspace Registered</a></li>
-                
-                  
-                </li>
               </ul>
             </div>
           </div>
@@ -76,12 +72,6 @@
       </div>
     </div>
 
-
-   
-      </div>
-  </div>
-</div>
- </div>
        <script>
     function myfun() {
         if (document.getElementById("1") == null) {
@@ -111,11 +101,11 @@ Instance:
 
 <p id="instance"></p>
 
-      <td><h2> Enter your RAM
+    <td><h2> Enter your RAM</h2>
         <select id="selectram">
           <option>Select a region</option>
         </select>
-        <td><h2> Enter an image
+    <td><h2> Enter an image</h2>
           <select id="selectimage">
             <option>Select an image</option>
           </select>
@@ -198,8 +188,8 @@ ValueT: 'Ubuntu 12.04 LTS',
 ValueU: 'Debian 7 (Wheezy) (PVHVM)',
 ValueV: 'Debian 8 (Jessie) (PVHVM)',
 ValueW: 'Debian Testing (Stretch) (PVHVM)',
-ValueX: 'Scientific Linux 6 (PVHVM)'
-ValueY: 'Fedora 24 (PVHVM)'
+ValueX: 'Scientific Linux 6 (PVHVM)',
+ValueY: 'Fedora 24 (PVHVM)',
 };
 
 var select = document.getElementById("selectimage");
@@ -229,9 +219,9 @@ function myFunction() {
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    zone: $("#no_of_inst").val(),
-                    region: $("#selectram").val(),
-                    image: $("#selectimage").val(),
+                    instance: $("#instance").val(),
+                    selectram: $("#selectram").val(),
+                    selectimage: $("#selectimage").val(),
 
                 },
                 success: function (json) {

@@ -18,12 +18,8 @@ def rackspace_home(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-
-        no_of_inst = request.POST.get("no_of_inst")
+        instance = request.POST.get("instance")
         selectram = request.POST.get("selectram")
         selectimage = request.POST.get("selectimage")
-
-        print no_of_inst, selectram, selectimage
-
-
+        print instance, selectram, selectimage
     return render_to_response("rackspace_home.html", {}, context_instance = RequestContext(request))

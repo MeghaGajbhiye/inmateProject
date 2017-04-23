@@ -77,10 +77,10 @@
 
        
     <td><h2><button onclick="myFunction()">Delete</button><h2>
-        <p id="demo"></p>
+        <p id="instance"></p>
         <script type="text/javascript">
     function myFunction() {
-            document.getElementById("demo").innerHTML = "Zone selected";
+            document.getElementById("instance").innerHTML = "Zone selected";
         }
     </script>
     
@@ -93,7 +93,7 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    zone: $("#instance").val(),
+                    instance: $("#instance").val(),
                    
                 },
                 success: function (json) {

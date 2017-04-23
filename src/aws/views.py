@@ -146,11 +146,8 @@ def aws_create(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-
         instance = request.POST.get("instance")
-
         print instance
-
     return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
 
 

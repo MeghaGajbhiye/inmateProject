@@ -55,9 +55,10 @@
                 var label = document.createElement("label");
                 label.innerHTML = "Instance" + i;
                 var linebreak = document.createElement("br");
-                document.body.appendChild(label);
-                document.body.appendChild(div);
-                document.body.appendChild(linebreak);
+                var dynamic = document.getElementById("dynamic");
+                dynamic.appendChild(label);
+                dynamic.appendChild(div);
+                dynamic.appendChild(linebreak);
             }
         }
     }
@@ -69,21 +70,25 @@
     <h3> Enter Number of Instances:</h3>
         <input type="text" name="text" id="instance">
     </td>
-    
+    <td>
 <input type="submit" onclick="myfun()" value="submit">
 <input type="reset" value="reset" onclick="reset()">
-
-
+    </td>
+    <td>
+        <div id="dynamic"></div>
+    </td>
 
        
     <td><h2><button onclick="myFunction()">Create</button><h2>
+
+
         <p id="instance"></p>
         <script type="text/javascript">
     function myFunction() {
             document.getElementById("instance").innerHTML = "Zone selected";
         }
     </script>
-    
+
     <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
@@ -93,7 +98,7 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    zone: $("#instance").val(),
+                    instance: $("#instance").val(),
                    
                 },
                 success: function (json) {
