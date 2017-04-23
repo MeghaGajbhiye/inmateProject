@@ -125,6 +125,31 @@ def aws_inst(request):
     return render_to_response("aws_inst.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")
 
+def aws_delete(request):
+    print "aws_delete **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+
+        instance = request.POST.get("instance")
+
+        print instance
+
+    return render_to_response("aws_delete.html", {}, context_instance = RequestContext(request))
+
+def aws_create(request):
+    print "aws_create **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+        instance = request.POST.get("instance")
+        print instance
+    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
+
 
 def aws_get_keys():
     aws = AWS.objects.raw("Select * from aws where user_id = 4")

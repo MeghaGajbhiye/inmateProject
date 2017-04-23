@@ -1,4 +1,4 @@
-{% include Dash_2_Final.html %}
+
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -59,16 +59,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand"></a>
+          <a class="navbar-brand">AUTUM <img
+                            src={% static "img/autum.jpg" %} style="width:25px;height:25px"/></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="#">Settings
-            <ul class="dropdown-menu">
-                    <li><a href="/acknowledgement">Support</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="/home">Logout</a></li>
+              <li><a href="/acknowledgement">Support</a></li>
+              <li><a href="/home">Logout</a></li>
                    
                 </ul></a></li>
            
@@ -82,13 +80,22 @@
 
         
     </div>
-<h2> Instance  <input type="text" name="Instance name" value="chrome_app.apk"></h2>
-<h4> Status: Active </h4>
-        <button type="button"> Create </button>
-        <button type="button"> Retrieve </button>
-        <button type="button"> Delete </button>
-         <button type="button"> Update </button>
-       
+      <td><h2> Monitor cloud </h2></td>
+               <td><h2><form action="/aws">
+    <input type="submit" value="AWS" />
+               </form></h2></td>
+             <td><h2><form action="/azure">
+    <input type="submit" value="AZURE" />
+        </form></h2></td>
+                <td><h2><form action="/ibm">
+    <input type="submit" value="IBM" />
+                </form></h2></td>
+                <td><h2><form action="/rackspace">
+    <input type="submit" value="RACKSPACE" />
+                </form></h2></td>
+            <td><h2><form action="/google">
+    <input type="submit" value="GOOGLE" />
+            </form></h2></td>
    {% include 'javascript.html' %}
   </body>
 </html>

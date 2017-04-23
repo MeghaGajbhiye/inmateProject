@@ -1,4 +1,3 @@
-{%include CP_final.html %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +34,7 @@
 
     <!-- Custom styles for this template -->
     <link href="carousel.css" rel="stylesheet">
+       <meta charset="UTF-8">
   </head>
    <title>{% block head_title %}{% endblock %} </title>
  <div class="navbar-wrapper">
@@ -64,9 +64,6 @@
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Dashboard</a></li>
                 <li><a href="#">Rackspace Registered</a></li>
-                
-                  
-                </li>
               </ul>
             </div>
           </div>
@@ -75,60 +72,124 @@
       </div>
     </div>
 
+       <script>
+    function myfun() {
+        if (document.getElementById("1") == null) {
+            var x = document.getElementById("instance").value;
+            for (i = 0; i < x; i++) {
+                var div = document.createElement("input");
+                div.type = "text";
+                div.name = i;
+                div.id = i;
+                var label = document.createElement("label");
+                label.innerHTML = "Instance" + i;
+                var linebreak = document.createElement("br");
+                document.body.appendChild(label);
+                document.body.appendChild(div);
+                document.body.appendChild(linebreak);
+            }
+        }
+    }
+    function reset() {
+        location.reload();
+    }
+</script>
+Instance:
+<input type="text" name="text" id="instance">
+<input type="submit" onclick="myfun()" value="submit">
+<input type="reset" value="reset" onclick="reset()">
 
-   
-      </div>
-  </div>
-</div>
- </div>
-       <h1> Enter your Information </h1>
-       <td><h2> Enter your Zone 
-      <select id="selectzone">
-         <option>Select a zone</option>
-      </select>
-      <td><h2> Enter your region
-        <select id="selectregion">
+<p id="instance"></p>
+
+    <td><h2> Enter your RAM</h2>
+        <select id="selectram">
           <option>Select a region</option>
         </select>
-        <td><h2> Enter an image
+    <td><h2> Enter an image</h2>
           <select id="selectimage">
             <option>Select an image</option>
           </select>
-    <script type="text/javascript">
+
+  <script>
 var myobject = {
-  ValueA : 'es-us-1',
-  ValueB : 'es-us-2',
-  ValueC : 'es-us-3',
-  ValueD : 'es-us-4',
+    Value1: 'RAM512',
+  Vakue2: 'RAM1024',
+  Value3: 'RAM2048',
+  Value4: 'RAM4096',
+  Value5: 'RAM8192',
+  Value6: 'RAM15360',
+  Value7: 'RAM30720',
+  Value8: 'RAM15360',
+  Value9: 'RAM30720',
+  Value10: 'RAM3840',
+  Value11: 'RAM61440',
+  Value12: 'RAM7680',
+  Value13: 'RAM1024',
+  Value14: 'RAM2048',
+  Value15: 'RAM4096',
+  Value16: 'RAM8192',
+  Value17: 'RAM122880',
+  Value18: 'RAM15360',
+  Value19: 'RAM30720',
+  Value20: 'RAM61440',
+  Value21: 'RAM92160',
+  Value22: 'RAM122880',
+  Value23: 'RAM15360',
+  Value24: 'RAM245760',
+  Value25: 'RAM30720',
+  Value26: 'RAM61440',
+  Value27: 'RAM32768',
+  Value28: 'RAM131072',
+  Value29: 'RAM65536',
+  Value30: 'RAM32768',
+  Value31: 'RAM131072',
+  Value32: 'RAM131072',
+  Value33: 'RAM524288',
+  Value34: 'RAM1024',
+  Value35: 'RAM2048',
+  Value36: 'RAM4096',
+  Value37: 'RAM8192',
+  Value38: 'RAM122880',
+  Value39: 'RAM15360',
+  Value40: 'RAM30720',
+  Value41: 'RAM61440',
+  Value42: 'RAM92160',
 };
 
-var select = document.getElementById("selectzone");
+var select = document.getElementById("selectram");
 for(index in myobject) {
   select.options[select.options.length] = new Option(myobject[index], index);
-}
-
-</script>
-  <script>
-var myobject1 = {
-  ValueA : 'Virginia_US',
-  ValueB : 'Dallas_US',
-  ValueC : 'Hongkong_China',
-  ValueD : 'Europe_UK',
-};
-
-var select = document.getElementById("selectregion");
-for(index in myobject1) {
-  select.options[select.options.length] = new Option(myobject1[index], index);
 }
 
 </script>
 
   <script type="text/javascript">
 var myobject2 = {
-  ValueA : 'image-1',
-  ValueB : 'image-2',
-  ValueC : 'image-3',
-  ValueD : 'image-4',
+    ValueA: 'Ubuntu 17.04 LTS (Zesty Zapus) (PVHVM)',
+ValueB: 'Ubuntu 16.04 LTS (Xenial Xerus) (PVHVM)',
+ValueC: 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Standard',
+ValueD: 'Windows Server 2012 R2 + SQL Server 2016 Web',
+ValueE: 'Windows Server 2012 R2 + SQL Server 2016 Standard',
+ValueF: 'Windows Server 2012 + SQL Server 2012 SP1 Web',
+ValueG: 'Windows Server 2012 R2 + SQL Server 2014 Web',
+ValueH: 'Windows Server 2012 + SQL Server 2012 SP1 Standard',
+ValueI: 'Windows Server 2012 R2 + SQL Server 2014 Standard',
+ValueJ: 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Web',
+ValueK: 'Windows Server 2012',
+ValueL: 'Windows Server 2012 R2',
+ValueM: 'Windows Server 2008 R2 SP1',
+ValueN: 'FreeBSD 10 (PVHVM)',
+ValueO: 'FreeBSD 11 (PVHVM)',
+ValueP: 'Fedora 25 (PVHVM)',
+ValueQ: 'CentOS 7 (PVHVM)',
+ValueR: 'CentOS 6 (PV)',
+ValueS: 'Ubuntu 12.04 LTS',
+ValueT: 'Ubuntu 12.04 LTS',
+ValueU: 'Debian 7 (Wheezy) (PVHVM)',
+ValueV: 'Debian 8 (Jessie) (PVHVM)',
+ValueW: 'Debian Testing (Stretch) (PVHVM)',
+ValueX: 'Scientific Linux 6 (PVHVM)',
+ValueY: 'Fedora 24 (PVHVM)',
 };
 
 var select = document.getElementById("selectimage");
@@ -138,26 +199,42 @@ for(index in myobject2) {
 
 </script>
 <button onclick="myFunction()">Update</button>
-<p id="zone"></p>
-<p id="region"></p>
-<p id="image"></p>
+<p id="instance"></p>
+<p id="selectram"></p>
+<p id="selectimage"></p>
 <script>
 function myFunction() {
-  document.getElementById("zone").innerHTML = "Zone selected";
-  document.getElementById("region").innerHTML = "Region selected";
-  document.getElementById("image").innerHTML = "Image selected";
+  document.getElementById("instance").innerHTML = "Number of instances selected";
+  document.getElementById("selectram").innerHTML = "Ram selected";
+  document.getElementById("selectimage").innerHTML = "Image selected";
 }
 </script>
 
+<script type="text/javascript">
+        function myFunction() {
+            $('.ajaxProgress').show();
+            $.ajax({
+                type: "POST",
+                url: "/rackspace_home/",
+                async: true,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    instance: $("#instance").val(),
+                    selectram: $("#selectram").val(),
+                    selectimage: $("#selectimage").val(),
 
-      <!-- FOOTER -->
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </footer>
+                },
+                success: function (json) {
+                    $('#output').html(json.message);
+                    $('.ajaxProgress').hide();
+                },
+                fail: function () {
+                    alert("failed")
+                }
+            });
+        }
 
-    </div><!-- /.container -->
-
+    </script>
 
     
   {%include javascript.html %}
