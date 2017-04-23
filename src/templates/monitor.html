@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,8 +11,7 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Dashboard Template for Bootstrap</title>
-
-       <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+      <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
@@ -63,17 +63,17 @@
           </form>
         </div>
       </div>
-    </nav>
 
+    </nav>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="monitor.html">Monitor</a></li>
-            <li><a href="instance.html">Instances</a></li>
-            <li><a href="CP_final.html">Cloud Service Providers</a></li>
-            <li><a href="migration.html">Migrate</a></li>
+            <li><a href="/monitor">Monitor</a></li>
+            <li><a href="/instance">Instances</a></li>
+            <li><a href="/cpfinal">Cloud Service Providers</a></li>
+            <li><a href="/migration">Migrate</a></li>
           </ul>
          
         </div>
@@ -117,7 +117,27 @@
          </div>
         
     </div>
+            <td><h2> Monitor cloud </h2></td>
+               <td><h2><form action="/aws_home">
+    <input type="submit" value="AWS" />
+               </form></h2></td>
+             <td><h2><form action="/azure_home">
+    <input type="submit" value="AZURE" />
+        </form></h2></td>
+                <td><h2><form action="/ibm_home">
+    <input type="submit" value="IBM" />
+                </form></h2></td>
+                <td><h2><form action="/rackspace_home">
+    <input type="submit" value="RACKSPACE" />
+                </form></h2></td>
+            <td><h2><form action="/google_home">
+    <input type="submit" value="GOOGLE" />
+            </form></h2></td>
 
     {% include 'javascript.html' %}
+        </div>
+        </div>
+    </div>
+
   </body>
 </html>

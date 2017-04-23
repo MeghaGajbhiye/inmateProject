@@ -2,13 +2,13 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
-from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal
-from aws.views import aws, aws_home
+from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
+from aws.views import aws, aws_home, aws_inst, aws_delete, aws_create
 from azure.views import azure
 from ibm.views import ibm
 
-from google.views import google
-from rackspace.views import rackspace
+from google.views import google, google_home
+from rackspace.views import rackspace, rackspace_home
 
 
 urlpatterns = [
@@ -18,21 +18,25 @@ urlpatterns = [
     url(r'^dashboard/$',dashboard,name='dashboard'),
     # url(r'^cp_final/$', cp_final, name='cp_final'),
     url(r'^cpfinal/$', cpfinal , name='cpfinal'),
+
     url(r'^aws/$',aws,name='aws'),
-    url(r'^AWS_Zone/$',aws_home,name='aws'),
+    url(r'^aws_home/$',aws_home,name='aws_home'),
+    url(r'^aws_inst/$', aws_inst, name='aws_inst'),
+    url(r'^aws_delete/$', aws_delete, name='aws_delete'),
+    url(r'^aws_create/$', aws_create, name='aws_create'),
     url(r'^azure/$',azure,name='azure'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^ibm/$',ibm,name='ibm'),
     # url(r'^IBM_Home/$',ibm_home,name='ibm'),
     url(r'^google/$',google,name='google'),
-    # url(r'^Google_Home/$',google_home,name='google'),
+    url(r'^google_home/$',google_home,name='google_home'),
     url(r'^rackspace/$',rackspace,name='rackspace'),
-    # url(r'^Rackspace_Home/$',rackspace_home,name='rackspace'),
+    url(r'^rackspace_home/$',rackspace_home,name='rackspace_home'),
     url(r'^support/$',support,name='support'),
     url(r'^contact/$',contact,name='contact'),
     url(r'^migration/$',migration,name='migration'),
     url(r'^monitor/$',monitor,name='monitor'),
-
+    url(r'^instance/$', instance, name='instance'),
 
     # url(r'^blog/', include('blog.urls')),
 

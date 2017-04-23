@@ -49,15 +49,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">AUTUM <img
-                    src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+            <a class="navbar-brand" href="#">AUTUM <img src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/Dash_2_final/">Dashboard</a></li>
-                <li><a href="/contact">Contact</a></li>
+
+                <li><a href="/dashboard/">Dashboard</a></li>
+                <li><a href="/support">Contact</a></li>
                 <li>
-                    <button type="button">Logout</button>
+                <li><a href="/home.html" > Logout </a></li>
 
 
             </ul>
@@ -76,8 +76,8 @@
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
                 <li><a href="/monitor">Monitor</a></li>
-                <li><a href="/instance">Instances</a></li>
-                <li><a href="/cpfinal">Cloud Service Providers</a></li>
+                <li><a href="/instance">Manage Instances</a></li>
+                <li><a href="/cpfinal">Register for Cloud</a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
@@ -94,15 +94,15 @@
 
                         function drawChart() {
                             var data = google.visualization.arrayToDataTable([
-                                ['Performance', 'Service providers'],
-                                ['AWS', 3.2],
-                                ['Azure', 2.7],
-                                ['Google', 1.8],
-                                ['IBM', 2.3],
-                                ['Rackspace', 3.7]]);
+                                ['Price', 'Service providers'],
+                                ['AWS', 300],
+                                ['Azure', 250],
+                                ['Google', 320],
+                                ['IBM', 180],
+                                ['Rackspace', 265]]);
 
                             var options = {
-                                title: 'Performance chart',
+                                title: 'Price chart',
                                 curveType: 'function',
                                 legend: {position: 'bottom'}
                             };
@@ -115,7 +115,7 @@
                     <div id="curve_chart" style="width: 500px; height: 300px">
 
                     </div>
-                    <h3>Performance Graph</h3>
+                    <h3>Price Graph</h3>
                 </div>
             </div>
             {% include 'javascript.html' %}

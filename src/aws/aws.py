@@ -2,7 +2,7 @@ import types
 import boto3
 from datetime import datetime, timedelta
 
-class AWS:
+class AWS_Configuration:
 
     def __init__(self, ak, sk):
         self.access_key = ak
