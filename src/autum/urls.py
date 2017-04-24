@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 from aws.views import aws, aws_home, aws_inst, aws_delete, aws_create
-from azure.views import azure
+from azure.views import azure, azure_inst
 from ibm.views import ibm
 
 from google.views import google, google_home
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^aws_create/$', aws_create, name='aws_create'),
     url(r'^azure/$',azure,name='azure'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
+    url(r'^azure_inst/$',azure_inst,name='azure_inst'),
     url(r'^ibm/$',ibm,name='ibm'),
     # url(r'^IBM_Home/$',ibm_home,name='ibm'),
     url(r'^google/$',google,name='google'),

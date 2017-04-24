@@ -36,7 +36,7 @@
                 <li><a href="/dashboard/">Dashboard</a></li>
                 <li><a href="/support">Contact</a></li>
                 <li>
-                <li><a href="#" > Logout </a></li>
+                <li><a href="/home" > Logout </a></li>
 
 
             </ul>
@@ -106,13 +106,13 @@
                         legend: {position: 'bottom'}
                     };
 
-                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
                     chart.draw(data, options);
                 }
             </script>
 
-            <div id="curve_chart1" style="width: 300px; height: 250px"></div>
+            <div id="curve_chart" style="width: 300px; height: 250px"></div>
 
             <h4>Price Graph</h4>
 
@@ -156,7 +156,7 @@
         $('.ajaxProgress').show();
         $.ajax({
             type: "POST",
-            url: "/aws_inst/",
+            url: "/azure_inst/",
             async: true,
             data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',

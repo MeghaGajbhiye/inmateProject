@@ -47,15 +47,17 @@
     <div class="container">
 
       <form class="form-signin">
-        <h1> AUTUM <img src = "fall-leaf-cutout.gif" style="width:25px;height:25px"> </img> </h1>
+        <h1> AUTUM <img src ={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img> </h1>
         <h2 class="form-signin-heading">Microsoft Cloud Provider Sign Up</h2>{% csrf_token %}
         {{form.as_p}}
         
-        <!--label for="inputPassword" class="sr-only">Enrollment #</label>
-        <input type="enrollment#" id="inputEnrollment#" class="form-control" placeholder="Enrollment #" required>
-        <label for="inputPassword" class="sr-only">API Key</label>
-        <input type="api_key" id="inputApiKey" class="form-control" placeholder="API_Key" required-->
+        <label for="inputPassword" class="sr-only">Subscription ID</label>
 
+        <label for="inputPassword" class="sr-only">Client ID</label>
+
+         <label for="inputPassword" class="sr-only">Secret Key</label>
+
+           <label for="inputPassword" class="sr-only">Tenant ID</label>
         
         <div class="checkbox">
           <label>
@@ -68,7 +70,6 @@
     </div> <!-- /container -->
 
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+   {%  include 'javascript.html' %}
   </body>
 </html>
