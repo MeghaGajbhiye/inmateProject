@@ -34,8 +34,8 @@ def aws(request):
     return render_to_response("AWS_CP.html", context, context_instance = RequestContext(request))
 
 
-def aws_home(request):
-    print "aws_home **************************"
+def aws_create(request):
+    print "aws_create **************************"
     # if request.method == 'POST':
     # user_id = request.user.id
     # print user_id
@@ -83,12 +83,12 @@ def aws_home(request):
         #     response_data['result'] = 'nup!'
         #     response_data['message'] = "not correct"
 
-    return render_to_response("aws_home.html", {}, context_instance = RequestContext(request))
+    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")
 
 
-def aws_inst(request):
-    print "aws_inst **************************"
+def aws_home(request):
+    print "aws_home **************************"
     # if request.method == 'POST':
     # user_id = request.user.id
     # print user_id
@@ -122,7 +122,7 @@ def aws_inst(request):
 
         print selectOP
 
-    return render_to_response("aws_inst.html", {}, context_instance = RequestContext(request))
+    return render_to_response("aws_home.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")
 
 def aws_delete(request):
@@ -139,16 +139,7 @@ def aws_delete(request):
 
     return render_to_response("aws_delete.html", {}, context_instance = RequestContext(request))
 
-def aws_create(request):
-    print "aws_create **************************"
 
-    if request.is_ajax():
-        print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        instance = request.POST.get("instance")
-        print instance
-    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
 
 
 def aws_get_keys():

@@ -12,8 +12,8 @@ def azure(request):
 	return render_to_response("Azure_CP.html", context, context_instance = RequestContext(request))
 
 
-def azure_inst(request):
-	print "azure_inst **************************"
+def azure_home(request):
+	print "azure_home **************************"
 
 	if request.is_ajax():
 		print "it's ajax"
@@ -24,4 +24,4 @@ def azure_inst(request):
 
 		print selectOP
 
-	return render_to_response("azure_inst.html", {}, context_instance=RequestContext(request))
+	return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))

@@ -43,63 +43,153 @@
                 </div>
             </div>
         </nav>
-<script>
-    function myfun() {
-        if (document.getElementById("1") == null) {
-            var x = document.getElementById("instance").value;
-            for (i = 0; i < x; i++) {
-                var div = document.createElement("input");
-                div.type = "text";
-                div.name = i;
-                div.id = i;
-                var label = document.createElement("label");
-                label.innerHTML = "Instance" + i;
-                var linebreak = document.createElement("br");
-                var dynamic = document.getElementById("dynamic");
-                dynamic.appendChild(label);
-                dynamic.appendChild(div);
-                dynamic.appendChild(linebreak);
-            }
+
+
+        <h1> Enter your Information </h1>
+        <td>
+            <h2> Enter your Zone
+                <select id="selectzone">
+                    <option>Select a zone</option>
+                </select>
+            </h2>
+        </td>
+        <td>
+            <h2> Enter your region
+                <select id="selectregion">
+                    <option>Select a region</option>
+                </select>
+            </h2>
+        </td>
+        <td>
+            <h2> Enter an image
+                <select id="selectimage">
+                    <option>Select an image</option>
+                </select>
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Minimum Count
+                <input type="text" size="4" value="Min_Count" id="min">
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Maximum Count
+                <input type="text" size="4" value="Max_Count" id="max">
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Key Name
+                <input type="text" size="12" value="Key_Name" id="key_name">
+            </h2>
+        </td>
+        <td>
+            <h2> Enter Instance Type
+                <input type="text" size="12" value="Inst_Type" id="inst_type">
+            </h2>
+        </td>
+        <td>
+            <h2> Monitoring Status
+                <select id="check_status">
+                    <option>check status</option>
+                </select>
+            </h2>
+        </td>
+        <button onclick="myFunction()">Update</button>
+    </div>
+    <p id="zone"></p>
+    <p id="region"></p>
+    <p id="image"></p>
+    <p id="min_count"></p>
+    <p id="max_count"></p>
+    <p id="key_name"></p>
+    <p id="inst_type"></p>
+    <p id="check_status"></p>
+    <script type="text/javascript">
+        var myobject = {
+            ValueA: 'es-us-1',
+            ValueB: 'es-us-2',
+            ValueC: 'es-us-3',
+            ValueD: 'es-us-4',
+        };
+
+        var select = document.getElementById("selectzone");
+        for (index in myobject) {
+            select.options[select.options.length] = new Option(myobject[index], myobject[index]);
         }
-    }
-    function reset() {
-        location.reload();
-    }
-</script>
-<td>
-    <h3> Enter Number of Instances:</h3>
-        <input type="text" name="text" id="instance">
-    </td>
-    <td>
-<input type="submit" onclick="myfun()" value="submit">
-<input type="reset" value="reset" onclick="reset()">
-    </td>
-    <td>
-        <div id="dynamic"></div>
-    </td>
 
-       
-    <td><h2><button onclick="myFunction()">Create</button><h2>
+    </script>
+    <script>
+        var myobject1 = {
+            ValueA: 'Virginia_US',
+            ValueB: 'Dallas_US',
+            ValueC: 'Hongkong_China',
+            ValueD: 'Europe_UK',
+        };
 
-
-        <p id="instance"></p>
-        <script type="text/javascript">
-    function myFunction() {
-            document.getElementById("instance").innerHTML = "Zone selected";
+        var select = document.getElementById("selectregion");
+        for (index in myobject1) {
+            select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);
         }
+
     </script>
 
+    <script type="text/javascript">
+        var myobject2 = {
+            ValueA: 'image-1',
+            ValueB: 'image-2',
+            ValueC: 'image-3',
+            ValueD: 'image-4',
+        };
+
+        var select = document.getElementById("selectimage");
+        for (index in myobject2) {
+            select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
+        }
+
+    </script>
+
+
+    <script type="text/javascript">
+        var myobject3;
+        myobject3 = {
+            ValueA: 'Enable',
+            ValueB: 'Disable',
+        };
+        var select = document.getElementById("check_status");
+        for (index in myobject3) {
+            select.options[select.options.length] = new Option(myobject3[index], myobject3[index]);
+        }
+
+    </script>
+    <script>
+        function myFunction() {
+            document.getElementById("zone").innerHTML = "Zone selected";
+            document.getElementById("region").innerHTML = "Region selected";
+            document.getElementById("image").innerHTML = "Image selected";
+            document.getElementById("min_count").innerHTML = "min_count selected";
+            document.getElementById("max_count").innerHTML = "max_count selected";
+            document.getElementById("key_name").innerHTML = "key_name selected";
+            document.getElementById("inst_type").innerHTML = "inst_type selected";
+            document.getElementById("check_status").innerHTML = "monitoring selected";
+        }
+    </script>
     <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/aws_delete/",
+                url: "/aws_home/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    instance: $("#instance").val(),
-                   
+                    zone: $("#selectzone").val(),
+                    region: $("#selectregion").val(),
+                    image: $("#selectimage").val(),
+                    min: $("#min").val(),
+                    max: $("#max").val(),
+                    key_name: $("#key_name").val(),
+                    inst_type: $("#inst_type").val(),
+                    check_status: $("#check_status").val(),
                 },
                 success: function (json) {
                     $('#output').html(json.message);
