@@ -122,54 +122,39 @@
         <td>
             <h2> Enter your option</h2>
                 <select id="selectOP">
-                    <option>Select operation</option>
+                    <option value = "/aws_create">create</option>
+                    <option value = "/aws_delete">delete</option>
+                    <option value = "/aws_update">Update</option>
+                    <option value = "/aws_view">View</option>
+
                 </select>
                 <p id="selectOP"></p>
 
                 <button onclick="myFunction()">Submit</button>
 
 
-
-<script type="text/javascript">
-    var myobject = {
-        ValueA: 'create',
-        ValueB: 'update',
-        ValueC: 'delete',
-        ValueD: 'retrieve',
-    };
-
-    var select = document.getElementById("selectOP");
-    for (index in myobject) {
-        select.options[select.options.length] = new Option(myobject[index], myobject[index]);
-    }
-
-</script>
 <script type="text/javascript">
     function myFunction() {
-        document.getElementById("select").innerHTML = "Crud Operation selected";
+{#        $('.ajaxProgress').show();#}
+{#        $.ajax({#}
+{#            type: "POST",#}
+{#            url: "/aws_home/",#}
+{#            async: true,#}
+{#            data: {#}
+{#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
+{#                selectOP: $("#selectOP").val(),#}
+{#            },#}
+{#            success: function (json) {#}
+{#                $('#output').html(json.message);#}
+{#                $('.ajaxProgress').hide();#}
+{#            },#}
+{#            fail: function () {#}
+{#                alert("failed");#}
+{#            }#}
+{#        });#}
 
-    }
-
-</script>
-<script type="text/javascript">
-    function myFunction() {
-        $('.ajaxProgress').show();
-        $.ajax({
-            type: "POST",
-            url: "/aws_inst/",
-            async: true,
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                selectOP: $("#selectOP").val(),
-            },
-            success: function (json) {
-                $('#output').html(json.message);
-                $('.ajaxProgress').hide();
-            },
-            fail: function () {
-                alert("failed");
-            }
-        });
+        var value = $("#selectOP").val()
+        location.href = value;
     }
 </script>
 {% include 'javascript.html' %}

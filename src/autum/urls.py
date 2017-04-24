@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
-from aws.views import aws, aws_create, aws_home, aws_delete, aws_create
+from aws.views import aws, aws_create, aws_home, aws_delete
 from azure.views import azure
 from ibm.views import ibm
 from google.views import google, google_home

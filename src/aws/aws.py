@@ -1,7 +1,7 @@
 import types
 import boto3
 from datetime import datetime, timedelta
-
+ 
 class AWS:
 
     def __init__(self, ak, sk):
@@ -27,16 +27,19 @@ class AWS:
             list_instanceid.append(instance_id)
         return list_instanceid
 
-
     def launch_instance(self, min_count, max_count, key_name, instance_type,monitoring):
-        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
-                           aws_secret_access_key=self.get_secret_key())
-        image_id = self.describe_images()
-        # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
-        #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
-        ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
-                                    InstanceType=instance_type, Monitoring={'Enabled': monitoring})
-        # print (ec2_out)
+
+        print "I am inside launch instance"
+        # ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+        #                    aws_secret_access_key=self.get_secret_key())
+        # image_id = self.describe_images()
+        # # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
+        # #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
+        #
+        #
+        # ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
+        #                             InstanceType=instance_type, Monitoring={'Enabled': monitoring})
+        # # print (ec2_out)
 
     # http://boto3.readthedocs.io/en/latest/reference/services/ec2.html#EC2.Client.run_instances
 
