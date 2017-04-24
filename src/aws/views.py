@@ -55,14 +55,12 @@ def aws(request):
                    }
 
              return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
- 
-
-
 
 
 def aws_create(request): 
        
     #If the request method is Get, show the create form to the user   
+
     if request.method == 'POST':
          
         return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
@@ -96,14 +94,12 @@ def aws_create(request):
         
  
         #return HttpResponse(json.dumps({'message': "Success"}), content_type="application/json")
-        
-       
 
     return render_to_response("aws_create.html", {}, context_instance = RequestContext(request)) 
 
-
 def aws_home(request):
     print "aws_inst **************************"
+
     # if request.method == 'POST':
     # user_id = request.user.id
     # print user_id

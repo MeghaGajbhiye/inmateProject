@@ -106,13 +106,16 @@
                         legend: {position: 'bottom'}
                     };
 
-                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
 
                     chart.draw(data, options);
                 }
             </script>
 
-            <div id="curve_chart" style="width: 300px; height: 250px"></div>
+
+            <div id="curve_chart1" style="width: 300px; height: 250px"></div>
 
             <h4>Price Graph</h4>
 
@@ -127,11 +130,13 @@
                     <option value = "/aws_update">Update</option>
                     <option value = "/aws_view">View</option>
 
+
+
+                    <option>Select operation</option>
                 </select>
                 <p id="selectOP"></p>
 
                 <button onclick="myFunction()">Submit</button>
-
 
 <script type="text/javascript">
     function myFunction() {
