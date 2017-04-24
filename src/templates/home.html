@@ -10,7 +10,6 @@ Welcome |
 {% block row %}
   {% if request.user.is_authenticated %}
   <h1> You are logged in </h1>
-  {{ request.user.is_staff}}
   {{ queryset }}
   {% else %}
   <div class="row">

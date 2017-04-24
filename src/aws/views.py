@@ -9,32 +9,52 @@ import json
 import boto
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-from aws import AWS_Configuration
+from django.db import connection
 
-def aws_credentials(request):
+def aws(request):
+    # aws_object = AWS()
+    sum = 0
     user_id = request.user.id
+    query = ("Select * from aws where user_id = %d" % (user_id))
+    aws_result = AWS.objects.raw(query)
+    # cursor = connection.cursor()
+    # cursor.execute(query)
+    # result = cursor.fetchall()
+    for val in aws_result:
+        sum = sum+1
     form = AWSForm(request.POST or None)
-    print request.POST
     if form.is_valid():
-        aws_key = form.cleaned_data['aws_access_key']
-        aws_secret = form.cleaned_data['aws_secret_key']
-        instance = AWS(user_id = user_id, aws_access_key=aws_key, aws_secret_key=aws_secret)
-        # instance = form.save(commit=False)
-        # instance.user_id = user_id
-        # user = User.objects.only('id').get(id = user_id)
-        # print user
-        # aws_instance = AWS.objects.create(user_id=user)
-        # aws_instance.save()
-        instance.save()
-        print aws_key, aws_secret
+        if sum == 0:
+            if request.method == 'GET':
+                print "I am in get"
+                context = {
+                    "form": form,
+                }
 
-    context = {
-        "form": form,
-    }
-    return render_to_response("AWS_CP.html", context, context_instance = RequestContext(request))
+                return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
+
+            if request.method == 'POST':
+                print "it is post"
+                print request.POST
+                aws_key = form.cleaned_data['aws_access_key']
+                aws_secret = form.cleaned_data['aws_secret_key']
+                instance = AWS(user_id = user_id, aws_access_key=aws_key, aws_secret_key=aws_secret)
+                # instance = form.save(commit=False)
+                # instance.user_id = user_id
+                # user = User.objects.only('id').get(id = user_id)
+                # print user
+                # aws_instance = AWS.objects.create(user_id=user)
+                # aws_instance.save()
+                instance.save()
+                print aws_key, aws_secret
+                aws_create(request)
+                return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "I am here in aws_home when entries are there"
+        return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
 
 
-def aws_home(request):
+def aws_create(request):
     print "aws_home **************************"
     # if request.method == 'POST':
     # user_id = request.user.id
@@ -65,7 +85,6 @@ def aws_home(request):
     if request.method == 'POST':
         print "I am here inside post"
 
-
         zone = request.POST.get("zone")
         region = request.POST.get("region")
         image = request.POST.get("image")
@@ -84,12 +103,11 @@ def aws_home(request):
         #     response_data['result'] = 'nup!'
         #     response_data['message'] = "not correct"
 
-
-    return render_to_response("aws_home.html", {}, context_instance = RequestContext(request))
+    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")
 
 
-def aws_inst(request):
+def aws_home(request):
     print "aws_inst **************************"
     # if request.method == 'POST':
     # user_id = request.user.id
@@ -124,7 +142,7 @@ def aws_inst(request):
 
         print selectOP
 
-    return render_to_response("aws_inst.html", {}, context_instance = RequestContext(request))
+    return render_to_response("aws_home.html", {}, context_instance = RequestContext(request))
     # return HttpResponse(json.dumps(response_data),content_type="application/json")
 
 def aws_delete(request):
@@ -140,17 +158,6 @@ def aws_delete(request):
         print instance
 
     return render_to_response("aws_delete.html", {}, context_instance = RequestContext(request))
-
-def aws_create(request):
-    print "aws_create **************************"
-
-    if request.is_ajax():
-        print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        instance = request.POST.get("instance")
-        print instance
-    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
 
 
 def aws_get_keys():

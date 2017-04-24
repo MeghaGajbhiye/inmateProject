@@ -3,10 +3,9 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
-from aws.views import aws, aws_home, aws_inst, aws_delete, aws_create
+from aws.views import aws, aws_create, aws_home, aws_delete, aws_create
 from azure.views import azure
 from ibm.views import ibm
-
 from google.views import google, google_home
 from rackspace.views import rackspace, rackspace_home
 
@@ -20,8 +19,8 @@ urlpatterns = [
     url(r'^cpfinal/$', cpfinal , name='cpfinal'),
 
     url(r'^aws/$',aws,name='aws'),
-    url(r'^aws_home/$',aws_home,name='aws_home'),
-    url(r'^aws_inst/$', aws_inst, name='aws_inst'),
+    url(r'^aws_home/$', aws_home, name='aws_home'),
+    # url(r'^aws_inst/$', aws_home, name='aws_inst'),
     url(r'^aws_delete/$', aws_delete, name='aws_delete'),
     url(r'^aws_create/$', aws_create, name='aws_create'),
     url(r'^azure/$',azure,name='azure'),
