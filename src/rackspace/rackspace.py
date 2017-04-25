@@ -44,7 +44,7 @@ class Rackspace:
             print "inside not none"
             for servers in server:
                 server_name.append(servers.name)
-                # server_ip.append(servers.data)
+                server_ip.append(servers.accessIPv4)
             print server_ip
             return server_name
         else:
@@ -95,7 +95,49 @@ class Rackspace:
         chk = cm.create_check (ent, label="sample_check", check_type="remote.http", details={"url": host}, period=900,
                                timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"], target_hostname=host)
 
-        print chk
+        # print pyrax.list_metrics(chk)
+
+    def instance_reboot(self, server_name, boot_type):
+        servers = self.cs.servers.list ()
+        # Find the first 'ACTIVE' server
+        try:
+            active = [server for server in servers
+                      if server.status == "ACTIVE" and server.name == server_name][0]
+        except IndexError:
+            print("There are no active servers in your account.")
+            print("Please create one before running this script.")
+        # Display server info
+        print("Server Name:", active.name)
+        print("Server ID:", active.id)
+        print("Server Status:", active.status)
+        print()
+
+        # servers = cs.servers.list()
+        # # Find the first 'ACTIVE' server
+        # try:
+        #     active = [server for server in servers
+        #             if server.status == "ACTIVE"][0]
+        # except IndexError:
+        #     print("There are no active servers in your account.")
+        #     print("Please create one before running this script.")
+        #     sys.exit()
+        # # Display server info
+        # print("Server Name:", active.name)
+        # print("Server ID:", active.id)
+        # print("Server Status:", active.status)
+        # print()
+
+        print("A 'soft' reboot attempts a graceful shutdown and restart of your server.")
+        print("A 'hard' reboot power cycles your server.")
+        answer = boot_type
+        reboot_type = {"s": "soft", "h": "hard"}[answer]
+        active.reboot (reboot_type)
+        # Reload the server
+        after_reboot = self.cs.servers.get (active.id)
+        print()
+        print("After reboot command")
+        print("Server Status =", after_reboot.status)
+
 
 if __name__ =="__main__":
     r = Rackspace("achal126", "9ac58056270b4447a6154662d160ef9f")
