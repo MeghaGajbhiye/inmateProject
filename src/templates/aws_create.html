@@ -19,6 +19,7 @@
 <title>{% block head_title %}{% endblock %}</title>
 </head>
 
+
 <body>
 <div class="navbar-wrapper">
     <div class="container">
@@ -69,12 +70,18 @@
         </td>
         <td>
             <h2> Enter Minimum Count
-                <input type="text" size="4" value="Min_Count" id="min">
+                <input type="text" size="4" value="0" id="min">
+{#                <input type="text" size="4" value="Min_Count" id="min">#}
+
             </h2>
         </td>
         <td>
             <h2> Enter Maximum Count
-                <input type="text" size="4" value="Max_Count" id="max">
+
+                <input type="text" size="4" value="0" id="max">
+{#=======#}
+{#                <input type="text" size="4" value="Max_Count" id="max">#}
+{#>>>>>>> Seizon-sha-master#}
             </h2>
         </td>
         <td>
@@ -104,7 +111,12 @@
     <p id="key_name"></p>
     <p id="inst_type"></p>
     <p id="check_status"></p>
+
     <script type="text/javascript">
+
+{#=======#}
+{#    <script type="text/javascript">#}
+{#>>>>>>> Seizon-sha-master#}
         var myobject = {
             ValueA: 'es-us-1',
             ValueB: 'es-us-2',
@@ -115,10 +127,9 @@
         var select = document.getElementById("selectzone");
         for (index in myobject) {
             select.options[select.options.length] = new Option(myobject[index], myobject[index]);
-        }
 
-    </script>
-    <script>
+        } 
+    
         var myobject1 = {
             ValueA: 'Virginia_US',
             ValueB: 'Dallas_US',
@@ -131,10 +142,7 @@
             select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);
         }
 
-    </script>
-
-    <script type="text/javascript">
-        var myobject2 = {
+          var myobject2 = {
             ValueA: 'image-1',
             ValueB: 'image-2',
             ValueC: 'image-3',
@@ -146,10 +154,44 @@
             select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
         }
 
-    </script>
 
-
-    <script type="text/javascript">
+{#=======#}
+{#        }#}
+{##}
+{#    </script>#}
+{#    <script>#}
+{#        var myobject1 = {#}
+{#            ValueA: 'Virginia_US',#}
+{#            ValueB: 'Dallas_US',#}
+{#            ValueC: 'Hongkong_China',#}
+{#            ValueD: 'Europe_UK',#}
+{#        };#}
+{##}
+{#        var select = document.getElementById("selectregion");#}
+{#        for (index in myobject1) {#}
+{#            select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);#}
+{#        }#}
+{##}
+{#    </script>#}
+{##}
+{#    <script type="text/javascript">#}
+{#        var myobject2 = {#}
+{#            ValueA: 'image-1',#}
+{#            ValueB: 'image-2',#}
+{#            ValueC: 'image-3',#}
+{#            ValueD: 'image-4',#}
+{#        };#}
+{##}
+{#        var select = document.getElementById("selectimage");#}
+{#        for (index in myobject2) {#}
+{#            select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);#}
+{#        }#}
+{##}
+{#    </script>#}
+{##}
+{##}
+{#    <script type="text/javascript">#}
+{#>>>>>>> Seizon-sha-master#}
         var myobject3;
         myobject3 = {
             ValueA: 'Enable',
@@ -160,25 +202,29 @@
             select.options[select.options.length] = new Option(myobject3[index], myobject3[index]);
         }
 
-    </script>
-    <script>
-        function myFunction() {
-            document.getElementById("zone").innerHTML = "Zone selected";
-            document.getElementById("region").innerHTML = "Region selected";
-            document.getElementById("image").innerHTML = "Image selected";
-            document.getElementById("min_count").innerHTML = "min_count selected";
-            document.getElementById("max_count").innerHTML = "max_count selected";
-            document.getElementById("key_name").innerHTML = "key_name selected";
-            document.getElementById("inst_type").innerHTML = "inst_type selected";
-            document.getElementById("check_status").innerHTML = "monitoring selected";
-        }
-    </script>
-    <script type="text/javascript">
+
+
+{#=======#}
+{#    </script>#}
+{#    <script>#}
+{#        function myFunction() {#}
+{#            document.getElementById("zone").innerHTML = "Zone selected";#}
+{#            document.getElementById("region").innerHTML = "Region selected";#}
+{#            document.getElementById("image").innerHTML = "Image selected";#}
+{#            document.getElementById("min_count").innerHTML = "min_count selected";#}
+{#            document.getElementById("max_count").innerHTML = "max_count selected";#}
+{#            document.getElementById("key_name").innerHTML = "key_name selected";#}
+{#            document.getElementById("inst_type").innerHTML = "inst_type selected";#}
+{#            document.getElementById("check_status").innerHTML = "monitoring selected";#}
+{#        }#}
+{#    </script>#}
+{#    <script type="text/javascript">#}
+{#>>>>>>> Seizon-sha-master#}
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/aws_home/",
+                url: "/aws_create/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
@@ -191,7 +237,8 @@
                     inst_type: $("#inst_type").val(),
                     check_status: $("#check_status").val(),
                 },
-                success: function (json) {
+                success: function (json) { 
+                    console.log(json.message);
                     $('#output').html(json.message);
                     $('.ajaxProgress').hide();
                 },
@@ -202,7 +249,6 @@
         }
 
     </script>
-
 
 </div>
 </div>
