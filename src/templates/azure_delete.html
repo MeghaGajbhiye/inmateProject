@@ -83,88 +83,27 @@
   </div>
 </div>
  </div>
+    
     <td>
-            <h2> Enter Choice
-                <input type="text" size="4" value="Choice" id="choice">
-            </h2>
-        </td>
-    <td>
-            <h2> Enter Username
-                <input type="text" size="4" value="Username" id="user">
-            </h2>
-        </td>
-    <td>
-            <h2> Enter Password
-                <input type="text" size="4" value="Password" id="password">
-            </h2>
-        </td>
-        <td>
             <h2> Enter Resource Group Name
                 <input type="text" size="4" value="Res_Grp_Name" id="res_grp_name">
             </h2>
         </td>
-        <td>
+    <td>
             <h2> Enter VM Name
-                <input type="text" size="4" value="VM_Name" id="vm_name">
+                <input type="text" size="4" value="Vm_Name" id="vm_name">
             </h2>
         </td>
-        <td>
-            <h2> Enter Location
-                <input type="text" size="4" value="Location" id="loc">
-            </h2>
-        </td>
-        <td>
-            <h2> Enter V_Net Name
-                <input type="text" size="4" value="Vnet_name" id="vnet_name">
-            </h2>
-        </td>
-        <td>
-            <h2> Enter Sub_Net Name
-                <input type="text" size="4" value="Snet_name" id="snet_name">
-            </h2>
-        </td>
-        <td>
-            <h2> Enter Nic_Name
-                <input type="text" size="4" value="Nic_Name" id="nic_name">
-            </h2>
-        </td>
-        <td>
-            <h2> Enter Ip Configuration Name
-                <input type="text" size="4" value="Ip_config" id="ip_con">
-            </h2>
-        </td>
-        <td>
-            <h2> Enter Disk Name
-                <input type="text" size="4" value="Disk_Name" id="d_name">
-            </h2>
-        </td>
-    
-<button onclick="myFunction()">Create</button>
-<p id="choice"></p>
-<p id="user"></p>
-<p id="password"></p>
+        
+<button onclick="myFunction()">Delete</button>
+<p id="size"></p>
 <p id="res_grp_name"></p>
 <p id="vm_name"></p>
-<p id="loc"></p>
-<p id="vnet_name"></p>
-<p id="snet_name"></p>
-<p id="nic_name"></p>
-<p id="ip_con"></p>
-<p id="d_name"></p>
 
 <script>
 function myFunction() {
-  document.getElementById("choice").innerHTML = "Choice selected";
-  document.getElementById("user").innerHTML = "Username selected";
-  document.getElementById("password").innerHTML = "Password selected";
   document.getElementById("res_grp_name").innerHTML = "Resource Group Name selected";
   document.getElementById("vm_name").innerHTML = "VM Name selected";
-  document.getElementById("loc").innerHTML = "Location selected";
-  document.getElementById("vnet_name").innerHTML = "VNet Name selected";
-  document.getElementById("snet_name").innerHTML = "SNet Name selected";
-  document.getElementById("nic_name").innerHTML = "Nic Name selected";
-  document.getElementById("ip_con").innerHTML = "IP Configuration selected";
-  document.getElementById("d_name").innerHTML = "Disk Name selected";
   
 }
 </script>
@@ -173,22 +112,13 @@ function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/azure_create/",
+                url: "/azure_delete/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    choice: $("#choice").val(),
-                    user: $("#user").val(),
-                    pass: $("#password").val(),
                     res_grp_name: $("#res_grp_name").val(),
                     vm_name: $("#vm_name").val(),
-                    loc: $("#loc").val(),
-                    vnet_name: $("#vnet_name").val(),
-                    snet_name: $("#snet_name").val(),
-                    nic_name: $("#nic_name").val(),
-                    ip_con: $("#ip_con").val(),
-                    d_name: $("#d_name").val(),
-                
+                    
                 },
                 success: function (json) {
                     $('#output').html(json.message);

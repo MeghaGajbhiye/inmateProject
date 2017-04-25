@@ -106,14 +106,11 @@
                         legend: {position: 'bottom'}
                     };
 
-
                     var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
-
 
                     chart.draw(data, options);
                 }
             </script>
-
 
             <div id="curve_chart1" style="width: 300px; height: 250px"></div>
 
@@ -125,12 +122,6 @@
         <td>
             <h2> Enter your option</h2>
                 <select id="selectOP">
-                    <option value = "/aws_create">create</option>
-                    <option value = "/aws_delete">delete</option>
-                    <option value = "/aws_update">Update</option>
-                    <option value = "/aws_view">View</option>
-
-
 
                     <option>Select operation</option>
                 </select>
@@ -138,6 +129,29 @@
 
                 <button onclick="myFunction()">Submit</button>
 
+
+
+<script type="text/javascript">
+    var myobject = {
+        ValueA: 'create',
+        ValueB: 'update',
+        ValueC: 'delete',
+        ValueD: 'retrieve',
+    };
+
+    var select = document.getElementById("selectOP");
+    for (index in myobject) {
+        select.options[select.options.length] = new Option(myobject[index], myobject[index]);
+    }
+
+</script>
+<script type="text/javascript">
+    function myFunction() {
+        document.getElementById("select").innerHTML = "Crud Operation selected";
+
+    }
+
+</script>
 <script type="text/javascript">
     function myFunction() {
 {#        $('.ajaxProgress').show();#}
