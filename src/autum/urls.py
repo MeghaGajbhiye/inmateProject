@@ -3,14 +3,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
-
 from aws.views import aws, aws_home, aws_delete, aws_create
-from azure.views import azure, azure_home
+from azure.views import azure, azure_home, azure_create, azure_update, azure_delete, azure_start, azure_stop, azure_reboot
 from ibm.views import ibm
 
 from google.views import google, google_create, google_retrieve, google_delete, google_home
-from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete
-
+from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot
 
 
 urlpatterns = [
@@ -27,7 +25,13 @@ urlpatterns = [
     url(r'^azure/$',azure,name='azure'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^azure_home/$',azure_home,name='azure_home'),
-    url(r'^ibm/$',ibm,name='ibm'),
+    url(r'^azure_start/$',azure_start,name='azure_start'),
+    url(r'^azure_stop/$',azure_stop,name='azure_stop'),
+    url(r'^azure_reboot/$',azure_reboot,name='azure_reboot'),
+    url(r'^azure_create/$',azure_create,name='azure_create'),
+    url(r'^azure_update/$',azure_update,name='azure_update'),
+    url(r'^azure_delete/$', azure_delete, name='azure_delete'),
+    # url(r'^ibm/$',ibm,name='ibm'),
     # url(r'^IBM_Home/$',ibm_home,name='ibm'),
     url(r'^google/$',google,name='google'),
     url(r'^google_home/$',google_home,name='google_home'),
@@ -35,6 +39,7 @@ urlpatterns = [
     url(r'^google_retrieve/$', google_retrieve, name='google_retrieve'),
     url(r'^google_delete/$', google_delete, name='google_delete'),
     url(r'^rackspace/$',rackspace,name='rackspace'),
+    url(r'^rackspace_reboot/$',rackspace_reboot,name='rackspace_reboot'),
     url(r'^rackspace_create/$',rackspace_create,name='rackspace_create'),
     url(r'^rackspace_home/$', rackspace_home, name='rackspace_home'),
     url(r'^rackspace_update/$',rackspace_update,name='rackspace_update'),
