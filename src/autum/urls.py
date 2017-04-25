@@ -3,14 +3,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
-
 from aws.views import aws, aws_home, aws_delete, aws_create
-from azure.views import azure, azure_home
+from azure.views import azure, azure_home, azure_create, azure_update, azure_delete
 from ibm.views import ibm
 
 from google.views import google, google_create, google_retrieve, google_delete, google_home
 from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete
-
 
 
 urlpatterns = [
@@ -27,7 +25,10 @@ urlpatterns = [
     url(r'^azure/$',azure,name='azure'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^azure_home/$',azure_home,name='azure_home'),
-    url(r'^ibm/$',ibm,name='ibm'),
+    url(r'^azure_create/$',azure_create,name='azure_create'),
+    url(r'^azure_update/$',azure_update,name='azure_update'),
+    url(r'^azure_delete/$', azure_delete, name='azure_delete'),
+    # url(r'^ibm/$',ibm,name='ibm'),
     # url(r'^IBM_Home/$',ibm_home,name='ibm'),
     url(r'^google/$',google,name='google'),
     url(r'^google_home/$',google_home,name='google_home'),

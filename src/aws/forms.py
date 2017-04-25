@@ -1,11 +1,11 @@
 from django import forms
-from models import AWSModel
+from models import AWS
 import boto
 
 
 class AWSForm(forms.ModelForm):
     class Meta:
-        model = AWSModel
+        model = AWS
         fields = ['aws_access_key', 'aws_secret_key']
 
         def clean_aws_key(self):
