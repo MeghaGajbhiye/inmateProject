@@ -1,0 +1,131 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Carousel Template for Bootstrap</title>
+
+    <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
+</head>
+<title>{% block head_title %}{% endblock %}</title>
+</head>
+
+<body>
+<div class="navbar-wrapper">
+    <div class="container">
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">AUTUM <img
+                            src={% static "img/autum.jpg" %} style="width:25px;height:25px"/> </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="#">AWS Registered</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+<script>
+    function myfun() {
+        if (document.getElementById("1") == null) {
+            var x = document.getElementById("instance").value;
+            for (i = 0; i < x; i++) {
+                var div = document.createElement("input");
+                div.type = "text";
+                div.name = i;
+                div.id = i;
+                var label = document.createElement("label");
+                label.innerHTML = "Instance" + i;
+                var linebreak = document.createElement("br");
+                var dynamic = document.getElementById("dynamic");
+                dynamic.appendChild(label);
+                dynamic.appendChild(div);
+                dynamic.appendChild(linebreak);
+            }
+        }
+    }
+    function reset() {
+        location.reload();
+    }
+</script>
+<td>
+    <h3> Enter Number of Instances:</h3>
+        <input type="text" name="text" id="instance">
+    </td>
+    <td>
+<input type="submit" onclick="myfun()" value="submit">
+<input type="reset" value="reset" onclick="reset()">
+    </td>
+    <td>
+        <div id="dynamic"></div>
+    </td>
+
+       
+    <td><h2><button onclick="myFunction()">Start</button><h2>
+
+
+        <p id="instance"></p>
+        <script type="text/javascript">
+    function myFunction() {
+            document.getElementById("instance").innerHTML = "Zone selected";
+        }
+    </script>
+
+    <script type="text/javascript">
+        function myFunction() {
+            $('.ajaxProgress').show();
+            $.ajax({
+                type: "POST",
+                url: "/azure_start/",
+                async: true,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    instance: $("#instance").val(),
+                   
+                },
+                success: function (json) {
+                    $('#output').html(json.message);
+                    $('.ajaxProgress').hide();
+                },
+                fail: function () {
+                    alert("failed")
+                }
+            });
+        }
+
+    </script>
+
+
+</div>
+</div>
+
+{% block row %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+
+{% include 'javascript.html' %}
+</body>
+</html>
+
