@@ -85,3 +85,45 @@ def azure_delete(request):
 		print res_grp_name, vm_name
 
 	return render_to_response("azure_create.html", {}, context_instance=RequestContext(request))
+
+def azure_stop(request):
+    print "azure_stop **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+
+        instance = request.POST.get("instance")
+
+        print instance
+
+    return render_to_response("azure_stop.html", {}, context_instance = RequestContext(request))
+
+def azure_start(request):
+    print "azure start **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+
+        instance = request.POST.get("instance")
+
+        print instance
+
+    return render_to_response("azure_start.html", {}, context_instance = RequestContext(request))
+
+def azure_reboot(request):
+    print "azure_reboot **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+
+        instance = request.POST.get("instance")
+
+        print instance
+
+    return render_to_response("azure_reboot.html", {}, context_instance = RequestContext(request))
