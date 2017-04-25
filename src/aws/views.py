@@ -61,7 +61,7 @@ def aws_create(request):
        
     #If the request method is Get, show the create form to the user   
 
-    if request.method == 'POST':
+    if request.method == 'GET':
          
         return render_to_response("aws_create.html", {}, context_instance = RequestContext(request))
 
@@ -69,33 +69,35 @@ def aws_create(request):
     #create an instance, therefore fetching the POST values from the aws_create.html and calling the create_instance
     #function in order to create a new instance        
     else:
-        zone = request.POST.get("zone")
-        region = request.POST.get("region")
-        image = request.POST.get("image")
-        min = request.POST.get("min")
-        max = request.POST.get("max")
-        key_name = request.POST.get("key_name")
-        inst_type = request.POST.get("inst_type")
-        check_status = request.POST.get("check_status")
+        if request.method == 'POST':
+            zone = request.POST.get("zone")
+            region = request.POST.get("region")
+            image = request.POST.get("image")
+            min = request.POST.get("min")
+            max = request.POST.get("max")
+            key_name = request.POST.get("key_name")
+            inst_type = request.POST.get("inst_type")
+            check_status = request.POST.get("check_status")
 
-        print zone, region, image, min, max, key_name, inst_type, check_status
+            print zone, region, image, min, max, key_name, inst_type, check_status
 
-        #Get AWS Access key and secret key from database
-        usr_id = request.user.id
-        aws_result = AWSModel.objects.get(user_id=usr_id)
-        access_key = aws_result.aws_access_key
-        secret_key = aws_result.aws_secret_key
+            # Get AWS Access key and secret key from database
+            usr_id = request.user.id
+            aws_result = AWSModel.objects.get(user_id=usr_id)
+            access_key = aws_result.aws_access_key
+            secret_key = aws_result.aws_secret_key
+            print access_key, secret_key
 
-        #Instantiate AWS class aws->aws.py and calling the launch_instance function
-        aws = AWS(access_key,secret_key)
+            # Instantiate AWS class aws->aws.py and calling the launch_instance function
+            aws = AWS(access_key,secret_key)
 
-        aws.launch_instance(min,max,key_name,inst_type,check_status)
+            aws.launch_instance(min,max,key_name,inst_type,check_status)
 
-        
- 
-        #return HttpResponse(json.dumps({'message': "Success"}), content_type="application/json")
 
-    return render_to_response("aws_create.html", {}, context_instance = RequestContext(request)) 
+
+            #return HttpResponse(json.dumps({'message': "Success"}), content_type="application/json")
+
+            return render_to_response("aws_home.html", {}, context_instance = RequestContext(request))
 
 def aws_home(request):
     print "aws_inst **************************"
@@ -141,19 +143,36 @@ def aws_delete(request):
 
     if request.is_ajax():
         print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
+        if request.method == 'POST':
+            print "I am here inside post"
 
-        instance = request.POST.get("instance")
-
-        print instance
+            instance = request.POST.get("instance")
+            # print instance
+            # Get AWS Access key and secret key from database
+            # Instantiate AWS class aws->aws.py and calling the launch_instance function
+            keys = aws_get_keys(request)
+            # print keys
+            access_key = keys["access_key"]
+            secret_key = keys["secret_key"]
+            aws = AWS (access_key, secret_key)
+            aws.terminate_instance(instance)
 
     return render_to_response("aws_delete.html", {}, context_instance = RequestContext(request))
 
 
-def aws_get_keys():
-    aws = AWS.objects.raw("Select * from aws where user_id = 4")
-    for val in aws:
-        access_key = val.aws_access_key
-        secret_key = val.aws_secret_key
-        print access_key, secret_key
+def aws_get_keys(request):
+    # print "I am inside aws_get_keys"
+    # aws = AWS.objects.raw("Select * from aws where user_id = 4")
+    # for val in aws:
+    #     access_key = val.aws_access_key
+    #     secret_key = val.aws_secret_key
+    #     print access_key, secret_key
+
+    usr_id = request.user.id
+    aws_result = AWSModel.objects.get (user_id=usr_id)
+    access_key = aws_result.aws_access_key
+    secret_key = aws_result.aws_secret_key
+    print access_key, secret_key
+    keys = {"access_key": access_key,"secret_key": secret_key}
+    return keys
+

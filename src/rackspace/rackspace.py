@@ -1,6 +1,5 @@
 import pyrax
 
-
 class Rackspace:
 
     def __init__(self, userName, apiKey):
@@ -40,10 +39,13 @@ class Rackspace:
         print "inside view instances"
         server = self.cs.servers.list()
         server_name = []
+        server_ip = []
         if server is not None:
             print "inside not none"
             for servers in server:
                 server_name.append(servers.name)
+                # server_ip.append(servers.data)
+            print server_ip
             return server_name
         else:
             print "none"
@@ -69,11 +71,37 @@ class Rackspace:
                 server.delete()
                 return 1
         return 0
+
+    def monitoring(self, ipAddress, host):
+        cm = pyrax.cloud_monitoring
+
+        # To list the available check types
+        chk_types = cm.list_check_types ()
+        for checktypes in chk_types:
+            print checktypes
+
+        # lists all the monitoring zones
+        monitoring_zones = cm.list_monitoring_zones ()
+        for MonitoringZones in monitoring_zones:
+            print MonitoringZones
+
+        # to Crete email notifications.
+        email = cm.create_notification ("email", label="my_email_notification",
+                                        details={"address": "megha.gajbhiye@sjsu.edu"})
+        # To create entity. We need input of the sevres ip address and host. host can be http://ipaddress.
+
+        ent = cm.create_entity (name="sample_entity123", ip_addresses={"example": ipAddress},
+                                metadata={"description": "Just a test entity"})
+        chk = cm.create_check (ent, label="sample_check", check_type="remote.http", details={"url": host}, period=900,
+                               timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"], target_hostname=host)
+
+        print chk
+
 if __name__ =="__main__":
-    r = Rackspace("", "")
-    # sn = r.view_instances()
+    r = Rackspace("achal126", "9ac58056270b4447a6154662d160ef9f")
+    sn = r.view_instances()
     # print sn
     # r.launch_instance("test2", "Debian 7 (Wheezy) (PVHVM)", 1024)
-    print r.update_instance("test2", 2048)
+    # print r.update_instance("test2", 2048)
     # result = r.delete_instance("test1")
     # print result
