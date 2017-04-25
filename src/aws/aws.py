@@ -23,7 +23,7 @@ class AWS:
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
-            print (instance_id)
+            print str(instance_id)
             list_instanceid.append(instance_id)
         return list_instanceid
 
@@ -99,5 +99,7 @@ class AWS:
 
 
 if __name__ == "__main__":
-    aws = AWS("", "")
+    # aws_access_key_id = '', aws_secret_access_key = 'ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy'
+    aws = AWS("AKIAJRQMACIVSVREZ6OA", "ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy")
+    aws.describe_instances()
 
