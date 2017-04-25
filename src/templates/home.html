@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
-
-
+{% load static %}
 <!-- Three columns of text below the carousel -->
 
 {% block head_title %}
@@ -12,7 +10,6 @@ Welcome |
 {% block row %}
   {% if request.user.is_authenticated %}
   <h1> You are logged in </h1>
-  {{ request.user.is_staff}}
   {{ queryset }}
   {% else %}
   <div class="row">
@@ -22,13 +19,13 @@ Welcome |
       
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-      <img class="img-sqaure" src={%static "img/uni.png"%} alt="Generic placeholder image" width="240" height="200">
+      <img class="img-sqaure" src={%static "img/cloud2.jpg"%} alt="Generic placeholder image" width="240" height="200">
       <h2>Continous Delivery</h2>
 
 
     </div><!-- /.col-lg-4 -->
     <div class="col-lg-4">
-      <img class="img-circle" src={%static "img/cont.jpg"%} alt="Generic placeholder image" width="240" height="200">
+      <img class="img-circle" src={%static "img/cloud3.jpg"%} alt="Generic placeholder image" width="240" height="200">
 
       <h2>Universal Self Service</h2>
 
