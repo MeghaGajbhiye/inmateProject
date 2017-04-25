@@ -23,23 +23,24 @@ class AWS:
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
-            print (instance_id)
+            print str(instance_id)
             list_instanceid.append(instance_id)
         return list_instanceid
 
     def launch_instance(self, min_count, max_count, key_name, instance_type,monitoring):
+        print self.access_key, self.secret_key, min_count, max_count,key_name,instance_type,monitoring
 
         print "I am inside launch instance"
-        # ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
-        #                    aws_secret_access_key=self.get_secret_key())
-        # image_id = self.describe_images()
-        # # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
-        # #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
-        #
-        #
-        # ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
-        #                             InstanceType=instance_type, Monitoring={'Enabled': monitoring})
-        # # print (ec2_out)
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key())
+        image_id = self.describe_images()
+        # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
+        #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
+
+
+        ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
+                                    InstanceType=instance_type, Monitoring={'Enabled': monitoring})
+        # print (ec2_out)
 
     # http://boto3.readthedocs.io/en/latest/reference/services/ec2.html#EC2.Client.run_instances
 
@@ -68,6 +69,7 @@ class AWS:
             # print (image_id, image_os)
 
     def terminate_instance(self, instance_id):
+
         ec2 = boto3.client ('ec2', aws_access_key_id=self.get_acccess_key(),
                             aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.terminate_instances (InstanceIds=[instance_id])
@@ -97,5 +99,7 @@ class AWS:
 
 
 if __name__ == "__main__":
-    aws = AWS("", "")
+    # aws_access_key_id = '', aws_secret_access_key = 'ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy'
+    aws = AWS("AKIAJRQMACIVSVREZ6OA", "ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy")
+    aws.describe_instances()
 
