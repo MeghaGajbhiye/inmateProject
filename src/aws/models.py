@@ -12,7 +12,7 @@ import boto
 #     return data
 
 
-class AWSModel(models.Model):
+class AWS(models.Model):
     #
     # user = User.objects.get(id = user_id)
     # print ("User is %r" %(User))
@@ -24,7 +24,6 @@ class AWSModel(models.Model):
     class Meta:
         # managed = True
         db_table = 'aws'
- 
 
 
 # class AWSHome(models.Model):

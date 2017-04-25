@@ -79,7 +79,7 @@
     </td>
 
        
-    <td><h2><button onclick="myFunction()">Create</button><h2>
+    <td><h2><button onclick="myFunction()">Reboot</button><h2>
 
 
         <p id="instance"></p>
@@ -94,7 +94,7 @@
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/aws_delete/",
+                url: "/rackspace_reboot/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
