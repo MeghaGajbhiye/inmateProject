@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from .forms import AzureForm
-<<<<<<< HEAD
+
 from models import Azure
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -10,9 +10,9 @@ import json
 import boto
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-=======
+
 from .models import Azure
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
+
 
 
 # Create your views here.
@@ -25,13 +25,13 @@ from .models import Azure
 
 
 def azure(request):
-<<<<<<< HEAD
+
     form = AzureForm()
     context = {
         "form": form,
     }
     return render_to_response("Azure_CP.html", context, context_instance=RequestContext(request))
-=======
+
     # Get the user Id of logged in user
     usr_id = request.user.id
 
@@ -71,12 +71,12 @@ def azure(request):
             }
 
             return render_to_response ("AWS_CP.html", context, context_instance=RequestContext (request))
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
+
 
 
 def azure_home(request):
     print "azure_home **************************"
-<<<<<<< HEAD
+
 
     if request.is_ajax():
         print "it's ajax"
@@ -89,7 +89,7 @@ def azure_home(request):
 
     	return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
 	elif request.method == 'GET':
-		return render_to_response("azure_create.html", {})
+		return render_to_response("azure_home.html", {})
 
 
 def azure_create(request):
@@ -204,16 +204,5 @@ def azure_reboot(request):
 
 	elif request.method == 'GET':
 		return render_to_response("azure_reboot.html", {})
-=======
 
-    if request.is_ajax ():
-        print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-
-        selectOP = request.POST.get ("selectOP")
-
-        print selectOP
-
-    return render_to_response ("Azure_Home.html", {}, context_instance=RequestContext (request))
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
+  
