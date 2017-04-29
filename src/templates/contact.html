@@ -1,6 +1,4 @@
-
 {% load staticfiles %}
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
   <head>
@@ -39,13 +37,6 @@
   </head>
 <title>{% block head_title %}{% endblock %}
 </title>
- <div class="navbar-wrapper">
-      <div class="container">
-        {# verbatim #}
-{#        {% include carousel.css %}#}
-      </div>
- </div>
-        {
   <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -61,10 +52,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="Dash_2.html">Dashboard</a></li>
-            <li><a href="">Settings</a></li>
-            <ul class="dropdown-menu">
-                    <li><a href="support.html">Support</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/support">Support</a></li>
+
                    
                 </ul>
            
@@ -81,11 +71,10 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Monitor</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Instances</a></li>
-            <li><a href="#">Cloud Service Providers</a></li>
-            <li><a href="#">Migrate</a></li>
+            <li><a href="/monitor">Monitor</a></li>
+            <li><a href="/instance"> Manage Instances</a></li>
+            <li><a href="/cp_final">Register for Cloud</a></li>
+            <li><a href="/migrate">Migrate</a></li>
           </ul>
          
         </div>

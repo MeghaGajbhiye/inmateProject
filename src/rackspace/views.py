@@ -41,6 +41,9 @@ def rackspace_home(request):
         selectOP = request.POST.get("selectOP")
         print selectOP
         return render_to_response("rackspace_home.html", {}, context_instance = RequestContext(request))
+    elif request.method == 'GET':
+        return render_to_response("rackspace_home.html", {})
+
 
 def rackspace_update(request):
     print "rackspace_update **************************"
@@ -67,3 +70,13 @@ def rackspace_delete(request):
         return render_to_response("rackspace_delete.html", {}, context_instance = RequestContext(request))
     elif request.method == 'GET':
         return render_to_response("rackspace_delete.html", {})
+
+def rackspace_reboot(request):
+    print "rackspace_reboot **************************"
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+        instance = request.POST.get("instance")
+        print instance
+        return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
