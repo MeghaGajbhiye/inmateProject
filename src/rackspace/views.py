@@ -80,3 +80,5 @@ def rackspace_reboot(request):
         instance = request.POST.get("instance")
         print instance
         return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
+    elif request.method == 'GET':
+        return render_to_response("rackspace_reboot.html", {})

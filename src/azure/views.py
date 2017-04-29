@@ -13,8 +13,6 @@ from django.http import HttpResponse
 
 from .models import Azure
 
-
-
 # Create your views here.
 # def azure(request):
 # 	form = AzureForm()
@@ -77,7 +75,6 @@ def azure(request):
 def azure_home(request):
     print "azure_home **************************"
 
-
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
@@ -89,7 +86,7 @@ def azure_home(request):
 
     	return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
 	elif request.method == 'GET':
-		return render_to_response("azure_home.html", {})
+		return render_to_response("azure_create.html", {})
 
 
 def azure_create(request):
@@ -161,11 +158,8 @@ def azure_stop(request):
         print "I am here inside post"
 
         instance = request.POST.get("instance")
-
         print instance
-
     	return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
-
 	elif request.method == 'GET':
 		return render_to_response("azure_stop.html", {})
 
@@ -204,5 +198,3 @@ def azure_reboot(request):
 
 	elif request.method == 'GET':
 		return render_to_response("azure_reboot.html", {})
-
-  

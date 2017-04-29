@@ -1,5 +1,5 @@
 import types
-import boto
+import boto3
 from datetime import datetime, timedelta
  
 class AWS:
@@ -18,7 +18,7 @@ class AWS:
 
     def describe_instances(self):
         print ('Inside describe method')
-        ec2 = boto.client('ec2')
+        ec2 = boto3.client('ec2')
         ec2_out = ec2.describe_instances()
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
@@ -31,7 +31,7 @@ class AWS:
         print self.access_key, self.secret_key, min_count, max_count,key_name,instance_type,monitoring
 
         print "I am inside launch instance"
-        ec2 = boto.client('ec2', aws_access_key_id=self.get_acccess_key(),
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
         image_id = self.describe_images()
         # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
@@ -45,21 +45,21 @@ class AWS:
     # http://boto3.readthedocs.io/en/latest/reference/services/ec2.html#EC2.Client.run_instances
 
     def describe_security_groups(self):
-        ec2 = boto.client('ec2', aws_access_key_id=self.get_acccess_key(),
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_security_groups()
         for security_group in ec2_out['SecurityGroups']:
             return (security_group['GroupName'])
 
     def describe_subnets(self):
-        ec2 = boto.client('ec2', aws_access_key_id=self.get_acccess_key(),
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_subnets()
         for subnet in ec2_out['Subnets']:
             return (subnet['SubnetId'])
 
     def describe_images(self):
-        ec2 = boto.client('ec2', aws_access_key_id=self.get_acccess_key(),
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.describe_images()
         for image in ec2_out['Images']:
@@ -70,7 +70,7 @@ class AWS:
 
     def terminate_instance(self, instance_id):
 
-        ec2 = boto.client ('ec2', aws_access_key_id=self.get_acccess_key(),
+        ec2 = boto3.client ('ec2', aws_access_key_id=self.get_acccess_key(),
                             aws_secret_access_key=self.get_secret_key())
         ec2_out = ec2.terminate_instances (InstanceIds=[instance_id])
         print (ec2_out)
