@@ -6,7 +6,7 @@ from models import Rackspace
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 import json
-import boto
+import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 
@@ -64,9 +64,8 @@ def rackspace_delete(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        selectram = request.POST.get("selectram")
         server = request.POST.get("server")
-        print selectram, server
+        print server
         return render_to_response("rackspace_delete.html", {}, context_instance = RequestContext(request))
     elif request.method == 'GET':
         return render_to_response("rackspace_delete.html", {})
@@ -77,8 +76,23 @@ def rackspace_reboot(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        instance = request.POST.get("instance")
-        print instance
+        server = request.POST.get("server")
+        boot = request.POST.get("boot")
+        print server, boot
         return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
         return render_to_response("rackspace_reboot.html", {})
+
+def rackspace_view(request):
+    print "rackspace_view **************************"
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+        server_name = request.POST.get("server_name")
+        server_ip = request.POST.get("server_ip")
+        print server_name, server_ip
+        return render_to_response("rackspace_view.html", {}, context_instance = RequestContext(request))
+    elif request.method == 'GET':
+        return render_to_response("rackspace_view.html", {})
+

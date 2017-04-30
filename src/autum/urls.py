@@ -5,11 +5,11 @@ from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 
 from aws.views import aws, aws_home, aws_delete, aws_create
-from azure.views import azure, azure_home, azure_create, azure_update, azure_delete, azure_start, azure_stop, azure_reboot
+from azure.views import azure, azure_home, azure_create, azure_update, azure_delete, azure_start, azure_stop, azure_reboot, azure_view
 from ibm.views import ibm, ibm_home
 
 from google.views import google, google_create, google_retrieve, google_delete, google_home
-from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot
+from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot, rackspace_view
 
 
 
@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^azure_create/$',azure_create,name='azure_create'),
     url(r'^azure_update/$',azure_update,name='azure_update'),
     url(r'^azure_delete/$', azure_delete, name='azure_delete'),
+    url(r'^azure_view/$', azure_view, name='azure_view'),
     url(r'^ibm/$',ibm,name='ibm'),
     url(r'^IBM_Home/$',ibm_home,name='ibm_home'),
     url(r'^google/$',google,name='google'),
@@ -46,6 +47,7 @@ urlpatterns = [
     url(r'^rackspace_home/$', rackspace_home, name='rackspace_home'),
     url(r'^rackspace_update/$',rackspace_update,name='rackspace_update'),
     url(r'^rackspace_delete/$',rackspace_delete,name='rackspace_delete'),
+    url(r'^rackspace_view/$', rackspace_view, name='rackspace_view'),
     url(r'^support/$',support,name='support'),
     url(r'^contact/$',contact,name='contact'),
     url(r'^migration/$',migration,name='migration'),

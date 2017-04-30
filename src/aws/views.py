@@ -6,7 +6,7 @@ from .forms import AWSForm, AWSHomeForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 import json
-import boto
+import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.db import connection
@@ -70,16 +70,13 @@ def aws_create(request):
     #function in order to create a new instance        
     else:
         if request.method == 'POST':
-            zone = request.POST.get("zone")
-            region = request.POST.get("region")
-            image = request.POST.get("image")
             min = request.POST.get("min")
             max = request.POST.get("max")
             key_name = request.POST.get("key_name")
             inst_type = request.POST.get("inst_type")
             check_status = request.POST.get("check_status")
 
-            print zone, region, image, min, max, key_name, inst_type, check_status
+            print min, max, key_name, inst_type, check_status
 
             # Get AWS Access key and secret key from database
             usr_id = request.user.id
@@ -146,7 +143,7 @@ def aws_delete(request):
         if request.method == 'POST':
             print "I am here inside post"
 
-            instance = request.POST.get("instance")
+            instance_id = request.POST.get("instance_id")
             # print instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
@@ -155,7 +152,7 @@ def aws_delete(request):
             access_key = keys["access_key"]
             secret_key = keys["secret_key"]
             aws = AWS (access_key, secret_key)
-            aws.terminate_instance(instance)
+            aws.terminate_instance(instance_id)
 
     return render_to_response("aws_delete.html", {}, context_instance = RequestContext(request))
 

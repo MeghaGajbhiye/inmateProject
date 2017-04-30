@@ -81,7 +81,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Azure_Home</h1>
             <div class="row placeholders">
-             <div class="col-xs-6 col-sm-3 placeholder">
+                <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/azure.jpg" %} width= 100 height=100></img>
                     <h1> AZURE HOME</h1>
                 </div>
@@ -152,78 +152,53 @@
                 </div>
             </div>
 
-            <table>
-                <tr>
-                    <td>
-                        <h2> Enter your option</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <select id="selectOP" style="width: 200px">
+            <td>
+                <h2> Enter your option</h2>
+                <select id="selectOP">
+                    <option value="/azure_create">create</option>
+                    <option value="/azure_delete">delete</option>
+                    <option value="/azure_update">Update</option>
+                    <option value="/azure_view">View</option>
+                    <option value="/azure_stop">Stop</option>
+                    <option value="/azure_start">Start</option>
+                    <option value="/azure_reboot">Reboot</option>
 
-                    <option>Select operation</option>
                 </select>
-                <p id="selectOP"></p> </td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
-                    </td>
-                </tr>
-            </table>
+            </td>
+            <p id="selectOP"></p>
 
+            <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
+            <script type="text/javascript">
+                function myFunction() {
+                    document.getElementById("select").innerHTML = "Crud Operation selected";
 
-                <script type="text/javascript">
-                    var myobject = {
-                        ValueA: 'create',
-                        ValueB: 'update',
-                        ValueC: 'delete',
-                        ValueD: 'retrieve',
-                        ValueE: 'start',
-                        ValueF: 'stop',
-                        ValueG: 'reboot',
+                }
 
-                    };
+            </script>
+            <script type="text/javascript">
+                function myFunction() {
+                    {#        $('.ajaxProgress').show();#}
+                    {#        $.ajax({#}
+                    {#            type: "POST",#}
+                    {#            url: "/aws_home/",#}
+                    {#            async: true,#}
+                    {#            data: {#}
+                    {#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
+                    {#                selectOP: $("#selectOP").val(),#}
+                    {#            },#}
+                    {#            success: function (json) {#}
+                    {#                $('#output').html(json.message);#}
+                    {#                $('.ajaxProgress').hide();#}
+                    {#            },#}
+                    {#            fail: function () {#}
+                    {#                alert("failed");#}
+                    {#            }#}
+                    {#        });#}
 
-                    var select = document.getElementById("selectOP");
-                    for (index in myobject) {
-                        select.options[select.options.length] = new Option(myobject[index], myobject[index]);
-                    }
-
-                </script>
-                <script type="text/javascript">
-                    function myFunction() {
-                        document.getElementById("select").innerHTML = "Crud Operation selected";
-
-                    }
-
-                </script>
-                <script type="text/javascript">
-                    function myFunction() {
-                        {#        $('.ajaxProgress').show();#}
-                        {#        $.ajax({#}
-                        {#            type: "POST",#}
-                        {#            url: "/aws_home/",#}
-                        {#            async: true,#}
-                        {#            data: {#}
-                        {#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
-                        {#                selectOP: $("#selectOP").val(),#}
-                        {#            },#}
-                        {#            success: function (json) {#}
-                        {#                $('#output').html(json.message);#}
-                        {#                $('.ajaxProgress').hide();#}
-                        {#            },#}
-                        {#            fail: function () {#}
-                        {#                alert("failed");#}
-                        {#            }#}
-                        {#        });#}
-
-                        var value = $("#selectOP").val()
-                        location.href = value;
-                    }
-                </script>
+                    var value = $("#selectOP").val()
+                    location.href = value;
+                }
+            </script>
         </div>
         {% include 'javascript.html' %}
 </body>

@@ -10,6 +10,13 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    {#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    {#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
@@ -72,37 +79,35 @@
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Azure_Stop</h1>
+            <h1 class="page-header">Rackspace_View</h1>
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
-                    <img src={% static "img/azure.jpg" %} width= 100 height=100></img>
-                    <h1> Stop Azure Instance</h1>
+                    <img src={% static "img/rack.jpg" %} width= 100 height=100></img>
+                    <h1> View Rackspace Instance</h1>
                 </div>
             </div>
-
+    
     <td>
-            <h2> Enter Resource Group Name
-                <input type="text" size="4" value="Res_Grp_Name" id="res_grp_name">
+            <h2> Enter Server Name
+                <input type="text" size="16" value="Server_name" id="server_name">
             </h2>
         </td>
     <td>
-            <h2> Enter VM Name
-                <input type="text" size="4" value="Vm_Name" id="vm_name">
+            <h2> Enter Server IP
+                <input type="text" size="16" value="Server_IP" id="server_ip">
             </h2>
         </td>
-
-   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Stop</button></h1>
-
+   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
 
 
-<p id="res_grp_name"></p>
-<p id="vm_name"></p>
+<p id="server_name"></p>
+<p id="server_id"></p>
 
 <script>
 function myFunction() {
-  document.getElementById("res_grp_name").innerHTML = "Resource Group Name selected";
-  document.getElementById("vm_name").innerHTML = "VM Name selected";
-
+  document.getElementById("server_name").innerHTML = "Server Name selected";
+  document.getElementById("server_ip").innerHTML = "Server IP selected";
+  
 }
 </script>
      <script type="text/javascript">
@@ -110,13 +115,13 @@ function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/azure_stop/",
+                url: "/rackspace_view/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    res_grp_name: $("#res_grp_name").val(),
-                    vm_name: $("#vm_name").val(),
-
+                    server_name: $("#server_name").val(),
+                    server_ip: $("#server_ip").val(),
+                    
                 },
                 success: function (json) {
                     $('#output').html(json.message);
@@ -129,20 +134,18 @@ function myFunction() {
         }
 
     </script>
-        </div>
 
 
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+
+    </div><!-- /.container -->
 
 
-{% block row %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-
-
-{% include 'javascript.html' %}
-</body>
+   
+ {%include 'javascript.html' %}
+  </body>
 </html>
-

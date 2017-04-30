@@ -10,7 +10,6 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-<<<<<<< HEAD
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
@@ -87,134 +86,57 @@
                     <h1> Reboot Rackspace Instance</h1>
                 </div>
             </div>
-=======
-    <title>Carousel Template for Bootstrap</title>
-
-    <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
-</head>
-<title>{% block head_title %}{% endblock %}</title>
-</head>
-
-<body>
-<div class="navbar-wrapper">
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                            aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">AUTUM <img
-                            src={% static "img/autum.jpg" %} style="width:25px;height:25px"/> </a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/dashboard">Dashboard</a></li>
-                        <li><a href="#">AWS Registered</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
-<script>
-    function myfun() {
-        if (document.getElementById("1") == null) {
-            var x = document.getElementById("instance").value;
-            for (i = 0; i < x; i++) {
-                var div = document.createElement("input");
-                div.type = "text";
-                div.name = i;
-                div.id = i;
-                var label = document.createElement("label");
-                label.innerHTML = "Instance" + i;
-                var linebreak = document.createElement("br");
-                var dynamic = document.getElementById("dynamic");
-                dynamic.appendChild(label);
-                dynamic.appendChild(div);
-                dynamic.appendChild(linebreak);
-            }
-        }
-    }
-    function reset() {
-        location.reload();
-    }
-</script>
-<td>
-    <h3> Enter Number of Instances:</h3>
-        <input type="text" name="text" id="instance">
-    </td>
-    <td>
-<<<<<<< HEAD
-<input type="submit" style="background-color: #0e84b5; color: white;" onclick="myfun()" value="submit">
-<input type="reset" style="background-color: #0e84b5; color: white;" value="reset" onclick="reset()">
-=======
-<input type="submit" onclick="myfun()" value="submit">
-<input type="reset" value="reset" onclick="reset()">
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
-    </td>
-    <td>
-        <div id="dynamic"></div>
-    </td>
-
-       
-<<<<<<< HEAD
-    <td><h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Reboot</button></h1></td>
-
-=======
-    <td><h2><button onclick="myFunction()">Reboot</button><h2>
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
+      
+            <td><h2> Enter Server Name</h2>
+            <input type="text" name="text" id="server">
+        </td>
 
 
-        <p id="instance"></p>
-        <script type="text/javascript">
-    function myFunction() {
-            document.getElementById("instance").innerHTML = "Zone selected";
-        }
-    </script>
+            <td><h2> Enter Boot Type</h2>
+            <input type="text" name="text" id="boot">
+        </td>
 
-    <script type="text/javascript">
-        function myFunction() {
-            $('.ajaxProgress').show();
-            $.ajax({
-                type: "POST",
-                url: "/rackspace_reboot/",
-                async: true,
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    instance: $("#instance").val(),
-                   
-                },
-                success: function (json) {
-                    $('#output').html(json.message);
-                    $('.ajaxProgress').hide();
-                },
-                fail: function () {
-                    alert("failed")
+            <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Reboot</button></h1>
+
+            <p id="server"></p>
+            <p id="boot"></p>
+            <script>
+                function myFunction() {
+                    document.getElementById("server").innerHTML = "Server selected";
+                    document.getElementById("boot").innerHTML = "Boot Type selected";
+                    }
+            </script>
+
+            <script type="text/javascript">
+                function myFunction() {
+                    $('.ajaxProgress').show();
+                    $.ajax({
+                        type: "POST",
+                        url: "/rackspace_reboot/",
+                        async: true,
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            server: $("#server").val(),
+                            boot: $("#boot").val(),
+
+
+
+                        },
+                        success: function (json) {
+                            $('#output').html(json.message);
+                            $('.ajaxProgress').hide();
+                        },
+                        fail: function () {
+                            alert("failed")
+                        }
+                    });
                 }
-            });
-        }
 
-    </script>
+            </script>
 
 
+            {% include 'javascript.html' %}
+    </div>
 </div>
-</div>
-
-{% block row %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-
-
-{% include 'javascript.html' %}
 </body>
 </html>
-

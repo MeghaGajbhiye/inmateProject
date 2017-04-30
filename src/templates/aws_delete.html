@@ -87,53 +87,20 @@
                 </div>
             </div>
 
-<script>
-    function myfun() {
-        if (document.getElementById("1") == null) {
-            var x = document.getElementById("instance").value;
-            for (i = 0; i < x; i++) {
-                var div = document.createElement("input");
-                div.type = "text";
-                div.name = i;
-                div.id = i;
-                var label = document.createElement("label");
-                label.innerHTML = "Instance" + i;
-                var linebreak = document.createElement("br");
-                var dynamic = document.getElementById("dynamic");
-                dynamic.appendChild(label);
-                dynamic.appendChild(div);
-                dynamic.appendChild(linebreak);
-            }
-        }
-    }
-    function reset() {
-        location.reload();
-    }
-</script>
+
+
 <td>
-    <h3> Enter Number of Instances:</h3>
-        <input type="text" name="text" id="instance">
-    </td>
-    <td>
-<input type="submit" style="background-color: #0e84b5; color: white;" onclick="myfun()" value="submit">
-<input type="reset" style="background-color: #0e84b5; color: white;" value="reset" onclick="reset()">
-    </td>
-    <td>
-        <div id="dynamic"></div>
+    <h3> Enter Instance ID</h3>
+    <input type="text" size="4" value="Instance ID" id="instance_id">
+
     </td>
 
-       
-<<<<<<< HEAD
     <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button><h2>
-=======
-    <td><h2><button onclick="myFunction()">Delete</button><h2>
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
 
-
-        <p id="instance"></p>
+        <p id="instance_id"></p>
         <script type="text/javascript">
     function myFunction() {
-            document.getElementById("instance").innerHTML = "Zone selected";
+            document.getElementById("instance_id").innerHTML = "Instance selected";
         }
     </script>
 
@@ -146,7 +113,7 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    instance: $("#instance").val(),
+                    instance_id: $("#instance_id").val(),
                    
                 },
                 success: function (json) {

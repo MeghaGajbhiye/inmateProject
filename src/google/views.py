@@ -6,7 +6,7 @@ from .forms import GoogleForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 import json
-import boto
+import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 
@@ -18,6 +18,19 @@ def google(request):
         "form": form,
     }
     return render_to_response("Google_CP.html", context, context_instance=RequestContext(request))
+
+
+def google_home(request):
+    print "google_home **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+        print "I am here inside post"
+        selectOP = request.POST.get("selectOP")
+        print selectOP
+    return render_to_response("Google_Home.html", {}, context_instance=RequestContext(request))
+
 
 def google_create(request):
     print "google_create **************************"
@@ -66,16 +79,4 @@ def google_delete(request):
     elif request.method == 'GET':
         print "in get method"
         return render_to_response("google_delete.html", {})
-
-def google_home(request):
-	print "google_home **************************"
-
-	if request.is_ajax():
-		print "it's ajax"
-	if request.method == 'POST':
-		print "I am here inside post"
-
-		selectOP = request.POST.get("selectOP")
-
-		print selectOP
 

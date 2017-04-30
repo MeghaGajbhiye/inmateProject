@@ -88,66 +88,42 @@
                 </div>
             </div>
 
-        <h1> Enter your Information </h1>
+
         <td>
-            <h2> Enter your Zone
-                <select id="selectzone">
-                    <option>Select a zone</option>
-                </select>
-            </h2>
-        </td>
-        <td>
-            <h2> Enter your region
-                <select id="selectregion">
-                    <option>Select a region</option>
-                </select>
-            </h2>
-        </td>
-        <td>
-            <h2> Enter an image
-                <select id="selectimage">
-                    <option>Select an image</option>
-                </select>
-            </h2>
-        </td>
-        <td>
-            <h2> Enter Minimum Count
+            <h4> Enter Minimum Count
                 <input type="text" size="4" value="0" id="min">
 {#                <input type="text" size="4" value="Min_Count" id="min">#}
 
-            </h2>
+            </h4>
         </td>
         <td>
-            <h2> Enter Maximum Count
+            <h4> Enter Maximum Count
 
                 <input type="text" size="4" value="0" id="max">
 {#=======#}
 {#                <input type="text" size="4" value="Max_Count" id="max">#}
 {#>>>>>>> Seizon-sha-master#}
-            </h2>
+            </h4>
         </td>
         <td>
-            <h2> Enter Key Name
+            <h4> Enter Key Name
                 <input type="text" size="12" value="Key_Name" id="key_name">
-            </h2>
+            </h4>
         </td>
         <td>
-            <h2> Enter Instance Type
+            <h4> Enter Instance Type
                 <input type="text" size="12" value="Inst_Type" id="inst_type">
-            </h2>
+            </h4>
         </td>
         <td>
-            <h2> Monitoring Status
+            <h4> Monitoring Status
                 <select id="check_status">
                     <option>check status</option>
                 </select>
-            </h2>
+            </h4>
         </td>
         <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Create</button>
     </div>
-    <p id="zone"></p>
-    <p id="region"></p>
-    <p id="image"></p>
     <p id="min_count"></p>
     <p id="max_count"></p>
     <p id="key_name"></p>
@@ -159,42 +135,8 @@
 {#=======#}
 {#    <script type="text/javascript">#}
 {#>>>>>>> Seizon-sha-master#}
-        var myobject = {
-            ValueA: 'es-us-1',
-            ValueB: 'es-us-2',
-            ValueC: 'es-us-3',
-            ValueD: 'es-us-4',
-        };
 
-        var select = document.getElementById("selectzone");
-        for (index in myobject) {
-            select.options[select.options.length] = new Option(myobject[index], myobject[index]);
 
-        } 
-    
-        var myobject1 = {
-            ValueA: 'Virginia_US',
-            ValueB: 'Dallas_US',
-            ValueC: 'Hongkong_China',
-            ValueD: 'Europe_UK',
-        };
-
-        var select = document.getElementById("selectregion");
-        for (index in myobject1) {
-            select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);
-        }
-
-          var myobject2 = {
-            ValueA: 'image-1',
-            ValueB: 'image-2',
-            ValueC: 'image-3',
-            ValueD: 'image-4',
-        };
-
-        var select = document.getElementById("selectimage");
-        for (index in myobject2) {
-            select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);
-        }
 
 
 {#=======#}
