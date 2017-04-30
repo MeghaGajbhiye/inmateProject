@@ -6,6 +6,6 @@ class Azure(models.Model):
 	client_id = models.CharField(max_length= 120, blank = True, null = True)
 	secret_key = models.CharField(max_length=120, blank=True, null=True)
 	tenant_id = models.CharField(max_length=120, blank=True, null=True)
-	class Meta:
-		# managed = False
-		db_table = 'azure'
+	# class Meta:
+	# 	# managed = False
+	# 	db_table = 'azure'
