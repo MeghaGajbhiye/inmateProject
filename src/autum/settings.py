@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_HOST_USER='megha.gajbhiye.test@gmail.com'
-EMAIL_HOST_PASSWORD='tester@123'
+EMAIL_HOST_PASSWORD='Tester@123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS= True
 
@@ -100,18 +100,18 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'autum',
-#         'USER': 'root',
-#         'PASSWORD': 'cloud',
-#         # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',
-#         # 'HOST': 'autum.cmxtlthf4esd.us-west-2.rds.amazonaws.com',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'autum_db',
+        'USER': 'root',
+        'PASSWORD': 'Amma512akka',
+        # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',
+        # 'HOST': 'autum.cmxtlthf4esd.us-west-2.rds.amazonaws.com',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
 
 
 # DATABASES = {

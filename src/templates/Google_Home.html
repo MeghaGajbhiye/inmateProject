@@ -72,8 +72,8 @@
             <ul class="nav nav-sidebar">
                 <li><a href="/dashboard">Overview </a></li>
                 <li><a href="/monitor">Monitor</a></li>
-                <li><a href="/instance">Manage Instances</a></li>
-                <li class="active"><a href="/cpfinal">Register for Cloud <span class="sr-only">(current)</span></a></li>
+                <li><a href="/instance">Register for Cloud</a></li>
+                <li class="active"><a href="/cpfinal">Manage Instances <span class="sr-only">(current)</span></a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
@@ -152,50 +152,25 @@
                 </div>
             </div>
 
-            <table>
-                <tr>
-                    <td>
-                        <h2> Enter your option</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <select id="selectOP" style="width: 200px">
+            <td>
+                <h2> Enter your option</h2>
+                <select id="selectOP">
+                    <option value="/google_create">create</option>
+                    <option value="/google_delete">delete</option>
+                    <option value="/google_retrieve">Update</option>
 
-                    <option>Select operation</option>
                 </select>
-                <p id="selectOP"></p> </td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
-                    </td>
-                </tr>
-            </table>
+            </td>
+            <p id="selectOP"></p>
 
+            <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
+            <script type="text/javascript">
+                function myFunction() {
+                    document.getElementById("select").innerHTML = "Crud Operation selected";
 
-                <script type="text/javascript">
-                    var myobject = {
-                        ValueA: 'create',
-                        ValueB: 'update',
-                        ValueC: 'delete',
-                        ValueD: 'retrieve',
-                    };
+                }
 
-                    var select = document.getElementById("selectOP");
-                    for (index in myobject) {
-                        select.options[select.options.length] = new Option(myobject[index], myobject[index]);
-                    }
-
-                </script>
-                <script type="text/javascript">
-                    function myFunction() {
-                        document.getElementById("select").innerHTML = "Crud Operation selected";
-
-                    }
-
-                </script>
+            </script>
                 <script type="text/javascript">
                     function myFunction() {
                         {#        $('.ajaxProgress').show();#}

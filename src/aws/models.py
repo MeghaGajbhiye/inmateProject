@@ -21,9 +21,9 @@ class AWSModel(models.Model):
     aws_secret_key = models.CharField(max_length=120, blank=True, null=True)
     # account_id = models.CharField(max_length=120, blank=True, null=True)
 
-    class Meta:
-        # managed = True
-        db_table = 'aws'
+    # class Meta:
+    #     # managed = True
+    #     db_table = 'aws'
  
 
 

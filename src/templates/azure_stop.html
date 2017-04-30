@@ -10,14 +10,6 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-<<<<<<< HEAD
-    <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    {#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    {#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
@@ -73,8 +65,8 @@
             <ul class="nav nav-sidebar">
                 <li><a href="/dashboard">Overview </a></li>
                 <li><a href="/monitor">Monitor</a></li>
-                <li><a href="/instance">Manage Instances</a></li>
-                <li class="active"><a href="/cpfinal">Register for Cloud <span class="sr-only">(current)</span></a></li>
+                <li><a href="/instance">Register for Cloud</a></li>
+                <li class="active"><a href="/cpfinal">Manage Instances<span class="sr-only">(current)</span></a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
@@ -87,98 +79,33 @@
                     <h1> Stop Azure Instance</h1>
                 </div>
             </div>
-=======
-    <title>Carousel Template for Bootstrap</title>
 
-    <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
-</head>
-<title>{% block head_title %}{% endblock %}</title>
-</head>
+    <td>
+            <h2> Enter Resource Group Name
+                <input type="text" size="4" value="Res_Grp_Name" id="res_grp_name">
+            </h2>
+        </td>
+    <td>
+            <h2> Enter VM Name
+                <input type="text" size="4" value="Vm_Name" id="vm_name">
+            </h2>
+        </td>
 
-<body>
-<div class="navbar-wrapper">
-    <div class="container">
-        <nav class="navbar navbar-inverse navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                            aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">AUTUM <img
-                            src={% static "img/autum.jpg" %} style="width:25px;height:25px"/> </a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/dashboard">Dashboard</a></li>
-                        <li><a href="#">AWS Registered</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
+   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Stop</button></h1>
+
+
+
+<p id="res_grp_name"></p>
+<p id="vm_name"></p>
+
 <script>
-    function myfun() {
-        if (document.getElementById("1") == null) {
-            var x = document.getElementById("instance").value;
-            for (i = 0; i < x; i++) {
-                var div = document.createElement("input");
-                div.type = "text";
-                div.name = i;
-                div.id = i;
-                var label = document.createElement("label");
-                label.innerHTML = "Instance" + i;
-                var linebreak = document.createElement("br");
-                var dynamic = document.getElementById("dynamic");
-                dynamic.appendChild(label);
-                dynamic.appendChild(div);
-                dynamic.appendChild(linebreak);
-            }
-        }
-    }
-    function reset() {
-        location.reload();
-    }
+function myFunction() {
+  document.getElementById("res_grp_name").innerHTML = "Resource Group Name selected";
+  document.getElementById("vm_name").innerHTML = "VM Name selected";
+
+}
 </script>
-<td>
-    <h3> Enter Number of Instances:</h3>
-        <input type="text" name="text" id="instance">
-    </td>
-    <td>
-<<<<<<< HEAD
-<input type="submit" style="background-color: #0e84b5; color: white;" onclick="myfun()" value="submit">
-<input type="reset" style="background-color: #0e84b5; color: white;" value="reset" onclick="reset()">
-=======
-<input type="submit" onclick="myfun()" value="submit">
-<input type="reset" value="reset" onclick="reset()">
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
-    </td>
-    <td>
-        <div id="dynamic"></div>
-    </td>
-
-       
-<<<<<<< HEAD
-    <td><h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Stop</button></h1></td>
-
-=======
-    <td><h2><button onclick="myFunction()">Stop</button><h2>
->>>>>>> 1816083a6388300f524dc9930227be21ad46c8a9
-
-
-        <p id="instance"></p>
-        <script type="text/javascript">
-    function myFunction() {
-            document.getElementById("instance").innerHTML = "Zone selected";
-        }
-    </script>
-
-    <script type="text/javascript">
+     <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
@@ -187,8 +114,9 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    instance: $("#instance").val(),
-                   
+                    res_grp_name: $("#res_grp_name").val(),
+                    vm_name: $("#vm_name").val(),
+
                 },
                 success: function (json) {
                     $('#output').html(json.message);
@@ -201,10 +129,10 @@
         }
 
     </script>
+        </div>
 
 
-</div>
-</div>
+
 
 {% block row %}
 {% endblock %}
