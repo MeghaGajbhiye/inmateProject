@@ -2,12 +2,13 @@ import argparse
 import os
 import time
 from azure.mgmt.resource import ResourceManagementClient as rmc
+from azure.monitor import MonitorClient as mc
 from azure.common.credentials import ServicePrincipalCredentials as spc
 from azure.mgmt.network import NetworkManagementClient as nmc
 from azure.mgmt.storage import StorageManagementClient as smc
 from azure.mgmt.compute import ComputeManagementClient as cmc
 from haikunator import Haikunator as hk
-
+import datetime
 
 # things to ask user -subnet_name, vnet-name,group-name,location,
 # ip-config-name, nic-name, username, password, vm-name, vm-type,
@@ -35,6 +36,7 @@ class Azure:
         self.compute_client = cmc (self.credentials, self.subscription_id)
         self.storage_client = smc (self.credentials, self.subscription_id)
         self.network_client = nmc (self.credentials, self.subscription_id)
+        self.monitor_client = mc(self.credentials, self.subscription_id)
 
         self.VM_REFERENCE = {
             'linux': {
@@ -297,12 +299,159 @@ class Azure:
             },
         }
 
+    def cloud_monitor(self):
+        print "I am here"
+        today = datetime.datetime.now ().date ()
+        filter = " and ".join ([
+            "eventTimestamp ge {}".format (today),
+            "resourceGroupName eq 'ResourceGroupName'"
+        ])
+        select = ",".join ([
+            "eventName",
+            "operationName"
+        ])
+
+        activity_logs = self.monitor_client.activity_logs.list (
+            filter=filter,
+            select=select
+        )
+        print activity_logs
+
+        for log in activity_logs:
+            # assert isinstance(log, azure.monitor.models.EventData)
+            print(" ".join ([
+                log.event_name.localized_value,
+                log.operation_name.localized_value
+            ]))
+
+    def cloud_monitoring_metrics(self, resource_group_name, vm_name):
+        resource_id = (
+            "subscriptions/{}/"
+            "resourceGroups/{}/"
+            "providers/Microsoft.Compute/virtualMachines/{}"
+        ).format (self.subscription_id, resource_group_name, vm_name)
+
+        for metric in self.monitor_client.metric_definitions.list (resource_id):
+            print("{}: id={}, unit={}".format (
+                metric.name.localized_value,
+                metric.name.value,
+                metric.unit
+            ))
+        #
+        # Percentage
+        # CPU: id = Percentage
+        # CPU, unit = Unit.percent
+        # Network
+        # In: id = Network
+        # In, unit = Unit.bytes
+        # Network
+        # Out: id = Network
+        # Out, unit = Unit.bytes
+        # Disk
+        # Read
+        # Bytes: id = Disk
+        # Read
+        # Bytes, unit = Unit.bytes
+        # Disk
+        # Write
+        # Bytes: id = Disk
+        # Write
+        # Bytes, unit = Unit.bytes
+        # Disk
+        # Read
+        # Operations / Sec: id = Disk
+        # Read
+        # Operations / Sec, unit = Unit.count_per_second
+        # Disk
+        # Write
+        # Operations / Sec: id = Disk
+        # Write
+        # Operations / Sec, unit = Unit.count_per_second
+
+        # Get CPU total of yesterday for this VM, by hour
+
+        today = datetime.datetime.now ().date ()
+        yesterday = today - datetime.timedelta (days=1)
+
+        filter = " and ".join ([
+            "name.value eq 'Percentage CPU'",
+            "aggregationType eq 'Total'",
+            "startTime eq {}".format (yesterday),
+            "endTime eq {}".format (today),
+            "timeGrain eq duration'PT1H'"
+        ])
+
+        metrics_data = self.monitor_client.metrics.list (
+            resource_id,
+            filter=filter
+        )
+
+        for item in metrics_data:
+            # azure.monitor.models.Metric
+            print("{} ({})".format (item.name.localized_value, item.unit.name))
+            for data in item.data:
+                # azure.monitor.models.MetricData
+                print("{}: {}".format (data.time_stamp, data.total))
+
+                # 2017 - 04 - 29
+                # 00:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 01:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 02:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 03:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 04:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 05:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 06:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 07:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 0
+                # 8:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 0
+                # 9:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 10:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 11:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 12:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 13:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 14:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 15:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 16:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 17:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 18:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 19:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 20:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 21:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 22:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 23:00:00 + 00:00: None
+
 
 if __name__ == "__main__":
-    az = Azure('', '', '', '')
+    az = Azure('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
+    # az.cloud_monitor()
+    az.cloud_monitoring_metrics("group1","vm1")
     # az.delete_resource_group("azure-sample-group-virtual-machines2")
     # az.start_vm("group1", "vm1")
     # az.restart_vm("group1", "vm1")
     # az.update_instance(10,"group1","vm1")
     # az.view_instances("group1")
-    az.create_instance("linux", "megha", "MeghaRocks@1", "group1", "vm1", "westus", "vnet1", "subnet1", "nic1", "ipconfig1", "osdisk1")
+    # az.create_instance("linux", "megha", "MeghaRocks@1", "group1", "vm1", "westus", "vnet1", "subnet1", "nic1", "ipconfig1", "osdisk1")

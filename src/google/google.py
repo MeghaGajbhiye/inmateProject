@@ -2,13 +2,19 @@ import argparse
 import os
 import time
 
+import argparse
+import datetime
+
 import googleapiclient.discovery
 from six.moves import input
 from oauth2client.client import GoogleCredentials
-credentials = GoogleCredentials.get_application_default()
+
 
 
 class Google:
+
+    def __init__(self):
+        credentials = GoogleCredentials.get_application_default ()
 
     def wait_for_operation(self, compute, project, zone, operation):
         print('Waiting for operation to finish...')
@@ -133,7 +139,67 @@ class Google:
                    It will take a minute or two for the instance to be deleted.
                    """)
 
+    def format_rfc3339(self, datetime_instance=None):
+        """Formats a datetime per RFC 3339.
+        :param datetime_instance: Datetime instanec to format, defaults to utcnow
+        """
+        return datetime_instance.isoformat ("T") + "Z"
 
+    def get_now_rfc3339(self):
+        return self.format_rfc3339 (datetime.datetime.utcnow ())
+
+    def cloud_monitor(self, project_id):
+        CUSTOM_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
+        client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
+        now = self.get_now_rfc3339 ()
+        desc = {"project": project_id,
+                "metric": CUSTOM_METRIC_NAME}
+        point = {"start": now,
+                 "end": now,
+                 "doubleValue": os.getpid ()}
+        print("Writing {} at {}".format (point["doubleValue"], now))
+
+        # Write a new data point.
+        try:
+            write_request = client.timeseries ().write (
+                project=project_id,
+                body={"timeseries": [{"timeseriesDesc": desc, "point": point}]})
+            write_request.execute ()  # Ignore the response.
+        except Exception as e:
+            print("Failed to write custom metric data: exception={}".format (e))
+            raise
+
+        # Read all data points from the time series.
+        # When a custom metric is created, it may take a few seconds
+        # to propagate throughout the system. Retry a few times.
+        print("Reading data from custom metric timeseries...")
+        read_request = client.timeseries ().list (
+            project=project_id,
+            metric=CUSTOM_METRIC_NAME,
+            youngest=now)
+        start = time.time ()
+        while True:
+            try:
+                read_response = read_request.execute ()
+                for point in read_response["timeseries"][0]["points"]:
+                    print("Point:  {}: {}".format (
+                        point["end"], point["doubleValue"]))
+                break
+            except Exception as e:
+                if time.time () < start + 20:
+                    print("Failed to read custom metric data, retrying...")
+                    time.sleep (3)
+                else:
+                    print("Failed to read custom metric data, aborting: "
+                          "exception={}".format (e))
+                    raise
+    #
+    # Point:  2017 - 05 - 01
+    # T05:17:23.000
+    # Z: 43495.0
+    # Point:  2017 - 05 - 01
+    # T05:12:10.000
+    # Z: 40906.0
 
 if __name__ == '__main__':
     gc= Google()
@@ -141,5 +207,6 @@ if __name__ == '__main__':
     # gc.set_bucket_name("autum")
     # gc.set_zone("us-central1-f")
     # gc.set_instance_name("autumtest3")
-    gc.create_instance("autum-165318","us-central1-f","autumtest-1","autum" )
+    # gc.create_instance("autum-165318","us-central1-f","autumtest-1","autum" )
     # gc.delete_instance("autum-165318", "us-central1-f", "autumtest1")
+    gc.cloud_monitor("autum-165318")
