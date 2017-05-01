@@ -1,6 +1,7 @@
-import argparse
 import os
-import time
+import datetime
+
+#3rd Party Libraries
 from azure.mgmt.resource import ResourceManagementClient as rmc
 from azure.monitor import MonitorClient as mc
 from azure.common.credentials import ServicePrincipalCredentials as spc
@@ -8,10 +9,6 @@ from azure.mgmt.network import NetworkManagementClient as nmc
 from azure.mgmt.storage import StorageManagementClient as smc
 from azure.mgmt.compute import ComputeManagementClient as cmc
 from haikunator import Haikunator as hk
-import datetime
-
-# things to ask user -subnet_name, vnet-name,group-name,location,
-# ip-config-name, nic-name, username, password, vm-name, vm-type,
 
 
 class Azure:
@@ -19,14 +16,14 @@ class Azure:
 
         self.haikunator = hk ()
         self.STORAGE_ACC_NAME = self.haikunator.haikunate (delimiter='')
-        self.SUB_ID = sub_id
-        self.CLIENT_ID = client_id
-        self.TENANT_ID = tenant
-        self.SECRET_KEY = secret
+        self.SUB_ID = sub_id            #Azure Subscription ID
+        self.CLIENT_ID = client_id      #Azure Client ID
+        self.TENANT_ID = tenant         #Azure Tenant ID
+        self.SECRET_KEY = secret        #Azure Secret Key
 
         self.subscription_id = os.environ.get (
             'AZURE_SUBSCRIPTION_ID',
-            self.SUB_ID)  # your Azure Subscription Id
+            self.SUB_ID)
         self.credentials = spc (
             client_id=self.CLIENT_ID,
             secret=self.SECRET_KEY,
@@ -444,9 +441,40 @@ class Azure:
                 # 2017 - 04 - 29
                 # 23:00:00 + 00:00: None
 
+    def azure_offers(self):
+        print "inside azure offers"
+        region = 'eastus2'
+        result_list_pub = self.compute_client.virtual_machine_images.list_publishers (region,)
+        for publisher in result_list_pub:
+            result_list_offers = self.compute_client.virtual_machine_images.list_offers(region, publisher.name,)
+            for offer in result_list_offers:
+                result_list_skus = self.compute_client.virtual_machine_images.list_skus (region, publisher.name,offer.name,)
+                for sku in result_list_skus:
+                    result_list = self.compute_client.virtual_machine_images.list(region,publisher.name,offer.name,sku.name,)
+                    for version in result_list:
+                        result_get = self.compute_client.virtual_machine_images.get (region,publisher.name,offer.name,sku.name,version.name,)
+                        print('PUBLISHER: {0}, OFFER: {1}, SKU: {2}, VERSION: {3}'.format (publisher.name,offer.name,sku.name,version.name,))
+
+
+    def create_snapshot(self, resource_group_name, disk_name):
+        managed_disk = self.compute_client.disks.get (resource_group_name, disk_name)
+        async_snapshot_creation = self.compute_client.snapshots.create_or_update (
+            'my_resource_group',
+            'mySnapshot',
+            {
+                'location': 'westus',
+                'creation_data': {
+                    'create_option': 'Copy',
+                    'source_uri': managed_disk.id
+                }
+            }
+        )
+        snapshot = async_snapshot_creation.result ()
 
 if __name__ == "__main__":
     az = Azure('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
+    # az.create_snapshot("group1", "osdisk1")
+    # az.azure_offers()
     # az.cloud_monitor()
     az.cloud_monitoring_metrics("group1","vm1")
     # az.delete_resource_group("azure-sample-group-virtual-machines2")
