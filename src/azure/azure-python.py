@@ -299,7 +299,7 @@ class Azure:
 
 
 if __name__ == "__main__":
-    az = Azure('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
+    az = Azure('', '', '', '')
     # az.delete_resource_group("azure-sample-group-virtual-machines2")
     # az.start_vm("group1", "vm1")
     # az.restart_vm("group1", "vm1")
