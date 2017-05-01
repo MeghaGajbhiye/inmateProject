@@ -44,6 +44,7 @@ def azure(request):
                 client_id = form.cleaned_data['client_id']
                 secret_key = form.cleaned_data['secret_key']
                 tenant_id = form.cleaned_data['tenant_id']
+                print subscription_id, client_id, secret_key, tenant_id
                 keys = Azure(id=usr_id, subscription_id=subscription_id, client_id=client_id,
                              secret_key=secret_key, tenant_id=tenant_id, )
                 save_keys = Azure.save(keys)
@@ -137,35 +138,32 @@ def azure_update(request):
             azure = Azure(subscription_id, client_id, secret_key, tenant_id)
             azure.update_instance(size, res_grp_name, vm_name)
             print "I got the azure keys"
-            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_update.html", {}, context_instance=RequestContext(request))
 
 
-def azure_delete(request):
-    print "azure_delete **************************"
+def azure_delete_vm(request):
+    print "azure_delete_vm **************************"
 
     if request.is_ajax():
         print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        res_grp_name = request.POST.get("res_grp_name")
-        vm_name = request.POST.get("vm_name")
-        print res_grp_name, vm_name
-        keys = azure_get_keys(request)
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.delete_vm(res_grp_name, vm_name)
-        print "I got the azure keys"
+        if request.method == 'POST':
+            print "I am here inside post"
+            res_grp_name = request.POST.get("res_grp_name")
+            vm_name = request.POST.get("vm_name")
+            print res_grp_name, vm_name
+            keys = azure_get_keys(request)
+            subscription_id = keys["subscription_id"]
+            client_id = keys["client_id"]
+            secret_key = keys["secret_key"]
+            tenant_id = keys["tenant_id"]
+            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure.delete_vm(res_grp_name, vm_name)
+            print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
-    # print res_grp_name, vm_name
-    return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
-    #   elif request.method == 'GET':
+    return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
 
-
-# return render_to_response("azure_delete.html", {})
+# return render_to_response("azure_delete_vm.html", {})
 
 
 
@@ -174,23 +172,22 @@ def azure_stop(request):
 
     if request.is_ajax():
         print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        res_grp_name = request.POST.get("res_grp_name")
-        vm_name = request.POST.get("vm_name")
-        print res_grp_name, vm_name
-        keys = azure_get_keys(request)
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.stop_vm(res_grp_name, vm_name)
-        print "I got the azure keys"
-
-        # print res_grp_name, vm_name
+        if request.method == 'POST':
+            print "I am here inside post"
+            res_grp_name = request.POST.get("res_grp_name")
+            vm_name = request.POST.get("vm_name")
+            print res_grp_name, vm_name
+            keys = azure_get_keys(request)
+            subscription_id = keys["subscription_id"]
+            client_id = keys["client_id"]
+            secret_key = keys["secret_key"]
+            tenant_id = keys["tenant_id"]
+            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure.stop_vm(res_grp_name, vm_name)
+            print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
+
 
 
 def azure_start(request):

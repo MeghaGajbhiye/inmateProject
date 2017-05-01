@@ -156,12 +156,12 @@ def aws_delete(request):
             print instance_id, instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
-            # keys = aws_get_keys(request)
-            # # print keys
-            # access_key = keys["access_key"]
-            # secret_key = keys["secret_key"]
-            # aws = AWS (access_key, secret_key)
-            # aws.terminate_instance(instance_id)
+            keys = aws_get_keys(request)
+            # print keys
+            access_key = keys["access_key"]
+            secret_key = keys["secret_key"]
+            aws = AWS (access_key, secret_key)
+            aws.terminate_instance(instance_id)
 
             instance_db = [u'instance_test', u'Server-01']
             print "I am above instance_name"

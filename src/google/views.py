@@ -16,7 +16,7 @@ def google(request):
     print "google cp****"
     usr_id = request.user.id
     try:
-        google_result = Google.objects.get(user_id=usr_id)
+        google_result = Google.objects.get(id=usr_id)
     except:
         google_result = None
     if google_result is not None:
@@ -27,7 +27,7 @@ def google(request):
            form = GoogleForm(request.POST or None)
            if form.is_valid():
                project_id = form.cleaned_data['project_id']
-               keys = Google(user_id=usr_id, project_id=project_id)
+               keys = Google(id=usr_id, project_id=project_id)
                save_keys = Google.save(keys)
                print "Google KEYS HAS BEEN SAVED IN Google TABLE"
                return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
@@ -67,7 +67,7 @@ def google_create(request):
             Inst_name = request.POST.get("Inst_name")
             print selectzone, Pro_id, Buck_id, Inst_name
             usr_id = request.user.id
-            google_result = Google.objects.get(user_id=usr_id)
+            google_result = Google.objects.get(id=usr_id)
             project_id = google_result.project_id
             print project_id
             google = Google(project_id)
@@ -116,7 +116,7 @@ def google_delete(request):
 
 def google_get_keys(request):
     usr_id = request.user.id
-    google_result = Google.objects.get(user_id=usr_id)
+    google_result = Google.objects.get(id=usr_id)
     project_id = google_result.project_id
     print project_id
     keys = {"project_id": project_id}
