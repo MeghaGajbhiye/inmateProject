@@ -77,27 +77,6 @@ class AuthUserUserPermissions(models.Model):
         db_table = 'auth_user_user_permissions'
         unique_together = (('user_id', 'permission_id'),)
 
-
-class Aws(models.Model):
-    user_id = models.ForeignKey(AuthUser, primary_key=True)
-    aws_access_key = models.CharField(max_length=120, blank=True, null=True)
-    aws_secret_key = models.CharField(max_length=120, blank=True, null=True)
-    account_id = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'aws'
-
-
-class Azure(models.Model):
-    enrollment_number = models.CharField(max_length=120, blank=True, null=True)
-    api_key = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'azure'
-
-
 class CloudSignup(models.Model):
     email = models.CharField(max_length=254)
     full_name = models.CharField(max_length=120, blank=True, null=True)
@@ -161,30 +140,6 @@ class DjangoSite(models.Model):
     class Meta:
         managed = False
         db_table = 'django_site'
-
-
-class Google(models.Model):
-    project_id = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'google'
-
-
-class Ibm(models.Model):
-    api_key = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'ibm'
-
-
-class Rackspace(models.Model):
-    tenant_id = models.CharField(max_length=120, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'rackspace'
 
 
 class RegistrationRegistrationprofile(models.Model):

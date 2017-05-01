@@ -63,6 +63,8 @@ def aws(request):
 def aws_create(request):
     print "aws create ********"
     # If the request method is Get, show the create form to the user
+    if request.is_ajax():
+        print "it's ajax"
 
     if request.method == 'GET':
         print "inside get"
@@ -72,6 +74,8 @@ def aws_create(request):
     # create an instance, therefore fetching the POST values from the aws_create.html and calling the create_instance
     # function in order to create a new instance
     else:
+        if request.is_ajax():
+            print "it's ajax"
         if request.method == 'POST':
             print "Inside post"
             min = request.POST.get("min")

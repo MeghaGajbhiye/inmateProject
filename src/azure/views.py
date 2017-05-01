@@ -49,12 +49,15 @@ def azure(request):
                 save_keys = Azure.save(keys)
                 print "Azure KEYS HAS BEEN SAVED IN Azure TABLE"
                 return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
-
-                form = AzureForm()
-                context = {
-                    "form": form,
-                }
-            return render_to_response("Azure_CP.html", context, context_instance=RequestContext(request))
+        else:
+            form = AzureForm()
+            context = {
+            "form": form,
+            }
+        return render_to_response("Azure_CP.html", context, context_instance=RequestContext(request))
+        # elif request.method == 'GET':
+            #     return render(request, 'Azure_CP.html', {'form': form})
+            #
 
 
 def azure_home(request):
@@ -71,6 +74,7 @@ def azure_home(request):
 
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
 
+    return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
 
 def azure_create(request):
     print "azure_create **************************"
@@ -82,13 +86,13 @@ def azure_create(request):
         if request.method == 'POST':
             print "I am here inside post"
 
-        choice = request.POST.get("choice")
-        user = request.POST.get("user")
-        password = request.POST.get("password")
-        res_grp_name = request.POST.get("res_grp_name")
-        vm_name = request.POST.get("vm_name")
-        loc = request.POST.get("loc")
-        vnet_name = request.POST.get("vnet_name")
+            choice = request.POST.get("choice")
+            user = request.POST.get("user")
+            password = request.POST.get("password")
+            res_grp_name = request.POST.get("res_grp_name")
+            vm_name = request.POST.get("vm_name")
+            loc = request.POST.get("loc")
+            vnet_name = request.POST.get("vnet_name")
         snet_name = request.POST.get("snet_name")
         nic_name = request.POST.get("nic_name")
         ip_con = request.POST.get("ip_con")
@@ -110,6 +114,7 @@ def azure_create(request):
                               ip_con, d_name)
 
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_create.html", {}, context_instance=RequestContext(request))
 
 
 def azure_update(request):
@@ -124,15 +129,16 @@ def azure_update(request):
             res_grp_name = request.POST.get("res_grp_name")
             vm_name = request.POST.get("vm_name")
             print size, res_grp_name, vm_name
-        keys = azure_get_keys(request)
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.update_instance(size, res_grp_name, vm_name)
-        print "I got the azure keys"
-        return render_to_response("azure_update.html", {}, context_instance=RequestContext(request))
+            keys = azure_get_keys(request)
+            subscription_id = keys["subscription_id"]
+            client_id = keys["client_id"]
+            secret_key = keys["secret_key"]
+            tenant_id = keys["tenant_id"]
+            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure.update_instance(size, res_grp_name, vm_name)
+            print "I got the azure keys"
+            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_update.html", {}, context_instance=RequestContext(request))
 
 
 def azure_delete(request):
@@ -153,6 +159,7 @@ def azure_delete(request):
         azure = Azure(subscription_id, client_id, secret_key, tenant_id)
         azure.delete_vm(res_grp_name, vm_name)
         print "I got the azure keys"
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     # print res_grp_name, vm_name
     return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
     #   elif request.method == 'GET':
@@ -182,7 +189,8 @@ def azure_stop(request):
         print "I got the azure keys"
 
         # print res_grp_name, vm_name
-        return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
 
 
 def azure_start(request):
@@ -205,7 +213,8 @@ def azure_start(request):
         print "I got the azure keys"
 
         # print res_grp_name, vm_name
-        return render_to_response("azure_start.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_start.html", {}, context_instance=RequestContext(request))
 
 
 def azure_view(request):
@@ -227,7 +236,8 @@ def azure_view(request):
         print "I got the azure keys"
 
         # print res_grp_name
-        return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
 
 
 # elif request.method == 'GET':
@@ -253,7 +263,7 @@ def azure_reboot(request):
         azure = Azure(subscription_id, client_id, secret_key, tenant_id)
         azure.restart_vm(res_grp_name, vm_name)
         print "I got the azure keys"
-
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     # print res_grp_name, vm_name
     return render_to_response("azure_reboot.html", {}, context_instance=RequestContext(request))
 

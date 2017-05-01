@@ -77,6 +77,8 @@ def rackspace_update(request):
     print "rackspace_update **************************"
     if request.is_ajax():
         print "it's ajax"
+    if request.method == 'GET':
+        return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
     if request.method == 'POST':
         print "I am here inside post"
         selectram = request.POST.get("selectram")
@@ -87,7 +89,7 @@ def rackspace_update(request):
         rackspace = Rackspace(tenant_id)
         rackspace.update_instance(selectram, server)
         # print selectram, server
-        return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_update.html", {})
 
@@ -96,6 +98,8 @@ def rackspace_delete(request):
     print "rackspace_update **************************"
     if request.is_ajax():
         print "it's ajax"
+    if request.method == 'GET':
+        return render_to_response("rackspace_delete.html", {}, context_instance=RequestContext(request))
     if request.method == 'POST':
         print "I am here inside post"
         server = request.POST.get("server")
@@ -105,7 +109,7 @@ def rackspace_delete(request):
         rackspace = Rackspace(tenant_id)
         rackspace.delete_instance(server)
         # print server
-        return render_to_response("rackspace_delete.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_delete.html", {})
 
@@ -114,6 +118,8 @@ def rackspace_reboot(request):
     print "rackspace_reboot **************************"
     if request.is_ajax():
         print "it's ajax"
+    if request.method == 'GET':
+        return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
     if request.method == 'POST':
         print "I am here inside post"
         server = request.POST.get("server")
@@ -124,7 +130,7 @@ def rackspace_reboot(request):
         rackspace = Rackspace(tenant_id)
         rackspace.instance_reboot(server, boot)
         # print server, boot
-        return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_reboot.html", {})
 
@@ -133,6 +139,8 @@ def rackspace_view(request):
     print "rackspace_view **************************"
     if request.is_ajax():
         print "it's ajax"
+    if request.method == 'GET':
+        return render_to_response("rackspace_view.html", {}, context_instance=RequestContext(request))
     if request.method == 'POST':
         print "I am here inside post"
         server_name = request.POST.get("server_name")
@@ -143,7 +151,7 @@ def rackspace_view(request):
         rackspace = Rackspace(tenant_id)
         rackspace.view_instance(server_name, server_ip)
         # print server_name, server_ip
-        return render_to_response("rackspace_view.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_view.html", {})
 
