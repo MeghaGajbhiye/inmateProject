@@ -319,3 +319,6 @@ def azure_get_keys(request):
     keys = {"subscription_id": subscription_id, "client_id": client_id, "secret_key": secret_key,
             "tenant_id": tenant_id}
     return keys
+
+def azure_monitor(request):
+    return render_to_response("azure_monitor.html", )

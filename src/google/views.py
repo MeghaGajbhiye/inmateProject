@@ -121,3 +121,6 @@ def google_get_keys(request):
     print project_id
     keys = {"project_id": project_id}
     return keys
+
+def google_monitor(request):
+    return render_to_response("google_monitor.html", )
