@@ -15,7 +15,7 @@ from django.http import HttpResponse
 def rackspace(request):
     usr_id = request.user.id
     try:
-        rackspace_result = Rackspace.objects.get(user_id=usr_id)
+        rackspace_result = Rackspace.objects.get(id=usr_id)
     except:
         rackspace_result = None
     if rackspace_result is not None:
@@ -26,15 +26,16 @@ def rackspace(request):
             form = RackspaceForm(request.POST or None)
             if form.is_valid():
                 tenant_id = form.cleaned_data['tenant_id']
-                keys = Rackspace(user_id=usr_id, )
+                keys = Rackspace(id=usr_id, )
                 save_keys = Rackspace.save(keys)
                 print "Rackspace KEYS HAS BEEN SAVED IN Rackspace TABLE"
                 return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
-                form = RackspaceForm()
-                context = {
-                    "form": form,
-                }
-                return render_to_response("rackspace.html", context, context_instance=RequestContext(request))
+        else:
+            form = RackspaceForm()
+            context = {
+                "form": form,
+            }
+            return render_to_response("Rackspace.html", context, context_instance=RequestContext(request))
 
 
 def rackspace_create(request):
@@ -50,12 +51,13 @@ def rackspace_create(request):
         selectimage = request.POST.get("selectimage")
         print instance, selectram, selectimage
         usr_id = request.user.id
-        rackspace_result = Rackspace.objects.get(user_id=usr_id)
+        rackspace_result = Rackspace.objects.get(id=usr_id)
         tenant_id = rackspace_result.tenant_id
         print tenant_id
         rackspace = Rackspace(tenant_id)
         rackspace.launch_instance(instance, selectram, selectimage)
-        return render_to_response("rackspace_create.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("rackspace_create.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_create.html", {})
 
@@ -69,8 +71,7 @@ def rackspace_home(request):
         selectOP = request.POST.get("selectOP")
         print selectOP
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
-    elif request.method == 'GET':
-        return render_to_response("rackspace_home.html", {})
+
 
 
 def rackspace_update(request):
@@ -87,13 +88,13 @@ def rackspace_update(request):
         rackspace = Rackspace(tenant_id)
         rackspace.update_instance(selectram, server)
         # print selectram, server
-        return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_update.html", {})
-
+    return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
 
 def rackspace_delete(request):
-    print "rackspace_update **************************"
+    print "rackspace_delete **************************"
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
@@ -105,10 +106,10 @@ def rackspace_delete(request):
         rackspace = Rackspace(tenant_id)
         rackspace.delete_instance(server)
         # print server
-        return render_to_response("rackspace_delete.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_delete.html", {})
-
+    return render_to_response("rackspace_delete.html", {}, context_instance=RequestContext(request))
 
 def rackspace_reboot(request):
     print "rackspace_reboot **************************"
@@ -124,10 +125,10 @@ def rackspace_reboot(request):
         rackspace = Rackspace(tenant_id)
         rackspace.instance_reboot(server, boot)
         # print server, boot
-        return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_reboot.html", {})
-
+    return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
 
 def rackspace_view(request):
     print "rackspace_view **************************"
@@ -143,14 +144,14 @@ def rackspace_view(request):
         rackspace = Rackspace(tenant_id)
         rackspace.view_instance(server_name, server_ip)
         # print server_name, server_ip
-        return render_to_response("rackspace_view.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_view.html", {})
-
+    return render_to_response("rackspace_view.html", {}, context_instance=RequestContext(request))
 
 def rackspace_get_keys(request):
     usr_id = request.user.id
-    rackspace_result = Rackspace.objects.get(user_id=usr_id)
+    rackspace_result = Rackspace.objects.get(id=usr_id)
     tenant_id = rackspace_result.tenant_id
     print tenant_id
     keys = {"tenant_id": tenant_id}

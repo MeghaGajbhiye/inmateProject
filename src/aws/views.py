@@ -15,7 +15,7 @@ from aws import AWS
 
 
 def aws(request):
-    print "In aws function"
+    print "In aws function 123"
 
     # Get the user Id of logged in user
     usr_id = request.user.id
@@ -30,6 +30,7 @@ def aws(request):
     # If the logged in user Id matches against user_id inside aws table, that means the user has already entered and
     # saved the aws key and secret key in database, therefore the AWS dashboard is shown to user
     if aws_result is not None:
+        print "exiting here"
         return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
 
     # Else If the user Id does not mataches against user_id of aws table, we will now show the AWS form in which user can
@@ -43,7 +44,7 @@ def aws(request):
             if form.is_valid():
                 aws_key = form.cleaned_data['aws_access_key']
                 aws_secret = form.cleaned_data['aws_secret_key']
-                print aws_key, aws_secret
+                print usr_id, aws_key, aws_secret
                 keys = AWSModel(user_id=usr_id, aws_access_key=aws_key, aws_secret_key=aws_secret)
                 save_keys = AWSModel.save(keys)
                 print "AWS KEYS HAS BEEN SAVED IN AWS TABLE"
@@ -63,6 +64,8 @@ def aws(request):
 def aws_create(request):
     print "aws create ********"
     # If the request method is Get, show the create form to the user
+    if request.is_ajax():
+        print "it's ajax"
 
     if request.method == 'GET':
         print "inside get"
@@ -72,6 +75,8 @@ def aws_create(request):
     # create an instance, therefore fetching the POST values from the aws_create.html and calling the create_instance
     # function in order to create a new instance
     else:
+        if request.is_ajax():
+            print "it's ajax"
         if request.method == 'POST':
             print "Inside post"
             min = request.POST.get("min")
@@ -151,12 +156,12 @@ def aws_delete(request):
             print instance_id, instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
-            # keys = aws_get_keys(request)
-            # # print keys
-            # access_key = keys["access_key"]
-            # secret_key = keys["secret_key"]
-            # aws = AWS (access_key, secret_key)
-            # aws.terminate_instance(instance_id)
+            keys = aws_get_keys(request)
+            # print keys
+            access_key = keys["access_key"]
+            secret_key = keys["secret_key"]
+            aws = AWS (access_key, secret_key)
+            aws.terminate_instance(instance_id)
 
             instance_db = [u'instance_test', u'Server-01']
             print "I am above instance_name"
@@ -164,8 +169,12 @@ def aws_delete(request):
             print instance_name
             context = {"instance_name": instance_name}
             print "Gotcha instance"
+            return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
+    elif request.method == 'GET':
+        instance_db = [u'instance_test', u'Server-01']
+        return render_to_response("aws_delete.html", {'instance_db': instance_db})
 
-    return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
+
 
 
 def aws_get_keys(request):

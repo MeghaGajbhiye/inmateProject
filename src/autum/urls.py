@@ -5,7 +5,7 @@ from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 
 from aws.views import aws, aws_home, aws_delete, aws_create
-from azure.views import azure, azure_home, azure_create, azure_update, azure_delete, azure_start, azure_stop, \
+from azure.views import azure, azure_home, azure_create, azure_update, azure_delete_vm, azure_start, azure_stop, \
     azure_reboot, azure_view
 from ibm.views import ibm, ibm_home
 
@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^azure_reboot/$', azure_reboot, name='azure_reboot'),
     url(r'^azure_create/$', azure_create, name='azure_create'),
     url(r'^azure_update/$', azure_update, name='azure_update'),
-    url(r'^azure_delete/$', azure_delete, name='azure_delete'),
+    url(r'^azure_delete_vm/$', azure_delete_vm, name='azure_delete_vm'),
     url(r'^azure_view/$', azure_view, name='azure_view'),
     url(r'^ibm/$', ibm, name='ibm'),
     url(r'^IBM_Home/$', ibm_home, name='ibm_home'),
