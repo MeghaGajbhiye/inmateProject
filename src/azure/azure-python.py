@@ -35,7 +35,7 @@ class Azure:
         self.network_client = nmc (self.credentials, self.subscription_id)
         self.monitor_client = mc(self.credentials, self.subscription_id)
 
-        self.VM_REFERENCE = {
+        self.VM_OS = {
             'linux': {
                 'publisher': 'Canonical',
                 'offer': 'UbuntuServer',
@@ -50,8 +50,6 @@ class Azure:
             }
         }
 
-
-    # Create Resource group
     def create_resource_group(self, resource_group_name, location):
         """create resource group"""
         print('\nCreate Resource Group')
@@ -83,17 +81,15 @@ class Azure:
                                ip_config_name)
 
         if choice == 'linux':
-            # Create Linux VM
-            print('\nCreating Linux Virtual Machine')
-            vm_parameters = self.create_vm_parameters (nic.id, self.VM_REFERENCE['linux'], location, vm_name,
-                                                       admin_username, admin_password, os_disk_name)
-            async_vm_creation = self.compute_client.virtual_machines.create_or_update (
-                resource_group_name, vm_name, vm_parameters)
-            async_vm_creation.wait ()
+            # Launching Linux Virtual Machine
+            vm_params = self.create_parameters (nic.id, self.VM_OS['linux'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
 
-            # Tag the VM
-            print('\nTag Virtual Machine')
-            async_vm_update = self.compute_client.virtual_machines.create_or_update (
+            # Tag the Virtual Machine
+            vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
                 {
@@ -104,11 +100,10 @@ class Azure:
                     }
                 }
             )
-            async_vm_update.wait ()
+            vm_update.wait ()
 
-            # Attach data disk
-            print('\nAttach Data Disk')
-            async_vm_update = self.compute_client.virtual_machines.create_or_update (
+            # Attach the data disk to virtual machine.
+            vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
                 {
@@ -127,16 +122,16 @@ class Azure:
                     }
                 }
             )
-            async_vm_update.wait ()
+            vm_update.wait ()
 
         elif self.choice == 'windows':
             # Create Windows VM
             print('\nCreating Windows Virtual Machine')
-            vm_parameters = self.create_vm_parameters (nic.id, self.VM_REFERENCE['windows'], location, vm_name,
-                                                       admin_username, admin_password, os_disk_name)
-            async_vm_creation = self.compute_client.virtual_machines.create_or_update (
-                resource_group_name, vm_name, vm_parameters)
-            async_vm_creation.wait ()
+            vm_params = self.create_parameters (nic.id, self.VM_OS['windows'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
 
     def update_instance(self, add_size, resource_group_name, vm_name):
 
@@ -258,7 +253,7 @@ class Azure:
         subnet_info = async_subnet_creation.result ()
         return subnet_info
 
-    def create_vm_parameters(self, nic_id, vm_reference, location, vm_name, admin_username, admin_password,
+    def create_parameters(self, nic_id, vm_reference, location, vm_name, admin_username, admin_password,
                              os_disk_name):
         """Create the VM parameters structure.
         """
