@@ -152,8 +152,8 @@ def aws_delete(request):
         if request.method == 'POST':
             print "I am here inside post"
             instance = request.POST.get("instance")
-            instance_id = request.POST.get("instance_id")
-            print instance_id, instance
+
+            print instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
             keys = aws_get_keys(request)
@@ -161,7 +161,7 @@ def aws_delete(request):
             access_key = keys["access_key"]
             secret_key = keys["secret_key"]
             aws = AWS (access_key, secret_key)
-            aws.terminate_instance(instance_id)
+            aws.terminate_instance(instance)
 
             instance_db = [u'instance_test', u'Server-01']
             print "I am above instance_name"

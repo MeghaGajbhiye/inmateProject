@@ -98,11 +98,7 @@
         </select>
 <td>
 
-<td>
-    <h3> Enter Instance ID</h3>
-    <input type="text" size="4" value="Instance ID" id="instance_id">
 
-    </td>
 
     <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button><h2>
         <p id="instance"></p>
@@ -110,7 +106,7 @@
         <script type="text/javascript">
     function myFunction() {
             document.getElementById("instance").innerHTML = "Instance name selected";
-            document.getElementById("instance_id").innerHTML = "Instance selected";
+            
         }
     </script>
 
@@ -124,7 +120,7 @@
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     instance: $("#instance").val(),
-                    instance_id: $("#instance_id").val(),
+                    
                    
                 },
                 success: function (json) {

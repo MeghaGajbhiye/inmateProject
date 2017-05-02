@@ -141,6 +141,20 @@ def azure_update(request):
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_update.html", {}, context_instance=RequestContext(request))
 
+def azure_delete(request):
+    print "azure_delete **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+            selectOP = request.POST.get("selectOP")
+
+            print selectOP
+
+
+        return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
 
 def azure_delete_vm(request):
     print "azure_delete_vm **************************"
@@ -159,12 +173,37 @@ def azure_delete_vm(request):
             tenant_id = keys["tenant_id"]
             azure = Azure(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name, vm_name)
-            print "I got the azure keys"
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
-    return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
-
+            instance_db = [u'instance_test', u'Server-01']
+            print "I am above instance_name"
+            instance_name = json.dumps(instance_db)
+            print instance_name
+            context = {"instance_name": instance_name}
+            print "Gotcha instance"
+            return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
+    elif request.method == 'GET':
+        instance_db = [u'instance_test', u'Server-01']
+        return render_to_response("azure_delete_vm.html", {'instance_db': instance_db})
 # return render_to_response("azure_delete_vm.html", {})
 
+def azure_delete_rsgrp(request):
+    print "azure_delete_rsgrp **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+            res_grp_name = request.POST.get("res_grp_name")
+            print res_grp_name
+            keys = azure_get_keys(request)
+            subscription_id = keys["subscription_id"]
+            client_id = keys["client_id"]
+            secret_key = keys["secret_key"]
+            tenant_id = keys["tenant_id"]
+            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure.delete_vm(res_grp_name)
+            print "I got the azure keys"
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_delete_rsgrp.html", {}, context_instance=RequestContext(request))
 
 
 def azure_stop(request):

@@ -66,24 +66,24 @@
     </div>
 </nav>
 
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="/dashboard">Overview</a></li>
+                <li><a href="/dashboard">Overview </a></li>
                 <li><a href="/monitor">Monitor</a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
-                <li class="active"><a href="/cpfinal">Manage Instances <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="/cpfinal">Manage Instances<span class="sr-only">(current)</span></a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Azure_Home</h1>
             <div class="row placeholders">
-                <div class="col-xs-6 col-sm-3 placeholder">
+             <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/azure.jpg" %} width= 100 height=100></img>
-                    <h1> AZURE HOME</h1>
+                    <h1> AZURE DELETE</h1>
                 </div>
             </div>
             <div class="row placeholders">
@@ -152,54 +152,47 @@
                 </div>
             </div>
 
-            <td>
-                <h2> Enter your option</h2>
+
+             <td>
+            <h2> Enter your option</h2>
                 <select id="selectOP">
-                    <option value="/azure_create">create</option>
-                    <option value="/azure_delete">delete</option>
-                    <option value="/azure_update">Update</option>
-                    <option value="/azure_view">View</option>
-                    <option value="/azure_stop">Stop</option>
-                    <option value="/azure_start">Start</option>
-                    <option value="/azure_reboot">Reboot</option>
+                    <option value = "/azure_delete_vm">delete_vm</option>
+                    <option value = "/azure_delete_rsgrp">delete_rsgrp</option>
+
 
                 </select>
-            </td>
-            <p id="selectOP"></p>
+             </td>
+                <p id="selectOP"></p>
 
-            <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
-            <script type="text/javascript">
-                function myFunction() {
-                    document.getElementById("select").innerHTML = "Crud Operation selected";
+                        <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button>
 
-                }
+                <script type="text/javascript">
+                    function myFunction() {
+                        {#        $('.ajaxProgress').show();#}
+                        {#        $.ajax({#}
+                        {#            type: "POST",#}
+                        {#            url: "/azure_delete/",#}
+                        {#            async: true,#}
+                        {#            data: {#}
+                        {#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
+                        {#                selectOP: $("#selectOP").val(),#}
+                        {#            },#}
+                        {#            success: function (json) {#}
+                        {#                $('#output').html(json.message);#}
+                        {#                $('.ajaxProgress').hide();#}
+                        {#            },#}
+                        {#            fail: function () {#}
+                        {#                alert("failed");#}
+                        {#            }#}
+                        {#        });#}
 
-            </script>
-            <script type="text/javascript">
-                function myFunction() {
-                    {#        $('.ajaxProgress').show();#}
-                    {#        $.ajax({#}
-                    {#            type: "POST",#}
-                    {#            url: "/aws_home/",#}
-                    {#            async: true,#}
-                    {#            data: {#}
-                    {#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
-                    {#                selectOP: $("#selectOP").val(),#}
-                    {#            },#}
-                    {#            success: function (json) {#}
-                    {#                $('#output').html(json.message);#}
-                    {#                $('.ajaxProgress').hide();#}
-                    {#            },#}
-                    {#            fail: function () {#}
-                    {#                alert("failed");#}
-                    {#            }#}
-                    {#        });#}
-
-                    var value = $("#selectOP").val()
-                    location.href = value;
-                }
-            </script>
+                        var value = $("#selectOP").val()
+                        location.href = value;
+                    }
+                </script>
         </div>
         {% include 'javascript.html' %}
+    </div>
+</div>
 </body>
 </html>
