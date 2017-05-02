@@ -84,6 +84,23 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <img src={%static "img/azure.jpg" %} width = 200 height = 200></img>
             <h1 class="page-header">AZURE Monitoring</h1>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Data</th>
+                </tr>
+
+                    {% for i,j in data %}
+                        <tr>
+                        <td>{{ i }}</td>
+                        <td>{{ j }}</td>
+                        </tr>
+                    {% endfor %}
+
+            </table>
+
+
+
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
@@ -93,13 +110,11 @@
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Price', 'Service providers'],
-                                ['AWS', 300],
-                                ['Azure', 250],
-                                ['Google', 320],
-                                ['IBM', 180],
-                                ['Rackspace', 265]]);
+
+                             var data = new google.visualization.DataTable();
+                                data.addColumn('string', 'Time');
+  data.addColumn('number', 'Zone');
+                                data.addRows( {{ data1|safe }});
 
                             var options = {
                                 title: 'Price chart',
