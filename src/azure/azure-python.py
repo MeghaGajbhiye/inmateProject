@@ -384,7 +384,7 @@ class Azure:
             for data in item.data:
                 # azure.monitor.models.MetricData
                 print("{}: {}".format (data.time_stamp, data.total))
-
+                #
                 # 2017 - 04 - 29
                 # 00:00:00 + 00:00: None
                 # 2017 - 04 - 29
