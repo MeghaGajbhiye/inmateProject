@@ -192,3 +192,6 @@ def aws_get_keys(request):
     print access_key, secret_key
     keys = {"access_key": access_key, "secret_key": secret_key}
     return keys
+
+def aws_monitor(request):
+    return render_to_response("aws_monitor.html", )

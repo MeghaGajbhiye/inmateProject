@@ -73,8 +73,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="#">Overview</a></li>
-                <li class="active"><a href="/monitor">Monitor  <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Overview </a></li>
+                <li class="active"><a href="/monitor">Monitor <span class="sr-only">(current)</span></a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
                 <li><a href="/cpfinal">Manage Instances</a></li>
                 <li><a href="/migration">Migrate</a></li>
@@ -82,7 +82,9 @@
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Monitoring</h1>
+            <img src={%static "img/images.png" %} width = 150 height = 200></img>
+            <h1 class="page-header">GOOGLE Monitoring</h1>
+
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
@@ -92,16 +94,12 @@
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Price', 'Service providers'],
-                                ['AWS', 300],
-                                ['Azure', 250],
-                                ['Google', 320],
-                                ['IBM', 180],
-                                ['Rackspace', 265]]);
-
+                             var data = new google.visualization.DataTable();
+                                data.addColumn('string', 'Time');
+  data.addColumn('number', 'Zone');
+                                data.addRows( {{ data1|safe }});
                             var options = {
-                                title: 'Price chart',
+                                title: 'Time chart',
                                 curveType: 'function',
                                 legend: {position: 'bottom'}
                             };
@@ -111,93 +109,11 @@
                             chart.draw(data, options);
                         }
                     </script>
-                    <div id="curve_chart" style="width: 300px; height: 250px">
+                    <div id="curve_chart" style="width: 500px; height: 250px">
 
                     </div>
-                    <h3>Price Graph</h3>
-                </div>
-
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                    <script type="text/javascript">
-                        google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
-
-                        function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Performance', 'Service providers'],
-                                ['AWS', 4.2],
-                                ['Azure', 3.7],
-                                ['Google', 2.8],
-                                ['IBM', 1.3],
-                                ['Rackspace', 4.9]]);
-
-                            var options = {
-                                title: 'Performance chart',
-                                curveType: 'function',
-                                legend: {position: 'bottom'}
-                            };
-
-                            var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
-
-                            chart.draw(data, options);
-                        }
-                    </script>
-
-                    <div id="curve_chart1" style="width: 300px; height: 250px"></div>
-
-                    <h3>Performance Graph</h3>
-
-                </div>
-            </div>
-
-            <div>
-                <table class="monitor-buttons">
-                    <h2> Monitor cloud </h2>
-                    <tr>
-                        <td>
-                            <h2>
-                                <form action="/aws_monitor">
-                                    <input type="submit" value="AWS"/>
-                                </form>
-                            </h2>
-                        </td>
-                        <td>&nbsp;&nbsp;</td>
-                        <td>
-                            <h2>
-                                <form action="/azure_monitor">
-                                    <input type="submit" value="AZURE"/>
-                                </form>
-                            </h2>
-                        </td>
-                        <td>&nbsp;&nbsp;</td>
-                        <td>
-                            <h2>
-                                <form action="/ibm_home">
-                                    <input type="submit" value="IBM"/>
-                                </form>
-                            </h2>
-                        </td>
-                        <td>&nbsp;&nbsp;</td>
-                        <td>
-                            <h2>
-                                <form action="/rackspace_monitor">
-                                    <input type="submit" value="RACKSPACE"/>
-                                </form>
-                            </h2>
-                        </td>
-                        <td>&nbsp;&nbsp;</td>
-                        <td>
-                            <h2>
-                                <form action="/google_monitor">
-                                    <input type="submit" value="GOOGLE"/>
-                                </form>
-                            </h2>
-                        </td>
-                        <td>&nbsp;&nbsp;</td>
-                    </tr>
-                </table>
-            </div>
+                    <h3>Time Graph</h3>
+                    </div>
 
         </div>
         {% include 'javascript.html' %}

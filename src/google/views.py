@@ -121,3 +121,7 @@ def google_get_keys(request):
     print project_id
     keys = {"project_id": project_id}
     return keys
+
+def google_monitor(request):
+    data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
+    return render_to_response("google_monitor.html", {'data1': data1})

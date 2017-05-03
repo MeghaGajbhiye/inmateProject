@@ -156,3 +156,6 @@ def rackspace_get_keys(request):
     print tenant_id
     keys = {"tenant_id": tenant_id}
     return keys
+
+def rackspace_monitor(request):
+    return render_to_response("rackspace_monitor.html", )

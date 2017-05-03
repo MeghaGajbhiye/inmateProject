@@ -319,3 +319,9 @@ def azure_get_keys(request):
     keys = {"subscription_id": subscription_id, "client_id": client_id, "secret_key": secret_key,
             "tenant_id": tenant_id}
     return keys
+
+def azure_monitor(request):
+    time = ['2017 - 04 - 29 00:00:00 + 00:00', '2017 - 04 - 29 01:00:00 + 00:00']
+    zone = [None, None]
+    data = zip(time,zone)
+    return render_to_response("azure_monitor.html", {'data':data})
