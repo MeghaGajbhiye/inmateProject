@@ -87,36 +87,60 @@
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
-                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                    <script type="text/javascript">
-                        google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+                    <td>
+    <h2> Create Alarm
+        <select id="alarm">
 
-                        function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Price', 'Service providers'],
-                                ['AWS', 300],
-                                ['Azure', 250],
-                                ['Google', 320],
-                                ['IBM', 180],
-                                ['Rackspace', 265]]);
+            <option>Select alarm</option>
+            {% for i in alarm_db %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
+        </select>
+<td>
+<td>
+            <h4> Enter Email Address
+                <input type="text" size="12" value="email" id="email">
+            </h4>
+        </td>
 
-                            var options = {
-                                title: 'Price chart',
-                                curveType: 'function',
-                                legend: {position: 'bottom'}
-                            };
+    <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button><h2>
+        <p id="alarm"></p>
+        <p id="email"></p>
+        <script type="text/javascript">
+    function myFunction() {
+            document.getElementById("alarm").innerHTML = "Alarm selected";
+            document.getElementById("email").innerHTML = "Instance name selected";
+            
+        }
+    </script>
 
-                            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    <script type="text/javascript">
+        function myFunction() {
+            $('.ajaxProgress').show();
+            $.ajax({
+                type: "POST",
+                url: "/rackspace_monitor/",
+                async: true,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    alarm: $("#alarm").val(),
+                    email: $("#email").val(),
+                    
+                   
+                },
+                success: function (json) {
+                    $('#output').html(json.message);
+                    $('.ajaxProgress').hide();
+                },
+                fail: function () {
+                    alert("failed")
+                }
+            });
+        }
 
-                            chart.draw(data, options);
-                        }
-                    </script>
-                    <div id="curve_chart" style="width: 500px; height: 250px">
+    </script>
 
-                    </div>
-                    <h3>Price Graph</h3>
-                    </div>
+
 
         </div>
         {% include 'javascript.html' %}

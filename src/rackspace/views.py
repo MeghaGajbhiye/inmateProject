@@ -158,4 +158,27 @@ def rackspace_get_keys(request):
     return keys
 
 def rackspace_monitor(request):
-    return render_to_response("rackspace_monitor.html", )
+    print "rackspace_monitor **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+            alarm = request.POST.get("alarm")
+            email = request.POST.get("email")
+            print alarm, email
+            keys = rackspace_get_keys(request)
+            tenant_id = keys["tenant_id"]
+            rackspace = Rackspace(tenant_id)
+            rackspace.moniotiring(alarm, email)
+            alarm_db = [u'alarm_test', u'22:01:00']
+            print "I am above instance_name"
+            alarm_name = json.dumps(alarm_db)
+            print alarm_name
+            context = {"alarm_name": alarm_name}
+            print "Gotcha instance"
+            return render_to_response("rackspace_monitor.html", {}, context_instance=RequestContext(request))
+    elif request.method == 'GET':
+        alarm_db = [u'alarm_test', u'22:01:00']
+        return render_to_response("rackspace_monitor.html", {'alarm_db': alarm_db})
+
