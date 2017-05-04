@@ -1,34 +1,48 @@
 import argparse
 import os
 import time
-
-import argparse
 import datetime
+import json
 
 import googleapiclient.discovery
 from six.moves import input
 from oauth2client.client import GoogleCredentials
+from googleapiclient.discovery import build
+from oauth2client.client import AccessTokenCredentials
+from urllib import urlencode
+from urllib2 import Request , urlopen, HTTPError
 
 
 
 class Google:
 
-    def __init__(self):
-        credentials = GoogleCredentials.get_application_default ()
+    def __init__(self, google_client_id, google_client_secret, google_refresh_token):
+        auth_request = Request('https://accounts.google.com/o/oauth2/token', 
+                  data=urlencode({ 
+                    'grant_type': 'refresh_token', 
+                    'client_id': google_client_id, 
+                    'client_secret': google_client_secret, 
+                    'refresh_token': google_refresh_token }), 
+                  headers={'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' })
+        auth_response = json.load(urlopen(auth_request))
+        google_access_token= auth_response['access_token']
+        google_credentials = AccessTokenCredentials(google_access_token, "MyAgent/1.0", None)
+        self.compute = build('compute', 'v1', credentials=google_credentials)
+        # credentials = GoogleCredentials.get_application_default ()
 
-    def wait_for_operation(self, compute, project, zone, operation):
+    def operation_wait(self, project_id, google_zone, operation_name):
         print('Waiting for operation to finish...')
         while True:
-            result = compute.zoneOperations().get(
-                project=project,
-                zone=zone,
-                operation=operation).execute()
+            compute_result = self.compute.zoneOperations().get(
+                project=project_id,
+                zone=google_zone,
+                operation=operation_name).execute()
 
-            if result['status'] == 'DONE':
+            if compute_result['status'] == 'DONE':
                 print("done.")
-                if 'error' in result:
-                    raise Exception(result['error'])
-                return result
+                if 'error' in compute_result:
+                    raise Exception(compute_result['error'])
+                return compute_result
 
             time.sleep(1)
 
@@ -36,18 +50,18 @@ class Google:
 
         print('Creating instance.')
         # Get the latest Debian Jessie image.
-        compute = googleapiclient.discovery.build('compute', 'v1')
-        image_response = compute.images().getFromFamily(
+        # compute = googleapiclient.discovery.build('compute', 'v1')
+        image_result = self.compute.images().getFromFamily(
             project='debian-cloud', family='debian-8').execute()
-        source_disk_image = image_response['selfLink']
+        disk_image = image_result['selfLink']
 
-        # Configure the machine
+        # Configuring the virtual machine
         machine_type = "zones/%s/machineTypes/n1-standard-1" % zone
-        startup_script = open(
+        google_startup_script = open(
             os.path.join(
                 os.path.dirname(__file__), 'startup-script.sh'), 'r').read()
-        image_url = "http://storage.googleapis.com/gce-demo-input/photo.jpg"
-        image_caption = "Ready for dessert?"
+        google_image_url = "http://storage.googleapis.com/gce-demo-input/photo.jpg"
+        google_image_caption = "Ready for test!"
 
         config = {
             'name': instance_name,
@@ -59,7 +73,7 @@ class Google:
                     'boot': True,
                     'autoDelete': True,
                     'initializeParams': {
-                        'sourceImage': source_disk_image,
+                        'sourceImage': disk_image,
                     }
                 }
             ],
@@ -89,13 +103,13 @@ class Google:
                     # Startup script is automatically executed by the
                     # instance upon startup.
                     'key': 'startup-script',
-                    'value': startup_script
+                    'value': google_startup_script
                 }, {
                     'key': 'url',
-                    'value': image_url
+                    'value': google_image_url
                 }, {
                     'key': 'text',
-                    'value': image_caption
+                    'value': google_image_caption
                 }, {
                     'key': 'bucket',
                     'value': bucket_name
@@ -103,12 +117,12 @@ class Google:
             }
         }
 
-        operation= compute.instances().insert(
+        operation= self.compute.instances().insert(
             project=project_id,
             zone=zone,
             body=config).execute()
 
-        self.wait_for_operation(compute, project_id, zone, operation['name'])
+        self.operation_wait(project_id, zone, operation['name'])
 
         print("""
            Instance created.
@@ -117,23 +131,23 @@ class Google:
 
 
     def list_instances(self, project_id, zone):
-        compute = googleapiclient.discovery.build('compute', 'v1')
-        result = compute.instances().list(project=project_id, zone=zone).execute()
-        instances = result['items']
+        # compute = googleapiclient.discovery.build('compute', 'v1')
+        compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
+        google_instances = compute_result['items']
         print('Instances in project %s and zone %s:' % (project_id, zone))
-        for instance in instances:
-            print(' - ' + instance['name'])
+        for google_instance in google_instances:
+            print(' - ' + google_instance['name'])
 
 
     def delete_instance(self, project_id, zone, instance_name):
 
         print('Deleting instance.')
-        compute = googleapiclient.discovery.build('compute', 'v1')
+        # compute = googleapiclient.discovery.build('compute', 'v1')
 
         # operation = self.delete_instance(compute, self.get_project_id(), self.get_zone(), self.get_instance_name())
 
-        operation = compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
-        self.wait_for_operation(compute, project_id, zone, operation['name'])
+        operation = self.compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+        self.operation_wait(project_id, zone, operation['name'])
 
         print("""  Instance Deleted.
                    It will take a minute or two for the instance to be deleted.
@@ -202,11 +216,12 @@ class Google:
     # Z: 40906.0
 
 if __name__ == '__main__':
-    gc= Google()
+    gc= Google("32555940559.apps.googleusercontent.com", "ZmssLNjJy2998hD4CTg2ejr2", "1/Czt1brCXjU5UzTRfVrE4OUmHUL9RfUHRHd-K1HelXPo")
+    gc.list_instances("autum-165318", "us-central1-f")
     # gc.set_pid("autum-165318")
     # gc.set_bucket_name("autum")
     # gc.set_zone("us-central1-f")
-    # gc.set_instance_name("autumtest3")
-    # gc.create_instance("autum-165318","us-central1-f","autumtest-1","autum" )
-    # gc.delete_instance("autum-165318", "us-central1-f", "autumtest1")
-    gc.cloud_monitor("autum-165318")
+    # gc.set_instance_name("autumtest2")
+    gc.create_instance("autum-165318","us-central1-f","autumtest-2","autum2" )
+    gc.delete_instance("autum-165318", "us-central1-f", "autumtest2")
+    # gc.cloud_monitor("autum-165318")
