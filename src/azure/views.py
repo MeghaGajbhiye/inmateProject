@@ -173,7 +173,7 @@ def azure_delete_vm(request):
             tenant_id = keys["tenant_id"]
             azure = Azure(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name, vm_name)
-            instance_db = [u'instance_test', u'Server-01']
+            instance_db = [u'instance_test', u'Server-01', u'vm1']
             print "I am above instance_name"
             instance_name = json.dumps(instance_db)
             print instance_name
@@ -181,7 +181,7 @@ def azure_delete_vm(request):
             print "Gotcha instance"
             return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
-        instance_db = [u'instance_test', u'Server-01']
+        instance_db = [u'instance_test', u'Server-01', u'vm1']
         return render_to_response("azure_delete_vm.html", {'instance_db': instance_db})
 # return render_to_response("azure_delete_vm.html", {})
 
