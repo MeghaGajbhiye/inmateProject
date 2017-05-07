@@ -163,9 +163,6 @@ class Google:
             print("Failed to write custom metric data: exception={}".format (e))
             raise
 
-        # Read all data points from the time series.
-        # When a custom metric is created, it may take a few seconds
-        # to propagate throughout the system. Retry a few times.
         print("Reading data from custom metric timeseries...")
         read_request = google_client.timeseries ().list (
             project=project_id,
@@ -187,6 +184,7 @@ class Google:
                     print("Failed to read custom metric data, aborting: "
                           "exception={}".format (e))
                     raise
+
     #
     # Point:  2017 - 05 - 01
     # T05:17:23.000

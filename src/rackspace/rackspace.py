@@ -117,14 +117,22 @@ class Rackspace:
         plan = cm.create_notification_plan (label="default", ok_state=email, warning_state=email,
                                             critical_state=email)
 
+        if notification =="Duration":
+            print "inside Duration"
+            chk = cm.create_check (ent, label="check_duration", check_type="remote.http", details={"url": host}, period=900,
+                                   timeout=20, target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (metric['duration'] > 2000) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+
         if notification == "CPU":
+            print "inside cpu"
             chk = cm.create_check (ent, label="check_cpu", check_type="agent.cpu", details={"url": host}, period=900,
                                    timeout=20, target_hostname=ipAddress)
             alarm = cm.create_alarm (ent, chk, plan,
-                                     "if (rate(metric['usage_average']) > 10) { return new AlarmStatus(WARNING); } "
-                                     "return new AlarmStatus(OK);")
+                                     "if (rate(metric['usage_average']) > 10) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
 
         elif notification == "Memory":
+            print "inside memory"
             chk = cm.create_check (ent, label="check_memory", check_type="agent.memory", details={"url": host},
                                    period=900,
                                    timeout=20, target_hostname=ipAddress)
@@ -133,6 +141,7 @@ class Rackspace:
                                      "AlarmStatus(WARNING); } return new AlarmStatus(OK);")
 
         elif notification == "Ping":
+            print "Inside ping"
             chk = cm.create_check (ent, label="sample_check", check_type="remote.http", details={"url": host},
                                    period=900,
                                    timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
@@ -142,6 +151,7 @@ class Rackspace:
                                      "new AlarmStatus(OK);")
 
         elif notification == "5 minute load average":
+            print "inside 5min load"
             chk = cm.create_check (ent, label="sample_check", check_type="agent.load_average", details={"url": host},
                                    period=900,
                                    timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
@@ -198,22 +208,19 @@ class Rackspace:
         # print("Server Status:", active.status)
         # print()
 
-        print("A 'soft' reboot attempts a graceful shutdown and restart of your server.")
-        print("A 'hard' reboot power cycles your server.")
         answer = boot_type
         reboot_type = {"s": "soft", "h": "hard"}[answer]
         active.reboot (reboot_type)
         # Reload the server
         after_reboot = self.cs.servers.get (active.id)
-        print()
-        print("After reboot command")
+
         print("Server Status =", after_reboot.status)
 
 
 if __name__ == "__main__":
     r = Rackspace ("achal126", "9ac58056270b4447a6154662d160ef9f")
     sn = r.view_instances()
-    # monitoring = r.monitoring ("instance_test", "Duration")
+    monitoring = r.monitoring ("instance_test", "Ping","megha.gajbhiye@sjsu.edu")
     # print sn
     # r.launch_instance("instance_test", "Debian 7 (Wheezy) (PVHVM)", 1024)
     # print r.update_instance("test2", 2048)
