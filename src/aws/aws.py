@@ -18,8 +18,15 @@ class AWS:
 
     def describe_instances(self):
         print ('Inside describe method')
-        ec2 = boto3.client('ec2')
-        ec2_out = ec2.describe_instances()
+        ec2 = boto3.client('ec2',aws_access_key_id=self.get_acccess_key(),aws_secret_access_key=self.get_secret_key())
+        next_token=''
+	ec2_out = ec2.describe_instances(Filters=[
+		{
+		'Name':'instance-state-name',
+		'Values':[
+		'running'
+		]}],
+		NextToken=next_token)
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
@@ -33,7 +40,8 @@ class AWS:
         print "I am inside launch instance"
         ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
-        image_id = self.describe_images()
+        image_id = 'ami-8ca83fec' 
+	#self.describe_images()
         # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
         #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
 
@@ -75,7 +83,25 @@ class AWS:
         ec2_out = ec2.terminate_instances (InstanceIds=[instance_id])
         print (ec2_out)
 
-    # def cloudwatchmonitoring(self):
+    def get_metrics(self, instance_ids):
+        client = boto3.client('cloudwatch', aws_access_key_id=self.get_acccess_key(),
+                            aws_secret_access_key=self.get_secret_key())
+        now = datetime.utcnow()
+	    start = now - timedelta(hours=3)
+        all_metrics = ['CPUUtilization','DiskReadOps','DiskWriteOps', 'DiskReadBytes', 'DiskWriteBytes','NetworkIn',
+        'NetworkOut','NetworkPacketsIn','NetworkPacketsOut','StatusCheckFailed']
+        for metric in all_metrics:
+            response =  client.get_metric_statistics(
+                Namespace='AWS/EC2', 
+                MetricName="CPUUtilization", 
+                Dimensions=[{'Name': 'InstanceId','Value': 'i-0cae18706985f552e'},],
+                StartTime=start,
+                EndTime=now,
+                Period=120,
+                Statistics=['Average'])
+		return (response)
+    
+# def cloudwatchmonitoring(self):
     #     print "I am inside cloudwatch"
     #     instance_id_list  = self.describe_instances()
     #     now = datetime.utcnow()
@@ -100,6 +126,9 @@ class AWS:
 
 if __name__ == "__main__":
     # aws_access_key_id = '', aws_secret_access_key = 'ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy'
-    aws = AWS("AKIAJRQMACIVSVREZ6OA", "ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy")
-    aws.describe_instances()
-
+    aws = AWS("AKIAIR6NSMV54GLQET2A", "Z51MMk4s0eyeWPyaS2jMi0XMlIkZ7BJTZAtZ3tY+")
+    instances = aws.describe_instances()
+    for instance in instances:
+	print (instance)
+	aws.get_metrics(instance)
+    #aws.launch_instance( 1, 1,'keypair2', 'c3.xlarge',True)

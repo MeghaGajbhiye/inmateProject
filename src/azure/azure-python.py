@@ -1,7 +1,9 @@
-import argparse
 import os
-import time
+import datetime
+
+#3rd Party Libraries
 from azure.mgmt.resource import ResourceManagementClient as rmc
+from azure.monitor import MonitorClient as mc
 from azure.common.credentials import ServicePrincipalCredentials as spc
 from azure.mgmt.network import NetworkManagementClient as nmc
 from azure.mgmt.storage import StorageManagementClient as smc
@@ -9,23 +11,19 @@ from azure.mgmt.compute import ComputeManagementClient as cmc
 from haikunator import Haikunator as hk
 
 
-# things to ask user -subnet_name, vnet-name,group-name,location,
-# ip-config-name, nic-name, username, password, vm-name, vm-type,
-
-
 class Azure:
     def __init__(self, sub_id, client_id, secret, tenant):
 
         self.haikunator = hk ()
         self.STORAGE_ACC_NAME = self.haikunator.haikunate (delimiter='')
-        self.SUB_ID = sub_id
-        self.CLIENT_ID = client_id
-        self.TENANT_ID = tenant
-        self.SECRET_KEY = secret
+        self.SUB_ID = sub_id            #Azure Subscription ID
+        self.CLIENT_ID = client_id      #Azure Client ID
+        self.TENANT_ID = tenant         #Azure Tenant ID
+        self.SECRET_KEY = secret        #Azure Secret Key
 
         self.subscription_id = os.environ.get (
             'AZURE_SUBSCRIPTION_ID',
-            self.SUB_ID)  # your Azure Subscription Id
+            self.SUB_ID)
         self.credentials = spc (
             client_id=self.CLIENT_ID,
             secret=self.SECRET_KEY,
@@ -35,8 +33,9 @@ class Azure:
         self.compute_client = cmc (self.credentials, self.subscription_id)
         self.storage_client = smc (self.credentials, self.subscription_id)
         self.network_client = nmc (self.credentials, self.subscription_id)
+        self.monitor_client = mc(self.credentials, self.subscription_id)
 
-        self.VM_REFERENCE = {
+        self.VM_OS = {
             'linux': {
                 'publisher': 'Canonical',
                 'offer': 'UbuntuServer',
@@ -51,8 +50,6 @@ class Azure:
             }
         }
 
-
-    # Create Resource group
     def create_resource_group(self, resource_group_name, location):
         """create resource group"""
         print('\nCreate Resource Group')
@@ -84,17 +81,15 @@ class Azure:
                                ip_config_name)
 
         if choice == 'linux':
-            # Create Linux VM
-            print('\nCreating Linux Virtual Machine')
-            vm_parameters = self.create_vm_parameters (nic.id, self.VM_REFERENCE['linux'], location, vm_name,
-                                                       admin_username, admin_password, os_disk_name)
-            async_vm_creation = self.compute_client.virtual_machines.create_or_update (
-                resource_group_name, vm_name, vm_parameters)
-            async_vm_creation.wait ()
+            # Launching Linux Virtual Machine
+            vm_params = self.create_parameters (nic.id, self.VM_OS['linux'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
 
-            # Tag the VM
-            print('\nTag Virtual Machine')
-            async_vm_update = self.compute_client.virtual_machines.create_or_update (
+            # Tag the Virtual Machine
+            vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
                 {
@@ -105,11 +100,10 @@ class Azure:
                     }
                 }
             )
-            async_vm_update.wait ()
+            vm_update.wait ()
 
-            # Attach data disk
-            print('\nAttach Data Disk')
-            async_vm_update = self.compute_client.virtual_machines.create_or_update (
+            # Attach the data disk to virtual machine.
+            vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
                 {
@@ -128,16 +122,16 @@ class Azure:
                     }
                 }
             )
-            async_vm_update.wait ()
+            vm_update.wait ()
 
         elif self.choice == 'windows':
             # Create Windows VM
             print('\nCreating Windows Virtual Machine')
-            vm_parameters = self.create_vm_parameters (nic.id, self.VM_REFERENCE['windows'], location, vm_name,
-                                                       admin_username, admin_password, os_disk_name)
-            async_vm_creation = self.compute_client.virtual_machines.create_or_update (
-                resource_group_name, vm_name, vm_parameters)
-            async_vm_creation.wait ()
+            vm_params = self.create_parameters (nic.id, self.VM_OS['windows'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
 
     def update_instance(self, add_size, resource_group_name, vm_name):
 
@@ -259,7 +253,7 @@ class Azure:
         subnet_info = async_subnet_creation.result ()
         return subnet_info
 
-    def create_vm_parameters(self, nic_id, vm_reference, location, vm_name, admin_username, admin_password,
+    def create_parameters(self, nic_id, vm_reference, location, vm_name, admin_username, admin_password,
                              os_disk_name):
         """Create the VM parameters structure.
         """
@@ -297,11 +291,190 @@ class Azure:
             },
         }
 
+    def cloud_monitor(self):
+        print "I am here"
+        today = datetime.datetime.now ().date ()
+        filter = " and ".join ([
+            "eventTimestamp ge {}".format (today),
+            "resourceGroupName eq 'ResourceGroupName'"
+        ])
+        select = ",".join ([
+            "eventName",
+            "operationName"
+        ])
+
+        activity_logs = self.monitor_client.activity_logs.list (
+            filter=filter,
+            select=select
+        )
+        print activity_logs
+
+        for log in activity_logs:
+            # assert isinstance(log, azure.monitor.models.EventData)
+            print(" ".join ([
+                log.event_name.localized_value,
+                log.operation_name.localized_value
+            ]))
+
+    def cloud_monitoring_metrics(self, resource_group_name, vm_name):
+        resource_id = (
+            "subscriptions/{}/"
+            "resourceGroups/{}/"
+            "providers/Microsoft.Compute/virtualMachines/{}"
+        ).format (self.subscription_id, resource_group_name, vm_name)
+
+        for metric in self.monitor_client.metric_definitions.list (resource_id):
+            print("{}: id={}, unit={}".format (
+                metric.name.localized_value,
+                metric.name.value,
+                metric.unit
+            ))
+        #
+        # Percentage
+        # CPU: id = Percentage
+        # CPU, unit = Unit.percent
+        # Network
+        # In: id = Network
+        # In, unit = Unit.bytes
+        # Network
+        # Out: id = Network
+        # Out, unit = Unit.bytes
+        # Disk
+        # Read
+        # Bytes: id = Disk
+        # Read
+        # Bytes, unit = Unit.bytes
+        # Disk
+        # Write
+        # Bytes: id = Disk
+        # Write
+        # Bytes, unit = Unit.bytes
+        # Disk
+        # Read
+        # Operations / Sec: id = Disk
+        # Read
+        # Operations / Sec, unit = Unit.count_per_second
+        # Disk
+        # Write
+        # Operations / Sec: id = Disk
+        # Write
+        # Operations / Sec, unit = Unit.count_per_second
+
+        # Get CPU total of yesterday for this VM, by hour
+
+        today = datetime.datetime.now ().date ()
+        yesterday = today - datetime.timedelta (days=1)
+
+        filter = " and ".join ([
+            "name.value eq 'Percentage CPU'",
+            "aggregationType eq 'Total'",
+            "startTime eq {}".format (yesterday),
+            "endTime eq {}".format (today),
+            "timeGrain eq duration'PT1H'"
+        ])
+
+        metrics_data = self.monitor_client.metrics.list (
+            resource_id,
+            filter=filter
+        )
+
+        for item in metrics_data:
+            # azure.monitor.models.Metric
+            print("{} ({})".format (item.name.localized_value, item.unit.name))
+            for data in item.data:
+                # azure.monitor.models.MetricData
+                print("{}: {}".format (data.time_stamp, data.total))
+                #
+                # 2017 - 04 - 29
+                # 00:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 01:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 02:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 03:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 04:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 05:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 06:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 07:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 0
+                # 8:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 0
+                # 9:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 10:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 11:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 12:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 13:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 14:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 15:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 16:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 17:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 18:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 19:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 20:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 21:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 22:00:00 + 00:00: None
+                # 2017 - 04 - 29
+                # 23:00:00 + 00:00: None
+
+    def azure_offers(self):
+        print "inside azure offers"
+        region = 'eastus2'
+        result_list_pub = self.compute_client.virtual_machine_images.list_publishers (region,)
+        for publisher in result_list_pub:
+            result_list_offers = self.compute_client.virtual_machine_images.list_offers(region, publisher.name,)
+            for offer in result_list_offers:
+                result_list_skus = self.compute_client.virtual_machine_images.list_skus (region, publisher.name,offer.name,)
+                for sku in result_list_skus:
+                    result_list = self.compute_client.virtual_machine_images.list(region,publisher.name,offer.name,sku.name,)
+                    for version in result_list:
+                        result_get = self.compute_client.virtual_machine_images.get (region,publisher.name,offer.name,sku.name,version.name,)
+                        print('PUBLISHER: {0}, OFFER: {1}, SKU: {2}, VERSION: {3}'.format (publisher.name,offer.name,sku.name,version.name,))
+
+
+    def create_snapshot(self, resource_group_name, disk_name):
+        managed_disk = self.compute_client.disks.get (resource_group_name, disk_name)
+        async_snapshot_creation = self.compute_client.snapshots.create_or_update (
+            'my_resource_group',
+            'mySnapshot',
+            {
+                'location': 'westus',
+                'creation_data': {
+                    'create_option': 'Copy',
+                    'source_uri': managed_disk.id
+                }
+            }
+        )
+        snapshot = async_snapshot_creation.result ()
 
 if __name__ == "__main__":
     az = Azure('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
+    # az.create_snapshot("group1", "osdisk1")
+    # az.azure_offers()
+    # az.cloud_monitor()
+    az.cloud_monitoring_metrics("group1","vm1")
+    # az.delete_resource_group("azure-sample-group-virtual-machines2")
     # az.start_vm("group1", "vm1")
-    az.restart_vm("group1", "vm1")
+    # az.restart_vm("group1", "vm1")
     # az.update_instance(10,"group1","vm1")
     # az.view_instances("group1")
     # az.create_instance("linux", "megha", "MeghaRocks@1", "group1", "vm1", "westus", "vnet1", "subnet1", "nic1", "ipconfig1", "osdisk1")
