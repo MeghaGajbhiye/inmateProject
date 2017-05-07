@@ -17,9 +17,9 @@ class Rackspace:
             if img.name == image_name:
                 image_test = img.id
 
-        server = self.cs.servers.create (instance_name, image_test, self.describe_flavor (ram))
-        pyrax.utils.wait_until (server, "status", "ACTIVE", interval=1, attempts=30)
-        print server.id
+        rackspace_server = self.cs.servers.create (instance_name, image_test, self.describe_flavor (ram))
+        # pyrax.utils.wait_until (rackspace_server, "status", "ACTIVE", interval=1, attempts=30)
+        print rackspace_server.id
         # End result: Server created in Rackspace
 
     def describe_flavor(self, ram):
@@ -109,7 +109,7 @@ class Rackspace:
                                         details={"address": "megha.gajbhiye@sjsu.edu"})
         # To create entity. We need input of the sevres ip address and host. host can be http://ipaddress.
 
-        ent = cm.create_entity (name="sample_entity123", ip_addresses={"example": ipAddress},
+        ent = cm.create_entity (name="sample_entity123321", ip_addresses={"example": ipAddress},
                                 metadata={"description": "Just a test entity"})
 
         email = cm.create_notification ("email", label="my_email_notification",
@@ -119,17 +119,19 @@ class Rackspace:
 
         if notification =="Duration":
             print "inside Duration"
-            chk = cm.create_check (ent, label="check_duration", check_type="remote.http", details={"url": host}, period=900,
+            chk = cm.create_check (ent, label="check_duration", check_type="remote.http", details={"url": host}, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"], period=900,
                                    timeout=20, target_hostname=ipAddress)
-            alarm = cm.create_alarm (ent, chk, plan,
+            alarm = cm.create_alarm(ent, chk, plan,
                                      "if (metric['duration'] > 2000) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+            print alarm
 
-        if notification == "CPU":
+        elif notification == "CPU":
             print "inside cpu"
             chk = cm.create_check (ent, label="check_cpu", check_type="agent.cpu", details={"url": host}, period=900,
                                    timeout=20, target_hostname=ipAddress)
             alarm = cm.create_alarm (ent, chk, plan,
                                      "if (rate(metric['usage_average']) > 10) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+            print alarm
 
         elif notification == "Memory":
             print "inside memory"
@@ -139,6 +141,7 @@ class Rackspace:
             alarm = cm.create_alarm (ent, chk, plan,
                                      "if (percentage(metric['actual_used'], metric['total']) > 90) { return new "
                                      "AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+            print alarm
 
         elif notification == "Ping":
             print "Inside ping"
@@ -149,6 +152,7 @@ class Rackspace:
             alarm = cm.create_alarm (ent, chk, plan,
                                      "if (rate(metric['average']) > 10) { return new AlarmStatus(WARNING); } return "
                                      "new AlarmStatus(OK);")
+            print alarm
 
         elif notification == "5 minute load average":
             print "inside 5min load"
@@ -159,6 +163,7 @@ class Rackspace:
             alarm = cm.create_alarm (ent, chk, plan,
                                      "if (metric['5m'] > ${critical_threshold}) { return new AlarmStatus(WARNING); } "
                                      "return new AlarmStatus(OK);")
+            print alarm
 
         # print("Name:", ent.name)
         # print("ID:", ent.id)
@@ -220,7 +225,7 @@ class Rackspace:
 if __name__ == "__main__":
     r = Rackspace ("achal126", "9ac58056270b4447a6154662d160ef9f")
     sn = r.view_instances()
-    monitoring = r.monitoring ("instance_test", "Ping","megha.gajbhiye@sjsu.edu")
+    monitoring = r.monitoring ("instance_test", "CPU","megha.gajbhiye@sjsu.edu")
     # print sn
     # r.launch_instance("instance_test", "Debian 7 (Wheezy) (PVHVM)", 1024)
     # print r.update_instance("test2", 2048)

@@ -88,6 +88,10 @@
                     <form method="post" action="{% url 'rackspace' %}">
         <h2 class="form-signin-heading">Rackspace Cloud Provider Sign Up</h2>{% csrf_token %}
         {{form.as_p}}
+        <script>
+        $(document).ready(function() {
+    $('.has-popover').popover({'trigger':'hover'});
+});
        
         <!--label for="inputPassword" class="sr-only">Tenant ID</label>
         <input type="tenant_id" id="inputTenantID" class="form-control" placeholder="Tenant ID" required-->

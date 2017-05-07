@@ -20,13 +20,13 @@ class AWS:
         print ('Inside describe method')
         ec2 = boto3.client('ec2',aws_access_key_id=self.get_acccess_key(),aws_secret_access_key=self.get_secret_key())
         next_token=''
-	ec2_out = ec2.describe_instances(Filters=[
-		{
-		'Name':'instance-state-name',
-		'Values':[
-		'running'
-		]}],
-		NextToken=next_token)
+        ec2_out = ec2.describe_instances(Filters=[
+      {
+      'Name':'instance-state-name',
+      'Values':[
+      'running'
+      ]}],
+      NextToken=next_token)
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
@@ -40,8 +40,8 @@ class AWS:
         print "I am inside launch instance"
         ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
                            aws_secret_access_key=self.get_secret_key())
-        image_id = 'ami-8ca83fec' 
-	#self.describe_images()
+        image_id = 'ami-8ca83fec'
+        #self.describe_images()
         # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
         #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
 
@@ -87,7 +87,7 @@ class AWS:
         client = boto3.client('cloudwatch', aws_access_key_id=self.get_acccess_key(),
                             aws_secret_access_key=self.get_secret_key())
         now = datetime.utcnow()
-	    start = now - timedelta(hours=3)
+        start = now - timedelta(hours=3)
         all_metrics = ['CPUUtilization','DiskReadOps','DiskWriteOps', 'DiskReadBytes', 'DiskWriteBytes','NetworkIn',
         'NetworkOut','NetworkPacketsIn','NetworkPacketsOut','StatusCheckFailed']
         for metric in all_metrics:
@@ -99,7 +99,7 @@ class AWS:
                 EndTime=now,
                 Period=120,
                 Statistics=['Average'])
-		return (response)
+        print (response)
     
 # def cloudwatchmonitoring(self):
     #     print "I am inside cloudwatch"
@@ -129,6 +129,6 @@ if __name__ == "__main__":
     aws = AWS("AKIAIR6NSMV54GLQET2A", "Z51MMk4s0eyeWPyaS2jMi0XMlIkZ7BJTZAtZ3tY+")
     instances = aws.describe_instances()
     for instance in instances:
-	print (instance)
-	aws.get_metrics(instance)
+        print (instance)
+        aws.get_metrics(instance)
     #aws.launch_instance( 1, 1,'keypair2', 'c3.xlarge',True)
