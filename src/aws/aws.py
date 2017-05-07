@@ -20,13 +20,12 @@ class AWS:
         print ('Inside describe method')
         ec2 = boto3.client('ec2',aws_access_key_id=self.get_acccess_key(),aws_secret_access_key=self.get_secret_key())
         next_token=''
-        ec2_out = ec2.describe_instances(Filters=[
-      {
-      'Name':'instance-state-name',
-      'Values':[
-      'running'
-      ]}],
-      NextToken=next_token)
+        ec2_out = ec2.describe_instances(Filters=[{
+		'Name':'instance-state-name',
+		'Values':[
+		'running'
+		]}],
+		NextToken=next_token)
         list_instanceid = []
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']

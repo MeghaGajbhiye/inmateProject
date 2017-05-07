@@ -9,7 +9,28 @@ import json
 import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
+import base64
+key = "autum"
 
+
+def encode(value):
+    enc = []
+    for i in range(len(value)):
+        key_c = key[i % len(key)]
+        enc_c = chr((ord(value[i]) + ord(key_c)) % 256)
+        enc.append(enc_c)
+    encoded_val = base64.urlsafe_b64encode("".join(enc))
+    return encoded_val
+
+
+def decode(enc):
+    dec = []
+    enc = base64.urlsafe_b64decode(enc)
+    for i in range(len(enc)):
+        key_c = key[i % len(key)]
+        dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
+        dec.append(dec_c)
+    return "".join(dec)
 
 # Create your views here.
 def rackspace(request):
@@ -25,8 +46,10 @@ def rackspace(request):
             print "it is post"
             form = RackspaceForm(request.POST or None)
             if form.is_valid():
-                tenant_id = form.cleaned_data['tenant_id']
-                keys = Rackspace(id=usr_id, )
+                username = form.cleaned_data['username']
+                api_key = form.cleaned_data['api_key']
+                encoded_api_key = encode(api_key)
+                keys = Rackspace(id=usr_id, username=username, api_key=encoded_api_key)
                 save_keys = Rackspace.save(keys)
                 print "Rackspace KEYS HAS BEEN SAVED IN Rackspace TABLE"
                 return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -52,11 +75,14 @@ def rackspace_create(request):
         print instance, selectram, selectimage
         usr_id = request.user.id
         rackspace_result = Rackspace.objects.get(id=usr_id)
-        tenant_id = rackspace_result.tenant_id
-        print tenant_id
-        rackspace = Rackspace(tenant_id)
-        rackspace.launch_instance(instance, selectram, selectimage)
-        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+        username = rackspace_result.username
+        encoded_api_key = rackspace_result.api_key
+        api_key = decode(encoded_api_key)
+        print username, api_key
+        # rackspace = Rackspace(username, api_key)
+        #
+        # rackspace.launch_instance(instance, selectram, selectimage)
+        # return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("rackspace_create.html", {}, context_instance=RequestContext(request))
         # elif request.method == 'GET':
         #     return render_to_response("rackspace_create.html", {})
@@ -84,8 +110,9 @@ def rackspace_update(request):
         server = request.POST.get("server")
         keys = rackspace_get_keys(request)
         print keys
-        tenant_id = keys["tenant_id"]
-        rackspace = Rackspace(tenant_id)
+        username = keys["username"]
+        api_key = keys["api_key"]
+        rackspace = Rackspace(username, api_key)
         rackspace.update_instance(selectram, server)
         # print selectram, server
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -102,8 +129,9 @@ def rackspace_delete(request):
         server = request.POST.get("server")
         keys = rackspace_get_keys(request)
         print keys
-        tenant_id = keys["tenant_id"]
-        rackspace = Rackspace(tenant_id)
+        username = keys["username"]
+        api_key = keys["api_key"]
+        rackspace = Rackspace(username, api_key)
         rackspace.delete_instance(server)
         # print server
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -121,8 +149,9 @@ def rackspace_reboot(request):
         boot = request.POST.get("boot")
         keys = rackspace_get_keys(request)
         print keys
-        tenant_id = keys["tenant_id"]
-        rackspace = Rackspace(tenant_id)
+        username = keys["username"]
+        api_key = keys["api_key"]
+        rackspace = Rackspace(username, api_key)
         rackspace.instance_reboot(server, boot)
         # print server, boot
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -140,8 +169,9 @@ def rackspace_view(request):
         server_ip = request.POST.get("server_ip")
         keys = rackspace_get_keys(request)
         print keys
-        tenant_id = keys["tenant_id"]
-        rackspace = Rackspace(tenant_id)
+        username = keys["username"]
+        api_key = keys["api_key"]
+        rackspace = Rackspace(username, api_key)
         rackspace.view_instance(server_name, server_ip)
         # print server_name, server_ip
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -152,9 +182,10 @@ def rackspace_view(request):
 def rackspace_get_keys(request):
     usr_id = request.user.id
     rackspace_result = Rackspace.objects.get(id=usr_id)
-    tenant_id = rackspace_result.tenant_id
-    print tenant_id
-    keys = {"tenant_id": tenant_id}
+    username = rackspace_result.username
+    api_key = rackspace_result.api_key
+    print username, api_key
+    keys = {"username": username, "api_key": api_key}
     return keys
 
 def rackspace_monitor(request):
@@ -169,8 +200,9 @@ def rackspace_monitor(request):
             email = request.POST.get("email")
             print instance_name, alarm, email
             keys = rackspace_get_keys(request)
-            tenant_id = keys["tenant_id"]
-            rackspace = Rackspace(tenant_id)
+            username = keys["username"]
+            api_key = keys["api_key"]
+            rackspace = Rackspace(username, api_key)
             rackspace.moniotiring(instance_name, alarm, email)
             instance_db = [u'instance_test', u'instance_test1']
             print "I am above instance_name"
