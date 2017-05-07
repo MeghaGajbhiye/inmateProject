@@ -50,6 +50,10 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/rackspace_home/">Rackspace Home</a></li>
+             </ul>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -86,13 +90,14 @@
                     <h1> Update Rackspace Instance</h1>
                 </div>
             </div>
-        <td><h2> Enter your RAM</h2>
-            <select id="selectram">
+        <td><h3> Enter your RAM</h3>
+           <h2><select id="selectram">
                 <option>Select a region</option>
-            </select></td>
+           </select></h2></td>
         <td>
-            <h2> Enter Server Name</h2>
-            <input type="text" name="text" id="server">
+            <h3> Enter Server Name
+                <input type="text" size="12" value="server" id="server">
+            </h3>
         </td>
 
             <script>

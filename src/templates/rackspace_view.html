@@ -50,6 +50,10 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/rackspace_home/">Rackspace Home</a></li>
+             </ul>
+       
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -87,21 +91,21 @@
                 </div>
             </div>
     
-    <td>
-            <h2> Enter Server Name
-                <input type="text" size="16" value="Server_name" id="server_name">
-            </h2>
+   <td>
+            <h3> Enter Server Name
+                <input type="text" size="12" value="server" id="server">
+            </h3>
         </td>
-    <td>
-            <h2> Enter Server IP
-                <input type="text" size="16" value="Server_IP" id="server_ip">
-            </h2>
+     <td>
+            <h3> Enter Server IP
+                <input type="text" size="12" value="server_ip" id="server_ip">
+            </h3>
         </td>
-   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
+   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h1>
 
 
 <p id="server_name"></p>
-<p id="server_id"></p>
+<p id="server_ip"></p>
 
 <script>
 function myFunction() {

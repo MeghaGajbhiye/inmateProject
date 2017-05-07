@@ -27,7 +27,9 @@ def google(request):
            form = GoogleForm(request.POST or None)
            if form.is_valid():
                project_id = form.cleaned_data['project_id']
-               keys = Google(id=usr_id, project_id=project_id)
+               client_secret = form.cleaned_data['client_secret']
+               refresh_token = form.cleaned_data['refresh_token']
+               keys = Google(id=usr_id, project_id=project_id, client_secret=client_secret, refresh_token=refresh_token)
                save_keys = Google.save(keys)
                print "Google KEYS HAS BEEN SAVED IN Google TABLE"
                return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
@@ -69,8 +71,10 @@ def google_create(request):
             usr_id = request.user.id
             google_result = Google.objects.get(id=usr_id)
             project_id = google_result.project_id
-            print project_id
-            google = Google(project_id)
+            client_secret = google_result.client_secret
+            refresh_token = google_result.refresh_token
+            print project_id, client_secret, refresh_token
+            google = Google(project_id, client_secret, refresh_token)
             google.create_instance(selectzone, Pro_id, Buck_id, Inst_name)
             return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("google_create.html", {}, context_instance=RequestContext(request))
@@ -88,7 +92,9 @@ def google_retrieve(request):
         keys = google_get_keys(request)
         print keys
         project_id = keys["project_id"]
-        google = Google(project_id)
+        client_secret = keys["client_secret"]
+        refresh_token = keys["refresh_token"]
+        google = Google(project_id, client_secret, refresh_token)
         google.list_instances(selectzone, Pro_id)
         # print selectzone, Pro_id
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
@@ -107,7 +113,9 @@ def google_delete(request):
         Inst_name = request.POST.get("Inst_name")
         keys = google_get_keys(request)
         project_id = keys["project_id"]
-        google = Google(project_id)
+        client_secret = keys["client_secret"]
+        refresh_token = keys["refresh_token"]
+        google = Google(project_id, client_secret, refresh_token)
         google.delete_instance(selectzone, Pro_id, Inst_name)
         # print selectzone, Pro_id, Inst_name
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
@@ -118,8 +126,10 @@ def google_get_keys(request):
     usr_id = request.user.id
     google_result = Google.objects.get(id=usr_id)
     project_id = google_result.project_id
-    print project_id
-    keys = {"project_id": project_id}
+    client_secret = google_result.project_id
+    refresh_token = google_result.project_id
+    print project_id, client_secret, refresh_token
+    keys = {"project_id": project_id, "client_secret": client_secret, "refresh_token": refresh_token}
     return keys
 
 def google_monitor(request):

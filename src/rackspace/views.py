@@ -70,7 +70,7 @@ def rackspace_home(request):
         print "I am here inside post"
         selectOP = request.POST.get("selectOP")
         print selectOP
-        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
 
 
 
@@ -158,4 +158,34 @@ def rackspace_get_keys(request):
     return keys
 
 def rackspace_monitor(request):
-    return render_to_response("rackspace_monitor.html", )
+    print "rackspace_monitor **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+            instance_name = request.POST.get("instance_name")
+            alarm = request.POST.get("alarm")
+            email = request.POST.get("email")
+            print instance_name, alarm, email
+            keys = rackspace_get_keys(request)
+            tenant_id = keys["tenant_id"]
+            rackspace = Rackspace(tenant_id)
+            rackspace.moniotiring(instance_name, alarm, email)
+            instance_db = [u'instance_test', u'instance_test1']
+            print "I am above instance_name"
+            instance_name = json.dumps(instance_db)
+            print instance_name
+            context = {"instance_name": instance_name}
+            alarm_db = [u'CPU', u'Memory', u'Ping', u'5-Minute Load Average']
+            print "I am above alarm"
+            alarm_name = json.dumps(alarm_db)
+            print alarm_name
+            context = {"alarm_name": alarm_name}
+            print "Gotcha instance"
+            return render_to_response("rackspace_monitor.html", {}, context_instance=RequestContext(request))
+    elif request.method == 'GET':
+        instance_db = [u'instance_test', u'instance_test1']
+        alarm_db = [u'CPU', u'Memory', u'Ping', u'5-Minute Load Average']
+        return render_to_response("rackspace_monitor.html", {'alarm_db': alarm_db, 'instance_db': instance_db})
+

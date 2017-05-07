@@ -51,6 +51,9 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">AUTUM <img src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/azure_home/">Azure Home</a></li>
+             </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -93,12 +96,12 @@
 
     
     <td>
-            <h2> Enter Resource Group Name
-                <input type="text" size="4" value="Res_Grp_Name" id="res_grp_name">
-            </h2>
+            <h3> Enter Resource Group Name
+                <input type="text" size="12" value="Res_Grp_Name" id="res_grp_name">
+            </h3>
         </td>
    <td>
-    <h2> Select VM Name
+    <h3> Select VM Name
         <select id="instance">
 
             <option>VM Name</option>

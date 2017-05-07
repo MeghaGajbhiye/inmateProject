@@ -50,6 +50,9 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/rackspace_home/">Rackspace Home</a></li>
+             </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -86,50 +89,24 @@
                     <h1> Create Rackspace Instance</h1>
                 </div>
             </div>
-        <script>
 
-            function myfun() {
-                if (document.getElementById("1") == null) {
-                    var x = document.getElementById("instance").value;
-                    for (i = 0; i < x; i++) {
-                        var div = document.createElement("input");
-                        div.type = "text";
-                        div.name = i;
-                        div.id = i + 1;
-                        var label = document.createElement("label");
-                        label.innerHTML = "Instance" + i;
-                        var linebreak = document.createElement("br");
-                        var dynamic = document.getElementById("dynamic");
-                        dynamic.appendChild(label);
-                        dynamic.appendChild(div);
-                        dynamic.appendChild(linebreak);
-                    }
-                }
-            }
-            function reset() {
-                location.reload();
-            }
-        </script>
         <td>
-            <h2> Enter Number of Instances:</h2>
-            <input type="text" name="text" id="instance">
-        </td>
-        <td>
-            <input type="submit" style="background-color: #0e84b5; color: white;" onclick="myfun()" value="submit">
-            <input type="reset" style="background-color: #0e84b5; color: white;" value="reset" onclick="reset()">
-        </td>
-        <td>
-            <div id="dynamic"></div>
-        </td>
+            <h3> Enter Instance Name
+                <input type="text" size="12" value="instance" id="instance">
+            </h3>
 
-        <td><h2> Enter your RAM</h2>
-            <select id="selectram">
+
+
+
+
+        <td><h3> Enter your RAM</h3>
+            <h2><select id="selectram">
                 <option>Select a region</option>
-            </select>
-        <td><h2> Enter an image</h2>
-            <select id="selectimage">
+            </select></h2>
+        <td><h3> Enter an image</h3>
+          <h2><select id="selectimage">
                 <option>Select an image</option>
-            </select>
+          </select></h2>
 
             <script>
                 var myobject = {
