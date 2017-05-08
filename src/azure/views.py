@@ -2,17 +2,14 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from .forms import AzureForm
-
 from models import Azure
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 import json
-import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-
-from .models import Azure
-
+from azure_python import Azure_class as az
+import base64
 
 # Create your views here.
 # def azure(request):
@@ -22,6 +19,25 @@ from .models import Azure
 # 	}
 # 	return render_to_response("Azure_CP.html", context, context_instance = RequestContext(request))
 
+def encode(value):
+    key = "autum"
+    enc = []
+    for i in range(len(value)):
+        key_c = key[i % len(key)]
+        enc_c = chr((ord(value[i]) + ord(key_c)) % 256)
+        enc.append(enc_c)
+    encoded_val = base64.urlsafe_b64encode("".join(enc))
+    return encoded_val
+
+def decode(enc):
+    key = "autum"
+    dec = []
+    enc = base64.urlsafe_b64decode(enc)
+    for i in range(len(enc)):
+        key_c = key[i % len(key)]
+        dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
+        dec.append(dec_c)
+    return "".join(dec)
 
 def azure(request):
     print "azure cp"
@@ -41,12 +57,16 @@ def azure(request):
             form = AzureForm(request.POST or None)
             if form.is_valid():
                 subscription_id = form.cleaned_data['subscription_id']
+                encoded_subscription_id = encode(subscription_id)
                 client_id = form.cleaned_data['client_id']
+                encoded_client_id = encode(client_id)
                 secret_key = form.cleaned_data['secret_key']
+                encoded_secret_key = encode(secret_key)
                 tenant_id = form.cleaned_data['tenant_id']
+                encoded_tenant_id = encode(tenant_id)
                 print subscription_id, client_id, secret_key, tenant_id
-                keys = Azure(id=usr_id, subscription_id=subscription_id, client_id=client_id,
-                             secret_key=secret_key, tenant_id=tenant_id, )
+                keys = Azure(id=usr_id, subscription_id=encoded_subscription_id, client_id=encoded_client_id,
+                             secret_key=encoded_secret_key, tenant_id=encoded_tenant_id, )
                 save_keys = Azure.save(keys)
                 print "Azure KEYS HAS BEEN SAVED IN Azure TABLE"
                 return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
@@ -77,6 +97,7 @@ def azure_home(request):
 
     return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
 
+
 def azure_create(request):
     print "azure_create **************************"
 
@@ -94,27 +115,31 @@ def azure_create(request):
             vm_name = request.POST.get("vm_name")
             loc = request.POST.get("loc")
             vnet_name = request.POST.get("vnet_name")
-        snet_name = request.POST.get("snet_name")
-        nic_name = request.POST.get("nic_name")
-        ip_con = request.POST.get("ip_con")
-        d_name = request.POST.get("d_name")
+            snet_name = request.POST.get("snet_name")
+            nic_name = request.POST.get("nic_name")
+            ip_con = request.POST.get("ip_con")
+            d_name = request.POST.get("d_name")
 
-        print choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name, ip_con, d_name
-        usr_id = request.id
-        azure_result = Azure.objects.get(id=usr_id)
-        subscription_id = azure_result.subscription_id
-        client_id = azure_result.client_id
-        secret_key = azure_result.secret_key
-        tenant_id = azure_result.tenant_id
-        print subscription_id, client_id, secret_key, tenant_id
+            print choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name, ip_con, d_name
+            usr_id = request.id
+            azure_result = azure_get_keys(request)
 
-        # Instantiate AWS class aws->aws.py and calling the launch_instance function
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
 
-        azure.create_instance(choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name,
-                              ip_con, d_name)
+            # Instantiate AWS class aws->aws.py and calling the launch_instance function
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
 
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+            azure.create_instance(choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name,
+                                  ip_con, d_name)
+            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_create.html", {}, context_instance=RequestContext(request))
 
 
@@ -224,7 +249,7 @@ def azure_stop(request):
             azure = Azure(subscription_id, client_id, secret_key, tenant_id)
             azure.stop_vm(res_grp_name, vm_name)
             print "I got the azure keys"
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
 
 
@@ -301,6 +326,8 @@ def azure_reboot(request):
         print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     # print res_grp_name, vm_name
+
+
     return render_to_response("azure_reboot.html", {}, context_instance=RequestContext(request))
 
 
