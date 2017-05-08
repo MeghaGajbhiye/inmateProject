@@ -208,7 +208,7 @@ def rackspace_get_keys(request):
     return keys
 
 def rackspace_monitor(request):
-    print "rackspace_monitor **************************"
+    print "****************************************rackspace_monitor **************************"
 
     rackspace_result = rackspace_get_keys(request)
     username = rackspace_result['username']
