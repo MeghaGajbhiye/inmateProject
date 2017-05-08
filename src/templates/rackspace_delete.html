@@ -91,17 +91,22 @@
                 </div>
             </div>
       
-             <td>
-            <h3> Enter Server Name
-                <input type="text" size="12" value="server" id="server">
-            </h3>
-        </td>
+              <td>
+    <h3> Select Instance Name
+        <select id="instance">
+
+            <option>Instance Name</option>
+            {% for i in instance_list %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
+        </select>
+<td>
             <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
 
-            <p id="server"></p>
+            <p id="instance"></p>
             <script>
                 function myFunction() {
-                    document.getElementById("server").innerHTML = "Server selected";
+                    document.getElementById("instance").innerHTML = "Instance selected";
                 }
             </script>
 
@@ -114,7 +119,7 @@
                         async: true,
                         data: {
                             csrfmiddlewaretoken: '{{ csrf_token }}',
-                            server: $("#server").val(),
+                            instance: $("#instance").val(),
 
                         },
                         success: function (json) {
