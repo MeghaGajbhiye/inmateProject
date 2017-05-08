@@ -114,7 +114,7 @@
                         async: true,
                         data: {
                             csrfmiddlewaretoken: '{{ csrf_token }}',
-                            selectimage: $("#server").val(),
+                            server: $("#server").val(),
 
                         },
                         success: function (json) {
