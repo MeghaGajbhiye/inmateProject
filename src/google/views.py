@@ -9,6 +9,28 @@ import json
 import boto3
 from django.views.generic import TemplateView
 from django.http import HttpResponse
+import base64
+
+
+def encode(value):
+    key = "autum"
+    enc = []
+    for i in range(len(value)):
+        key_c = key[i % len(key)]
+        enc_c = chr((ord(value[i]) + ord(key_c)) % 256)
+        enc.append(enc_c)
+    encoded_val = base64.urlsafe_b64encode("".join(enc))
+    return encoded_val
+
+def decode(enc):
+    key = "autum"
+    dec = []
+    enc = base64.urlsafe_b64decode(enc)
+    for i in range(len(enc)):
+        key_c = key[i % len(key)]
+        dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
+        dec.append(dec_c)
+    return "".join(dec)
 
 
 # Create your views here.
