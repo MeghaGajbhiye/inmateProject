@@ -91,23 +91,39 @@
                 </div>
             </div>
       
-            <td>
-            <h3> Enter Server Name
-                <input type="text" size="12" value="server" id="server">
-            </h3>
-        </td>
- <td>
-            <h3> Enter Boot Type
-                <input type="text" size="12" value="boot" id="boot">
-            </h3>
-        </td>
+                    <td>
+    <h3> Select Instance Name</h3>
+        <h3><select id="instance">
+
+            <option>Instance Name</option>
+            {% for i in instance_list %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
+        </select></h3>
+</td>
+ <td><h3> Enter boot type</h3>
+           <h3><select id="boot">
+                <option>Select boot</option>
+           </select></h3></td>
+            <script>
+                var myobject = {
+                    Hard: 'h',
+                    Soft: 's',
+                     };
+
+                var select = document.getElementById("boot");
+                for (index in myobject) {
+                    select.options[select.options.length] = new Option(myobject[index], index);
+                }
+
+            </script>
             <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Reboot</button></h1>
 
-            <p id="server"></p>
+            <p id="instance"></p>
             <p id="boot"></p>
             <script>
                 function myFunction() {
-                    document.getElementById("server").innerHTML = "Server selected";
+                    document.getElementById("instance").innerHTML = "Instance selected";
                     document.getElementById("boot").innerHTML = "Boot Type selected";
                     }
             </script>

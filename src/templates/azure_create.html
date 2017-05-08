@@ -90,10 +90,11 @@
                 </div>
             </div>
     <td>
-            <h3> Enter Choice
-                <input type="text" size="12" value="Choice" id="choice">
-            </h3>
-        </td>
+    <h3> Enter your Choice</h3>
+       <h3> <select id="choice">
+            <option>Select choice</option>
+        </select></h3>
+<td>
     <td>
             <h3> Enter Username
                 <input type="text" size="12" value="Username" id="user">
@@ -144,6 +145,18 @@
                 <input type="text" size="12" value="Disk_Name" id="d_name">
             </h3>
         </td>
+        <script type="text/javascript">
+    var myobject = {
+        Linux: 'linux',
+        Windows: 'windows',
+        };
+
+    var select = document.getElementById("choice");
+    for (index in myobject) {
+        select.options[select.options.length] = new Option(myobject[index], index);
+    }
+
+</script>
     
 <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Create</button></h1>
 <p id="choice"></p>

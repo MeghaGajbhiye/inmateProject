@@ -91,28 +91,7 @@
                 </div>
             </div>
     
-   <td>
-            <h3> Enter Server Name
-                <input type="text" size="12" value="server" id="server">
-            </h3>
-        </td>
-     <td>
-            <h3> Enter Server IP
-                <input type="text" size="12" value="server_ip" id="server_ip">
-            </h3>
-        </td>
-   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h1>
-
-
-<p id="server_name"></p>
-<p id="server_ip"></p>
-
-<script>
-function myFunction() {
-  document.getElementById("server_name").innerHTML = "Server Name selected";
-  document.getElementById("server_ip").innerHTML = "Server IP selected";
-  
-}
+ 
 </script>
      <script type="text/javascript">
         function myFunction() {
@@ -123,8 +102,7 @@ function myFunction() {
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    server_name: $("#server_name").val(),
-                    server_ip: $("#server_ip").val(),
+                    
                     
                 },
                 success: function (json) {
