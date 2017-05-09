@@ -13,6 +13,28 @@ import base64
 from rackspace import Rackspace as r
 
 
+
+def encode(value):
+    key = "autum"
+    enc = []
+    for i in range(len(value)):
+        key_c = key[i % len(key)]
+        enc_c = chr((ord(value[i]) + ord(key_c)) % 256)
+        enc.append(enc_c)
+    encoded_val = base64.urlsafe_b64encode("".join(enc))
+    return encoded_val
+
+def decode(enc):
+    key = "autum"
+    dec = []
+    enc = base64.urlsafe_b64decode(enc)
+    for i in range(len(enc)):
+        key_c = key[i % len(key)]
+        dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
+        dec.append(dec_c)
+    return "".join(dec)
+
+
 # Create your views here.
 def rackspace(request):
     usr_id = request.user.id
@@ -58,8 +80,9 @@ def rackspace_create(request):
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
-        # print "I am here after encoding"
+        print "I am here after encoding"
         print (username, api_key)
+        print username, api_key
         rackspace = r(username, api_key)
         rackspace.launch_instance(instance, selectimage, selectram)
         # return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
@@ -85,6 +108,7 @@ def rackspace_update(request):
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
+
         print "I am here inside post"
         instance = request.POST.get("instance")
         selectram = request.POST.get("selectram")
@@ -100,49 +124,69 @@ def rackspace_update(request):
         rackspace.update_instance(instance, selectram)
         print "I am above instance_list"
         instance_list = json.dumps(rackspace.view_instances())
+        print "printing instance list"
         print instance_list
-        context = {"instance_list": instance_list}
-        print "Gotcha instance"
-        return render_to_response("rackspace_home.html", {context}, context_instance=RequestContext(request))
-
-    return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        rackspace_result = rackspace_get_keys(request)
+        username = rackspace_result['username']
+        encoded_api_key = str(rackspace_result['api_key'])
+        api_key = decode(encoded_api_key)
+        rackspace = r(username, api_key)
+        instance_list = rackspace.view_instances()
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("rackspace_update.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
    
         
 def rackspace_delete(request):
     print "rackspace_delete **************************"
-    rackspace_result = rackspace_get_keys(request)
-    username = rackspace_result['username']
-    encoded_api_key = str(rackspace_result['api_key'])
-    print username, encoded_api_key
-    api_key = decode(encoded_api_key)
-    # print "I am here after encoding"
-    print (username, api_key)
-    rackspace = r(username, api_key)
-            
     if request.is_ajax():
         print "it's ajax"
-        if request.method == 'POST':
-            print "I am here inside post"
-            instance = request.POST.get("instance")
-            rackspace.delete_instance(instance)
-            print "I am above instance_list"
-            context = {"instance_list": instance_list}
-            print "Gotcha instance"
-        # print server
-            return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
-    elif request.method == 'GET':
-        instance_list = rackspace.view_instances() # list of instances - pushpa
-        print instance_list    
-        return render_to_response("rackspace_delete.html", {})
-        # elif request.method == 'GET':
-        #     return render_to_response("rackspace_delete.html", {})
-    
+    if request.method == 'POST':
+
+        print "I am here inside post"
+        instance = request.POST.get("instance")
+
+        rackspace_result = rackspace_get_keys(request)
+        username = rackspace_result['username']
+        encoded_api_key = str(rackspace_result['api_key'])
+        print username, encoded_api_key
+        api_key = decode(encoded_api_key)
+        # print "I am here after encoding"
+        print (username, api_key)
+        rackspace = r(username, api_key)
+
+        rackspace.delete_instance(instance)
+        print "I am above instance_list"
+        instance_list = json.dumps(rackspace.view_instances())
+        print "printing instance list"
+        print instance_list
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        rackspace_result = rackspace_get_keys(request)
+        username = rackspace_result['username']
+        encoded_api_key = str(rackspace_result['api_key'])
+        api_key = decode(encoded_api_key)
+        rackspace = r(username, api_key)
+        instance_list = rackspace.view_instances()
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("rackspace_delete.html", {'instance_db': instance_db},
+                                  context_instance=RequestContext(request))
+
+
 
 def rackspace_reboot(request):
     print "rackspace_reboot **************************"
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
+
         print "I am here inside post"
         instance = request.POST.get("instance")
         boot = request.POST.get("boot")
@@ -154,23 +198,36 @@ def rackspace_reboot(request):
         # print "I am here after encoding"
         print (username, api_key)
         rackspace = r(username, api_key)
+
         rackspace.instance_reboot(instance, boot)
-        instance_list = json.dumps(rackspace.view_instances()) # list of instances - pushpa
+        print "I am above instance_list"
+        instance_list = json.dumps(rackspace.view_instances())
+        print "printing instance list"
         print instance_list
-        context = {"instance_list": instance_list}
-        print "Gotcha instance"
-        # print server, boot
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
-        # elif request.method == 'GET':
-        #     return render_to_response("rackspace_reboot.html", {})
-    return render_to_response("rackspace_reboot.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        rackspace_result = rackspace_get_keys(request)
+        username = rackspace_result['username']
+        encoded_api_key = str(rackspace_result['api_key'])
+        api_key = decode(encoded_api_key)
+        rackspace = r(username, api_key)
+        instance_list = rackspace.view_instances()
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("rackspace_reboot.html", {'instance_db': instance_db},
+                                  context_instance=RequestContext(request))
+
 
 def rackspace_view(request):
     print "rackspace_view **************************"
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
+
         print "I am here inside post"
+
         rackspace_result = rackspace_get_keys(request)
         username = rackspace_result['username']
         encoded_api_key = str(rackspace_result['api_key'])
@@ -179,16 +236,26 @@ def rackspace_view(request):
         # print "I am here after encoding"
         print (username, api_key)
         rackspace = r(username, api_key)
+
         rackspace.view_instances()
-        instance_list = json.dumps(rackspace.view_instances()) # list of instances - pushpa
+        print "I am above instance_list"
+        instance_list = json.dumps(rackspace.view_instances())
+        print "printing instance list"
         print instance_list
-        context = {"instance_list": instance_list}
-        print "Gotcha instance"
-        # print server_name, server_ip
         return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
-        # elif request.method == 'GET':
-        #     return render_to_response("rackspace_view.html", {})
-    return render_to_response("rackspace_view.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        rackspace_result = rackspace_get_keys(request)
+        username = rackspace_result['username']
+        encoded_api_key = str(rackspace_result['api_key'])
+        api_key = decode(encoded_api_key)
+        rackspace = r(username, api_key)
+        instance_list = rackspace.view_instances()
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("rackspace_view.html", {'instance_db': instance_db},
+                                  context_instance=RequestContext(request))
 
 
 def rackspace_get_keys(request):

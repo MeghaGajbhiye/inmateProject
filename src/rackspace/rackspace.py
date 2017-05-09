@@ -13,18 +13,18 @@ class Rackspace:
         '''Create Server'''
         print "*************************INSIDE LAUNCH INSTANCE ****************************************"
         print self.user_name, self.api_key, instance_name, image_name, ram
-        #################################################################################
-        # images = pyrax.images.list ()
-        # # image_name = 'Debian 7 (Wheezy) (PVHVM)'
-        # for img in images:
-        #     if img.name == image_name:
-        #         image_test = img.id
-        #
-        # server = self.cs.servers.create (instance_name, image_test, self.describe_flavor (ram))
-        # pyrax.utils.wait_until (server, "status", "ACTIVE", interval=1, attempts=30)
-        # print server.id
+        ################################################################################
+        images = pyrax.images.list ()
+        # image_name = 'Debian 7 (Wheezy) (PVHVM)'
+        for img in images:
+            if img.name == image_name:
+                image_test = img.id
+
+        server = self.cs.servers.create (instance_name, image_test, self.describe_flavor (ram))
+        pyrax.utils.wait_until (server, "status", "ACTIVE", interval=1, attempts=30)
+        print server.id
         # End result: Server created in Rackspace
-        #################################################################################
+        ################################################################################
 
     def describe_flavor(self, ram):
         '''Listing the flavor of servers'''

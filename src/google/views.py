@@ -148,8 +148,8 @@ def google_get_keys(request):
     usr_id = request.user.id
     google_result = Google.objects.get(id=usr_id)
     project_id = google_result.project_id
-    client_secret = google_result.project_id
-    refresh_token = google_result.project_id
+    client_secret = google_result.client_secret
+    refresh_token = google_result.refresh_token
     print project_id, client_secret, refresh_token
     keys = {"project_id": project_id, "client_secret": client_secret, "refresh_token": refresh_token}
     return keys
