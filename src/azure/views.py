@@ -39,7 +39,7 @@ def decode(enc):
         dec.append(dec_c)
     return "".join(dec)
 
-def azure(request):
+def azure_cp(request):
     print "azure cp"
     usr_id = request.user.id
     try:
