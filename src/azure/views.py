@@ -39,7 +39,7 @@ def decode(enc):
         dec.append(dec_c)
     return "".join(dec)
 
-def azure(request):
+def azure_cp(request):
     print "azure cp"
     usr_id = request.user.id
     try:
@@ -122,8 +122,8 @@ def azure_create(request):
 
             print choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name, ip_con, d_name
             usr_id = request.id
+            
             azure_result = azure_get_keys(request)
-
             encoded_subscription_id = str(azure_result["subscription_id"])
             subscription_id = decode(encoded_subscription_id)
             encoded_client_id = str(azure_result["client_id"])
@@ -133,8 +133,6 @@ def azure_create(request):
             encoded_tenant_id = str(azure_result["tenant_id"])
             tenant_id = decode(encoded_tenant_id)
             print subscription_id, client_id, secret_key, tenant_id
-
-            # Instantiate AWS class aws->aws.py and calling the launch_instance function
             azure = az(subscription_id, client_id, secret_key, tenant_id)
 
             azure.create_instance(choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name,
@@ -155,12 +153,17 @@ def azure_update(request):
             res_grp_name = request.POST.get("res_grp_name")
             vm_name = request.POST.get("vm_name")
             print size, res_grp_name, vm_name
-            keys = azure_get_keys(request)
-            subscription_id = keys["subscription_id"]
-            client_id = keys["client_id"]
-            secret_key = keys["secret_key"]
-            tenant_id = keys["tenant_id"]
-            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure_result = azure_get_keys(request)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
             azure.update_instance(size, res_grp_name, vm_name)
             print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
@@ -176,6 +179,17 @@ def azure_delete(request):
             selectOP = request.POST.get("selectOP")
 
             print selectOP
+            azure_result = azure_get_keys(request)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
 
 
         return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
@@ -191,12 +205,17 @@ def azure_delete_vm(request):
             res_grp_name = request.POST.get("res_grp_name")
             vm_name = request.POST.get("vm_name")
             print res_grp_name, vm_name
-            keys = azure_get_keys(request)
-            subscription_id = keys["subscription_id"]
-            client_id = keys["client_id"]
-            secret_key = keys["secret_key"]
-            tenant_id = keys["tenant_id"]
-            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure_result = azure_get_keys(request)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name, vm_name)
             instance_db = [u'instance_test', u'Server-02', u'vm1']
             print "I am above instance_name"
@@ -219,12 +238,17 @@ def azure_delete_rsgrp(request):
             print "I am here inside post"
             res_grp_name = request.POST.get("res_grp_name")
             print res_grp_name
-            keys = azure_get_keys(request)
-            subscription_id = keys["subscription_id"]
-            client_id = keys["client_id"]
-            secret_key = keys["secret_key"]
-            tenant_id = keys["tenant_id"]
-            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+            azure_result = azure_get_keys(request)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name)
             print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
@@ -241,13 +265,18 @@ def azure_stop(request):
             res_grp_name = request.POST.get("res_grp_name")
             vm_name = request.POST.get("vm_name")
             print res_grp_name, vm_name
-            keys = azure_get_keys(request)
-            subscription_id = keys["subscription_id"]
-            client_id = keys["client_id"]
-            secret_key = keys["secret_key"]
-            tenant_id = keys["tenant_id"]
-            azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-            azure.stop_vm(res_grp_name, vm_name)
+            azure_result = azure_get_keys(request)
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure = az(subscription_id, client_id, secret_key, tenant_id)
+            az.stop_vm(res_grp_name, vm_name)
             print "I got the azure keys"
             return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
@@ -264,15 +293,19 @@ def azure_start(request):
         res_grp_name = request.POST.get("res_grp_name")
         vm_name = request.POST.get("vm_name")
         print res_grp_name, vm_name
-        keys = azure_get_keys(request)
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.start_vm(res_grp_name, vm_name)
-        print "I got the azure keys"
-
+        azure_result = azure_get_keys(request)
+        encoded_subscription_id = str(azure_result["subscription_id"])
+        subscription_id = decode(encoded_subscription_id)
+        encoded_client_id = str(azure_result["client_id"])
+        client_id = decode(encoded_client_id)
+        encoded_secret_key = str(azure_result["secret_key"])
+        secret_key = decode(encoded_secret_key)
+        encoded_tenant_id = str(azure_result["tenant_id"])
+        tenant_id = decode(encoded_tenant_id)
+        print subscription_id, client_id, secret_key, tenant_id
+        azure = az(subscription_id, client_id, secret_key, tenant_id)
+        az.start_vm(res_grp_name, vm_name)
+        
         # print res_grp_name, vm_name
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_start.html", {}, context_instance=RequestContext(request))
@@ -286,16 +319,20 @@ def azure_view(request):
     if request.method == 'POST':
         print "I am here inside post"
         view = request.POST.get("view")
+	azure_result = azure_get_keys(request)
+        encoded_subscription_id = str(azure_result["subscription_id"])
+        subscription_id = decode(encoded_subscription_id)
+        encoded_client_id = str(azure_result["client_id"])
+        client_id = decode(encoded_client_id)
+        encoded_secret_key = str(azure_result["secret_key"])
+        secret_key = decode(encoded_secret_key)
+        encoded_tenant_id = str(azure_result["tenant_id"])
+        tenant_id = decode(encoded_tenant_id)
+        print subscription_id, client_id, secret_key, tenant_id
+        azure = az(subscription_id, client_id, secret_key, tenant_id)
+        az.view_instances(res_grp_name)
+        view = request.POST.get("view")
         keys = azure_get_keys(request)
-        print view
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.view_instances(view)
-        print "I got the azure keys"
-
         # print res_grp_name
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
@@ -358,14 +395,19 @@ def azure_reboot(request):
         res_grp_name = request.POST.get("res_grp_name")
         vm_name = request.POST.get("vm_name")
         print res_grp_name, vm_name
-        keys = azure_get_keys(request)
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.restart_vm(res_grp_name, vm_name)
+        azure_result = azure_get_keys(request)
         print "I got the azure keys"
+        encoded_subscription_id = str(azure_result["subscription_id"])
+        subscription_id = decode(encoded_subscription_id)
+        encoded_client_id = str(azure_result["client_id"])
+        client_id = decode(encoded_client_id)
+        encoded_secret_key = str(azure_result["secret_key"])
+        secret_key = decode(encoded_secret_key)
+        encoded_tenant_id = str(azure_result["tenant_id"])
+        tenant_id = decode(encoded_tenant_id)
+        print subscription_id, client_id, secret_key, tenant_id
+        azure = az(subscription_id, client_id, secret_key, tenant_id)
+        az.restart_vm(res_grp_name, vm_name)
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     # print res_grp_name, vm_name
 
@@ -390,6 +432,20 @@ def azure_get_keys(request):
     return keys
 
 def azure_monitor(request):
+    azure_result = azure_get_keys(request)
+    print "I got the azure keys"
+    encoded_subscription_id = str(azure_result["subscription_id"])
+    subscription_id = decode(encoded_subscription_id)
+    encoded_client_id = str(azure_result["client_id"])
+    client_id = decode(encoded_client_id)
+    encoded_secret_key = str(azure_result["secret_key"])
+    secret_key = decode(encoded_secret_key)
+    encoded_tenant_id = str(azure_result["tenant_id"])
+    tenant_id = decode(encoded_tenant_id)
+    print subscription_id, client_id, secret_key, tenant_id
+
+        # Instantiate azure class
+    azure = az(subscription_id, client_id, secret_key, tenant_id)    
     time = ['2017 - 04 - 29 00:00:00 + 00:00', '2017 - 04 - 29 01:00:00 + 00:00']
     zone = [None, None]
     data = zip(time,zone)
