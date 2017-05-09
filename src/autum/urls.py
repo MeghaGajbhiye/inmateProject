@@ -5,7 +5,7 @@ from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 
 from aws.views import aws, aws_home, aws_delete, aws_create, aws_monitor
-from azure.views import azure, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
+from azure.views import azure_cp, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
 from ibm.views import ibm, ibm_home
 
 from google.views import google, google_create, google_retrieve, google_delete, google_home, google_monitor
@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^aws_home/$', aws_home, name='aws_home'),
     url(r'^aws_delete/$', aws_delete, name='aws_delete'),
     url(r'^aws_monitor/$', aws_monitor, name='aws_monitor'),
-    url(r'^azure/$', azure_cp, name='azure'),
+    url(r'^azure_cp/$', azure_cp, name='azure_cp'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^azure_home/$', azure_home, name='azure_home'),
     url(r'^azure_start/$', azure_start, name='azure_start'),

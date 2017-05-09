@@ -118,8 +118,8 @@ def aws_create(request):
             print "I am here after encoding"
 
             aws = AWS(access_key, secret_key)
-
-            aws.launch_instance(min, max, key_name, inst_type, check_status)
+            print "here after aws setting keys"
+            aws.launch_instance("image_id_check", "region_name", min, max, key_name, inst_type, check_status)
 
             # return HttpResponse(json.dumps({'message': "Success"}), content_type="application/json")
 
