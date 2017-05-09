@@ -91,67 +91,43 @@
             </div>
 
         <td>
-            <h3> Enter Instance Name
-                <input type="text" size="12" value="instance" id="instance">
-            </h3>
+            <h3> Enter Instance Name</h3>
+            <h3><input type="text" size="10" value="instance" id="instance"></h3>
+        </td>
 
 
 
 
 
         <td><h3> Enter your RAM</h3>
-            <h3><select id="selectram" width = "50px">
+            <h3><select id="selectram" width = "24px">
                 <option>Select a region</option>
             </select></h3>
+        </td>
         <td><h3> Enter an image</h3>
-          <h3><select id="selectimage" width = "50px">
+          <h3><select id="selectimage" width = "24px">
                 <option>Select an image</option>
           </select></h3>
-
+        </td>
             <script>
                 var myobject = {
-                    Value1: '512',
-                    Value2: '1024',
-                    Value3: '2048',
-                    Value4: '4096',
-                    Value5: '8192',
-                    Value6: '15360',
-                    Value7: '30720',
-                    Value8: '15360',
-                    Value9: '30720',
-                    Value10: '3840',
-                    Value11: '61440',
-                    Value12: '7680',
-                    Value13: '1024',
-                    Value14: '2048',
-                    Value15: '4096',
-                    Value16: '8192',
-                    Value17: '122880',
-                    Value18: '15360',
-                    Value19: '30720',
-                    Value20: '61440',
-                    Value21: '92160',
-                    Value22: '122880',
-                    Value23: '15360',
-                    Value24: '245760',
-                    Value25: '30720',
-                    Value26: '61440',
-                    Value27: '32768',
-                    Value28: '131072',
-                    Value29: '65536',
-                    Value30: '32768',
-                    Value31: '131072',
-                    Value32: '131072',
-                    Value33: '524288',
-                    Value34: '1024',
-                    Value35: '2048',
-                    Value36: '4096',
-                    Value37: '8192',
-                    Value38: '122880',
-                    Value39: '15360',
-                    Value40: '30720',
-                    Value41: '61440',
-                    Value42: '92160',
+                    '512': '512',
+                    '1024': '1024',
+                    '2048': '2048',
+                    '4096': '4096',
+                    '8192': '8192',
+                    '15360': '15360',
+                    '30720': '30720',
+                    '3840': '3840',
+                    '61440': '61440',
+                    '7680': '7680',
+                    '92160': '92160',
+                    '122880': '122880',
+                    '245760': '245760',
+                    '32768': '32768',
+                    '131072': '131072',
+                    '65536': '65536',
+                    '524288': '524288',
                 };
 
                 var select = document.getElementById("selectram");
@@ -163,31 +139,30 @@
 
             <script type="text/javascript">
                 var myobject2 = {
-                    ValueA: 'Ubuntu 17.04 LTS (Zesty Zapus) (PVHVM)',
-                    ValueB: 'Ubuntu 16.04 LTS (Xenial Xerus) (PVHVM)',
-                    ValueC: 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Standard',
-                    ValueD: 'Windows Server 2012 R2 + SQL Server 2016 Web',
-                    ValueE: 'Windows Server 2012 R2 + SQL Server 2016 Standard',
-                    ValueF: 'Windows Server 2012 + SQL Server 2012 SP1 Web',
-                    ValueG: 'Windows Server 2012 R2 + SQL Server 2014 Web',
-                    ValueH: 'Windows Server 2012 + SQL Server 2012 SP1 Standard',
-                    ValueI: 'Windows Server 2012 R2 + SQL Server 2014 Standard',
-                    ValueJ: 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Web',
-                    ValueK: 'Windows Server 2012',
-                    ValueL: 'Windows Server 2012 R2',
-                    ValueM: 'Windows Server 2008 R2 SP1',
-                    ValueN: 'FreeBSD 10 (PVHVM)',
-                    ValueO: 'FreeBSD 11 (PVHVM)',
-                    ValueP: 'Fedora 25 (PVHVM)',
-                    ValueQ: 'CentOS 7 (PVHVM)',
-                    ValueR: 'CentOS 6 (PV)',
-                    ValueS: 'Ubuntu 12.04 LTS',
-                    ValueT: 'Ubuntu 12.04 LTS',
-                    ValueU: 'Debian 7 (Wheezy) (PVHVM)',
-                    ValueV: 'Debian 8 (Jessie) (PVHVM)',
-                    ValueW: 'Debian Testing (Stretch) (PVHVM)',
-                    ValueX: 'Scientific Linux 6 (PVHVM)',
-                    ValueY: 'Fedora 24 (PVHVM)',
+                    'Ubuntu 17.04 LTS (Zesty Zapus) (PVHVM)': 'Ubuntu 17.04 LTS (Zesty Zapus) (PVHVM)',
+                    'Ubuntu 16.04 LTS (Xenial Xerus) (PVHVM)': 'Ubuntu 16.04 LTS (Xenial Xerus) (PVHVM)',
+                    'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Standard': 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Standard',
+                    'Windows Server 2012 R2 + SQL Server 2016 Web': 'Windows Server 2012 R2 + SQL Server 2016 Web',
+                    'Windows Server 2012 R2 + SQL Server 2016 Standard': 'Windows Server 2012 R2 + SQL Server 2016 Standard',
+                    'Windows Server 2012 + SQL Server 2012 SP1 Web': 'Windows Server 2012 + SQL Server 2012 SP1 Web',
+                    'Windows Server 2012 R2 + SQL Server 2014 Web': 'Windows Server 2012 R2 + SQL Server 2014 Web',
+                    'Windows Server 2012 + SQL Server 2012 SP1 Standard': 'Windows Server 2012 + SQL Server 2012 SP1 Standard',
+                    'Windows Server 2012 R2 + SQL Server 2014 Standard': 'Windows Server 2012 R2 + SQL Server 2014 Standard',
+                    'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Web': 'Windows Server 2008 R2 SP1 + SQL Server 2008 R2 SP3 Web',
+                    'Windows Server 2012': 'Windows Server 2012',
+                    'Windows Server 2012 R2': 'Windows Server 2012 R2',
+                    'Windows Server 2008 R2 SP1': 'Windows Server 2008 R2 SP1',
+                   'FreeBSD 10 (PVHVM)' : 'FreeBSD 10 (PVHVM)',
+                    'FreeBSD 11 (PVHVM)': 'FreeBSD 11 (PVHVM)',
+                    'Fedora 25 (PVHVM)': 'Fedora 25 (PVHVM)',
+                   'CentOS 7 (PVHVM)': 'CentOS 7 (PVHVM)',
+                    'CentOS 6 (PV)': 'CentOS 6 (PV)',
+                    'Ubuntu 12.04 LTS': 'Ubuntu 12.04 LTS',
+                    'Debian 7 (Wheezy) (PVHVM)': 'Debian 7 (Wheezy) (PVHVM)',
+                    'Debian 8 (Jessie) (PVHVM)': 'Debian 8 (Jessie) (PVHVM)',
+                    'Debian Testing (Stretch) (PVHVM)': 'Debian Testing (Stretch) (PVHVM)',
+                   'Scientific Linux 6 (PVHVM)': 'Scientific Linux 6 (PVHVM)',
+                   'Fedora 24 (PVHVM)': 'Fedora 24 (PVHVM)',
                 };
 
                 var select = document.getElementById("selectimage");

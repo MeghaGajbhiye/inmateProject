@@ -88,6 +88,21 @@
              <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/rack.jpg" %} width= 100 height=100></img>
                     <h1> View Rackspace Instance</h1>
+                 <table>
+                <tr>
+                    <th>Instances</th>
+
+                </tr>
+
+                    {% for i in instance_db %}
+                        <tr>
+                        <td>{{ i }}</td>
+
+                        </tr>
+                    {% endfor %}
+
+            </table>
+
                 </div>
             </div>
     

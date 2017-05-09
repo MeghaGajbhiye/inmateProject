@@ -330,7 +330,7 @@ def azure_view(request):
         tenant_id = decode(encoded_tenant_id)
         print subscription_id, client_id, secret_key, tenant_id
         azure = az(subscription_id, client_id, secret_key, tenant_id)
-        az.view_instances(res_grp_name)
+        az.view_instances(view)
         view = request.POST.get("view")
         keys = azure_get_keys(request)
         # print res_grp_name
