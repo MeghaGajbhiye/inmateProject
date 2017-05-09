@@ -285,15 +285,15 @@ def azure_view(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        res_grp_name = request.POST.get("res_grp_name")
+        view = request.POST.get("view")
         keys = azure_get_keys(request)
-        print res_grp_name
+        print view
         subscription_id = keys["subscription_id"]
         client_id = keys["client_id"]
         secret_key = keys["secret_key"]
         tenant_id = keys["tenant_id"]
         azure = Azure(subscription_id, client_id, secret_key, tenant_id)
-        azure.view_instances(res_grp_name)
+        azure.view_instances(view)
         print "I got the azure keys"
 
         # print res_grp_name

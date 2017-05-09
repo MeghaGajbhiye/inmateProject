@@ -1,4 +1,3 @@
-
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +13,10 @@
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-{#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
+    {#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-{#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
+    {#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
@@ -26,10 +25,9 @@
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 
 
-
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-{#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
+    {#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,17 +48,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">AUTUM <img src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+            <a class="navbar-brand" href="#">AUTUM <img
+                    src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
              <ul class="nav navbar-nav navbar-left">
-                  <li><a href="/azure_home/">Azure Home</a></li>
+                  <li><a href="/rackspace_home/">Rackspace Home</a></li>
              </ul>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-
                 <li><a href="/dashboard/">Dashboard</a></li>
                 <li><a href="/support">Support</a></li>
-                <li><a href="{% url 'home' %} " > Logout </a></li>
+                <li><a href="{% url 'home' %} "> Logout </a></li>
 
 
             </ul>
@@ -75,62 +74,35 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li ><a href="#">Overview </a></li>
+                <li><a href="/dashboard">Overview </a></li>
                 <li><a href="/monitor">Monitor</a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
-                <li class="active"><a href="/cpfinal">Manage Instances <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="/cpfinal"> Manage Instances <span class="sr-only">(current)</span></a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
-        </div>
-    </div>
 
+        </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Azure_View</h1>
+            <h1 class="page-header">Rackspace_View</h1>
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/azure.jpg" %} width= 100 height=100></img>
-                    <h2> View Azure Instance</h2>
+                    <h1> Azure Instance by Subscription</h1>
                 </div>
             </div>
-
-
     
-    <td>
-            <h2> Select view instance type</h2>
-               <h2><select id="view">
-                    <option value = "/sub">Subscription</option>
-                    <option value = "/res">Resource Group</option>
-
-
-               </select></h2>
-             </td>
-    
-
-   <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h1>
-
-
-
-<p id="view"></p>
-
-
-<script>
-function myFunction() {
-  document.getElementById("view").innerHTML = "view type is selected";
  
-  
-}
 </script>
      <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/azure_view/",
+                url: "/sub/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    view: $("#view").val(),
-                   
+                    
                     
                 },
                 success: function (json) {
@@ -144,15 +116,18 @@ function myFunction() {
         }
 
     </script>
-        </div>
 
 
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+
+    </div><!-- /.container -->
 
 
    
  {%include 'javascript.html' %}
-        </div>
-    </div>
-</div>
   </body>
 </html>

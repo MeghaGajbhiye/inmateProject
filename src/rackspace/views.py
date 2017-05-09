@@ -103,7 +103,8 @@ def rackspace_update(request):
         print instance_list
         context = {"instance_list": instance_list}
         print "Gotcha instance"
-        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+        return render_to_response("rackspace_home.html", {context}, context_instance=RequestContext(request))
+
     return render_to_response("rackspace_update.html", {}, context_instance=RequestContext(request))
    
         
