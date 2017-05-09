@@ -101,13 +101,16 @@ def aws_create(request):
             print "it's ajax"
         if request.method == 'POST':
             print "Inside post"
+            inst_name = request.POST.get("inst_name")
+            image = request.POST.get("image")
+            inst_type = request.POST.get("inst_type")
             min = request.POST.get("min")
             max = request.POST.get("max")
             key_name = request.POST.get("key_name")
-            inst_type = request.POST.get("inst_type")
+
             check_status = request.POST.get("check_status")
 
-            print min, max, key_name, inst_type, check_status
+            print inst_name, image, inst_type, min, max, key_name, check_status
 
             aws_result = aws_get_keys(request)
             encoded_access_key = str(aws_result['access_key'])
