@@ -50,16 +50,16 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/aws_home/">AWS Home</a></li>
+             </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/dashboard/">Dashboard</a></li>
                 <li><a href="/support">Support</a></li>
-                <li>
-                <li><a href="{% url 'home' %}"> Logout </a></li>
+                <li><a href="{% url 'home' %} "> Logout </a></li>
 
-
-            </ul>
 
             </ul>
             <form class="navbar-form navbar-right">
@@ -73,53 +73,84 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="#">Overview </a></li>
-                <li class="active"><a href="/monitor">Monitor <span class="sr-only">(current)</span></a></li>
+                <li><a href="/dashboard">Overview </a></li>
+                <li><a href="/monitor">Monitor</a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
-                <li><a href="/cpfinal">Manage Instances</a></li>
+                <li class="active"><a href="/cpfinal">Manage Instances <span class="sr-only">(current)</span></a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <img src={%static "img/images.png" %} width = 150 height = 200></img>
-            <h1 class="page-header">GOOGLE Monitoring</h1>
-
-
+            <h1 class="page-header">AWS_Delete</h1>
             <div class="row placeholders">
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                    <script type="text/javascript">
-                        google.charts.load('current', {'packages': ['corechart']});
-                        google.charts.setOnLoadCallback(drawChart);
+             <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src={% static "img/aws.png" %} width= 100 height=100></img>
+                    <h1> AWS Monitor List</h1>
+                </div>
+            </div>
 
-                        function drawChart() {
-                             var data = new google.visualization.DataTable();
-                                data.addColumn('string', 'Time');
-  data.addColumn('number', 'CPU Utilization Time');
-                                data.addRows( {{ data1|safe }});
-                            var options = {
-                                title: 'Time chart',
-                                curveType: 'function',
-                                legend: {position: 'bottom'}
-                            };
+ <td>
+    <h2> Enter Instance ID
+        <select id="instance">
 
-                            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            <option>Select an instance</option>
+            {% for i in instance_db %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
 
-                            chart.draw(data, options);
-                        }
-                    </script>
-                    <div id="curve_chart" style="width: 500px; height: 250px">
+        </select>
+</td>
 
-                    </div>
-                    <h3>Time Graph</h3>
-                    </div>
 
-        </div>
-        {% include 'javascript.html' %}
+    <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Delete</button><h2>
+        <p id="instance"></p>
 
-        {#        </div>#}
-    </div>
+        <script type="text/javascript">
+    function myFunction() {
+            document.getElementById("instance").innerHTML = "Instance name selected";
+            
+        }
+    </script>
+
+    <script type="text/javascript">
+        function myFunction() {
+            $('.ajaxProgress').show();
+            $.ajax({
+                type: "POST",
+                url: "/aws_monitor_list/",
+                async: true,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    instance: $("#instance").val(),
+                    
+                   
+                },
+                success: function (json) {
+                    $('#output').html(json.message);
+                    $('.ajaxProgress').hide();
+                },
+                fail: function () {
+                    alert("failed")
+                }
+            });
+        }
+
+    </script>
+
+
 </div>
+</div>
+
+{% block row %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+
+{% include 'javascript.html' %}
 </body>
 </html>
+

@@ -321,5 +321,43 @@ def aws_get_keys(request):
     keys = {"access_key": access_key, "secret_key": secret_key}
     return keys
 
+def aws_monitor_list(request):
+    print "aws_monitor_list **************************"
+
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+            instance = request.POST.get("instance")
+
+            print instance
+            # Get AWS Access key and secret key from database
+            # Instantiate AWS class aws->aws.py and calling the launch_instance function
+            aws_result = aws_get_keys(request)
+            encoded_access_key = str(aws_result['access_key'])
+            access_key = decode(encoded_access_key)
+            encoded_secret_key = str(aws_result['secret_key'])
+            secret_key = decode(encoded_secret_key)
+            print encoded_access_key, access_key, encoded_secret_key, secret_key
+            print "I am here after encoding"
+            aws = AWS(access_key, secret_key)
+            aws.describe_instances(instance)
+            instance_list = aws.describe_instances(instance)
+            print "printing instance list in get"
+            print instance_list[0]
+            instance_db = instance_list
+            return render_to_response("aws_monitor.html", {'instance_db': instance_db})
+    print 'for get response'
+    return render_to_response("aws_monitor_list.html", {}, context_instance=RequestContext(request))
+
 def aws_monitor(request):
-    return render_to_response("aws_monitor.html", )
+    aws_result = aws_get_keys(request)
+    encoded_access_key = str(aws_result['access_key'])
+    access_key = decode(encoded_access_key)
+    encoded_secret_key = str(aws_result['secret_key'])
+    secret_key = decode(encoded_secret_key)
+    print encoded_access_key, access_key, encoded_secret_key, secret_key
+    aws = AWS(access_key, secret_key)
+    data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
+    return render_to_response("aws_monitor.html", {'data1': data1})
+

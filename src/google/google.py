@@ -4,30 +4,30 @@ import time
 import datetime
 import json
 
-import googleapiclient.discovery
-from six.moves import input
-from oauth2client.client import GoogleCredentials
-from googleapiclient.discovery import build
-from oauth2client.client import AccessTokenCredentials
-from urllib import urlencode
-from urllib2 import Request , urlopen, HTTPError
+# import googleapiclient.discovery
+# from six.moves import input
+# from oauth2client.client import GoogleCredentials
+# from googleapiclient.discovery import build
+# from oauth2client.client import AccessTokenCredentials
+# from urllib import urlencode
+# from urllib2 import Request , urlopen, HTTPError
 
 
 
 class Google:
 
-    def __init__(self, google_client_id, google_client_secret, google_refresh_token):
-        auth_request = Request('https://accounts.google.com/o/oauth2/token', 
-                  data=urlencode({ 
-                    'grant_type': 'refresh_token', 
-                    'client_id': google_client_id, 
-                    'client_secret': google_client_secret, 
-                    'refresh_token': google_refresh_token }), 
-                  headers={'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' })
-        auth_response = json.load(urlopen(auth_request))
-        google_access_token= auth_response['access_token']
-        google_credentials = AccessTokenCredentials(google_access_token, "MyAgent/1.0", None)
-        self.compute = build('compute', 'v1', credentials=google_credentials)
+    # def __init__(self, google_client_id, google_client_secret, google_refresh_token):
+    #     auth_request = Request('https://accounts.google.com/o/oauth2/token',
+    #               data=urlencode({
+    #                 'grant_type': 'refresh_token',
+    #                 'client_id': google_client_id,
+    #                 'client_secret': google_client_secret,
+    #                 'refresh_token': google_refresh_token }),
+    #               headers={'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' })
+    #     auth_response = json.load(urlopen(auth_request))
+    #     google_access_token= auth_response['access_token']
+    #     google_credentials = AccessTokenCredentials(google_access_token, "MyAgent/1.0", None)
+    #     self.compute = build('compute', 'v1', credentials=google_credentials)
 
     def operation_wait(self, project_id, google_zone, operation_name):
         print('Waiting for operation to finish...')
@@ -142,51 +142,51 @@ class Google:
 
     def get_now_rfc3339(self):
         return self.format_rfc3339 (datetime.datetime.utcnow ())
-
-    def cloud_monitor(self, project_id):
-        print "****************************************cloud monitor*************************************************"
- ##################
-        GOOGLE_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
-        google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
-        set_now = self.get_now_rfc3339 ()
-        description = {"project": project_id,
-                "metric": GOOGLE_METRIC_NAME}
-        point = {"start": set_now,
-                 "end": set_now,
-                 "doubleValue": os.getpid ()}
-        print("Writing {} at {}".format (point["doubleValue"], set_now))
-
-        # Write a new data point.
-        try:
-            write_request = google_client.timeseries ().write (
-                project=project_id,
-                body={"timeseries": [{"timeseriesDesc": description, "point": point}]})
-            write_request.execute ()  # Ignore the response.
-        except Exception as e:
-            print("Failed to write custom metric data: exception={}".format (e))
-            raise
-
-        print("Reading data from custom metric timeseries...")
-        read_request = google_client.timeseries ().list (
-            project=project_id,
-            metric=GOOGLE_METRIC_NAME,
-            youngest=set_now)
-        start = time.time ()
-        while True:
-            try:
-                read_response = read_request.execute ()
-                for point in read_response["timeseries"][0]["points"]:
-                    print("Point:  {}: {}".format (
-                        point["end"], point["doubleValue"]))
-                break
-            except Exception as e:
-                if time.time () < start + 20:
-                    print("Failed to read custom metric data, retrying...")
-                    time.sleep (3)
-                else:
-                    print("Failed to read custom metric data, aborting: "
-                          "exception={}".format (e))
-                    raise
+ #
+ #    def cloud_monitor(self, project_id):
+ #        print "****************************************cloud monitor*************************************************"
+ # ##################
+ #        GOOGLE_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
+ #        google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
+ #        set_now = self.get_now_rfc3339 ()
+ #        description = {"project": project_id,
+ #                "metric": GOOGLE_METRIC_NAME}
+ #        point = {"start": set_now,
+ #                 "end": set_now,
+ #                 "doubleValue": os.getpid ()}
+ #        print("Writing {} at {}".format (point["doubleValue"], set_now))
+ #
+ #        # Write a new data point.
+ #        try:
+ #            write_request = google_client.timeseries ().write (
+ #                project=project_id,
+ #                body={"timeseries": [{"timeseriesDesc": description, "point": point}]})
+ #            write_request.execute ()  # Ignore the response.
+ #        except Exception as e:
+ #            print("Failed to write custom metric data: exception={}".format (e))
+ #            raise
+ #
+ #        print("Reading data from custom metric timeseries...")
+ #        read_request = google_client.timeseries ().list (
+ #            project=project_id,
+ #            metric=GOOGLE_METRIC_NAME,
+ #            youngest=set_now)
+ #        start = time.time ()
+ #        while True:
+ #            try:
+ #                read_response = read_request.execute ()
+ #                for point in read_response["timeseries"][0]["points"]:
+ #                    print("Point:  {}: {}".format (
+ #                        point["end"], point["doubleValue"]))
+ #                break
+ #            except Exception as e:
+ #                if time.time () < start + 20:
+ #                    print("Failed to read custom metric data, retrying...")
+ #                    time.sleep (3)
+ #                else:
+ #                    print("Failed to read custom metric data, aborting: "
+ #                          "exception={}".format (e))
+ #                    raise
 ######################
     #
     # Point:  2017 - 05 - 01
