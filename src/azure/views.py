@@ -232,23 +232,24 @@ def azure_delete_vm(request):
 def azure_delete_rsgrp(request):
     print "azure_delete_rsgrp **************************"
 
+    azure_result = azure_get_keys(request)
+    encoded_subscription_id = str(azure_result["subscription_id"])
+    subscription_id = decode(encoded_subscription_id)
+    encoded_client_id = str(azure_result["client_id"])
+    client_id = decode(encoded_client_id)
+    encoded_secret_key = str(azure_result["secret_key"])
+    secret_key = decode(encoded_secret_key)
+    encoded_tenant_id = str(azure_result["tenant_id"])
+    tenant_id = decode(encoded_tenant_id)
+    print subscription_id, client_id, secret_key, tenant_id
+    azure = az(subscription_id, client_id, secret_key, tenant_id)
+
     if request.is_ajax():
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
             res_grp_name = request.POST.get("res_grp_name")
             print res_grp_name
-            azure_result = azure_get_keys(request)
-            encoded_subscription_id = str(azure_result["subscription_id"])
-            subscription_id = decode(encoded_subscription_id)
-            encoded_client_id = str(azure_result["client_id"])
-            client_id = decode(encoded_client_id)
-            encoded_secret_key = str(azure_result["secret_key"])
-            secret_key = decode(encoded_secret_key)
-            encoded_tenant_id = str(azure_result["tenant_id"])
-            tenant_id = decode(encoded_tenant_id)
-            print subscription_id, client_id, secret_key, tenant_id
-            azure = az(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name)
             print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
@@ -257,6 +258,17 @@ def azure_delete_rsgrp(request):
 
 def azure_stop(request):
     print "azure_stop **************************"
+    azure_result = azure_get_keys(request)
+    encoded_subscription_id = str(azure_result["subscription_id"])
+    subscription_id = decode(encoded_subscription_id)
+    encoded_client_id = str(azure_result["client_id"])
+    client_id = decode(encoded_client_id)
+    encoded_secret_key = str(azure_result["secret_key"])
+    secret_key = decode(encoded_secret_key)
+    encoded_tenant_id = str(azure_result["tenant_id"])
+    tenant_id = decode(encoded_tenant_id)
+    print subscription_id, client_id, secret_key, tenant_id
+    azure = az(subscription_id, client_id, secret_key, tenant_id)
 
     if request.is_ajax():
         print "it's ajax"
@@ -265,17 +277,6 @@ def azure_stop(request):
             res_grp_name = request.POST.get("res_grp_name")
             vm_name = request.POST.get("vm_name")
             print res_grp_name, vm_name
-            azure_result = azure_get_keys(request)
-            encoded_subscription_id = str(azure_result["subscription_id"])
-            subscription_id = decode(encoded_subscription_id)
-            encoded_client_id = str(azure_result["client_id"])
-            client_id = decode(encoded_client_id)
-            encoded_secret_key = str(azure_result["secret_key"])
-            secret_key = decode(encoded_secret_key)
-            encoded_tenant_id = str(azure_result["tenant_id"])
-            tenant_id = decode(encoded_tenant_id)
-            print subscription_id, client_id, secret_key, tenant_id
-            azure = az(subscription_id, client_id, secret_key, tenant_id)
             az.stop_vm(res_grp_name, vm_name)
             print "I got the azure keys"
             return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))

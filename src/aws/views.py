@@ -187,8 +187,7 @@ def aws_delete(request):
             print "I am here after encoding"
 
             aws = AWS(access_key, secret_key)
-
-            instance_db = [u'instance_test', u'Server-01']
+            instance_db = json.dumps(aws.describe_instances(instance))
             print "I am above instance_name"
             instance_name = json.dumps(instance_db)
             print instance_name

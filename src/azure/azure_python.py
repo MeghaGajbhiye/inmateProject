@@ -2,13 +2,13 @@ import os
 import datetime
 
 # #3rd Party Libraries
-# # from azure.mgmt.resource import ResourceManagementClient as rmc
-# from azure.monitor import MonitorClient as mc
-# from azure.common.credentials import ServicePrincipalCredentials as spc
-# from azure.mgmt.network import NetworkManagementClient as nmc
-# from azure.mgmt.storage import StorageManagementClient as smc
-# from azure.mgmt.compute import ComputeManagementClient as cmc
-# from haikunator import Haikunator as hk
+from azure.mgmt.resource import ResourceManagementClient as rmc
+from azure.monitor import MonitorClient as mc
+from azure.common.credentials import ServicePrincipalCredentials as spc
+from azure.mgmt.network import NetworkManagementClient as nmc
+from azure.mgmt.storage import StorageManagementClient as smc
+from azure.mgmt.compute import ComputeManagementClient as cmc
+from haikunator import Haikunator as hk
 
 
 class Azure_class:
@@ -184,23 +184,29 @@ class Azure_class:
         async_vm_restart.wait ()
 
     def stop_vm(self, resource_group_name, vm_name):
-        print('\nStop VM')
+        print('\n*********************************Stop VM**************************************')
         async_vm_stop = self.compute_client.virtual_machines.power_off (resource_group_name, vm_name)
         async_vm_stop.wait ()
 
     def view_instances_rgroup_name(self, resource_group_name):
         '''List VM in resource group'''
         print('\nList VMs in resource group')
+        vm_list = []
         for vm in self.compute_client.virtual_machines.list (resource_group_name):
-            print("\tVM: {}".format (vm.name))
+            vm_list.append(vm.name)
+            # print("\tVM: {}".format (vm.name))
+        return vm_list
 
     def view_instances_sub(self):
         print('\nList VMs in subscription')
+        vm_list = []
         for vm in self.compute_client.virtual_machines.list_all ():
-            print("\tVM: {}".format (vm.name))
+            vm_list.append(vm.name)
+        return vm_list
+            # print("\tVM: {}".format (vm.name))
 
     def delete_vm(self, resource_group_name, vm_name):
-        print('\nDelete VM')
+        print('\n************************Delete VM***************************************')
         async_vm_delete = self.compute_client.virtual_machines.delete (resource_group_name, vm_name)
         async_vm_delete.wait()
 
@@ -470,16 +476,16 @@ class Azure_class:
 #         )
 #         snapshot = async_snapshot_creation.result ()
 #
-# if __name__ == "__main__":
-#     az = Azure_class('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
-#     # az.create_snapshot("group1", "osdisk1")
-#     # az.azure_offers()
-#     # az.cloud_monitor()
-#     # az.cloud_monitoring_metrics("group1","vm1")
-#     # az.delete_resource_group("azure-sample-group-virtual-machines2")
-#     # az.start_vm("group1", "vm1")
-#     # az.restart_vm("group1", "vm1")
-#     # az.update_instance(10,"group1","vm1")
-#     az.view_instances_rgroup_name("group1")
-#     az.view_instances_sub()
-#     # az.create_instance("linux", "megha", "MeghaRocks@1", "group1", "vm1", "westus", "vnet1", "subnet1", "nic1", "ipconfig1", "osdisk1")
+if __name__ == "__main__":
+    az = Azure_class('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
+    # az.create_snapshot("group1", "osdisk1")
+    # az.azure_offers()
+    # az.cloud_monitor()
+    # az.cloud_monitoring_metrics("group1","vm1")
+    # az.delete_resource_group("azure-sample-group-virtual-machines2")
+    # az.start_vm("group1", "vm1")
+    # az.restart_vm("group1", "vm1")
+    # az.update_instance(10,"group1","vm1")
+    az.view_instances_rgroup_name("group1")
+    az.view_instances_sub()
+    # az.create_instance("linux", "megha", "MeghaRocks@1", "group1", "vm1", "westus", "vnet1", "subnet1", "nic1", "ipconfig1", "osdisk1")

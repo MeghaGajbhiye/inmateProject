@@ -45,17 +45,17 @@ class AWS:
         print self.secret_key, self.access_key, min_count, max_count, key_name, instance_type, monitoring
 
         print "I am inside launch instance"
-        # ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
-        #                    aws_secret_access_key=self.get_secret_key(), region_name = region_name)
-        # image_id = 'ami-8ca83fec'
-        # #self.describe_images()
-        # # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
-        # #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
+        ec2 = boto3.client('ec2', aws_access_key_id=self.get_acccess_key(),
+                           aws_secret_access_key=self.get_secret_key(), region_name = region_name)
+        image_id = 'ami-8ca83fec'
+        #self.describe_images()
+        # ec2_out = ec2.run_instances(ImageId='ami-8ca83fec', MinCount=1, MaxCount=1, KeyName='ravi',
+        #                             InstanceType='m4.xlarge', Monitoring={'Enabled': True})
 
 
-        # ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
-        #                             InstanceType=instance_type, Monitoring={'Enabled': monitoring})
-        # print (ec2_out)
+        ec2_out = ec2.run_instances(ImageId=image_id, MinCount=min_count, MaxCount=max_count, KeyName=key_name,
+                                    InstanceType=instance_type, Monitoring={'Enabled': monitoring})
+        print (ec2_out)
 
     # http://boto3.readthedocs.io/en/latest/reference/services/ec2.html#EC2.Client.run_instances
 
@@ -151,8 +151,8 @@ class AWS:
 if __name__ == "__main__":
     # aws_access_key_id = '', aws_secret_access_key = 'ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy'
     aws = AWS("AKIAIR6NSMV54GLQET2A", "Z51MMk4s0eyeWPyaS2jMi0XMlIkZ7BJTZAtZ3tY+")
-    # instances = aws.describe_instances("us-west-2")
-    aws.describe_key_pair()
+    instances = aws.describe_instances("us-west-2")
+    # aws.describe_key_pair()
     # for instance in instances:
     #     print (instance)
     #     aws.get_metrics(instance)
