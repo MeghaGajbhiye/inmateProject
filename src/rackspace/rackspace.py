@@ -12,16 +12,21 @@ class Rackspace:
     def launch_instance(self, instance_name, image_name, ram):
         '''Create Server'''
         print "*************************INSIDE LAUNCH INSTANCE ****************************************"
-        print self.user_name, self.api_key, instance_name, image_name, ram
+        print ("username ,%r, type ,%r, apikey ,%r, type ,%r, instancename ,%r, type ,%r, imagename ,%s, tupe ,%r, ram ,%r, type ,%r,") %(self.user_name, type(self.user_name), self.api_key, type(self.api_key), instance_name, type(instance_name), image_name, type(image_name), ram, type(ram))
         ################################################################################
         images = pyrax.images.list ()
+        print "after pyrax.images.list ()"
         # image_name = 'Debian 7 (Wheezy) (PVHVM)'
         for img in images:
             if img.name == image_name:
                 image_test = img.id
 
-        server = self.cs.servers.create (instance_name, image_test, self.describe_flavor (ram))
+        print (image_test)
+
+        server = self.cs.servers.create (instance_name, image_test, self.describe_flavor(ram))
+        print "after server"
         pyrax.utils.wait_until (server, "status", "ACTIVE", interval=1, attempts=30)
+        print "after wait"
         print server.id
         # End result: Server created in Rackspace
         ################################################################################
@@ -63,32 +68,37 @@ class Rackspace:
 
     def update_instance(self, server_name, ram):
         print "*****************************INside UPdate INstance*****************************************"
-        print self.api_key, self.user_name, server_name, ram
-        # #################################################################################
-        # server = self.cs.servers.list ()
-        # # print server
-        # for servers in server:
-        #     print servers.name
-        #     if servers.name == server_name:
-        #         server_id = servers.id
-        #         server = self.cs.servers.get (server_id)
-        #         flavor_id = self.describe_flavor (ram)
-        #         server.resize (flavor_id)
-        #         return 1
-        #     else:
-        #         return 0
-        # ###################################################################################3
+        print self.api_key, type(self.api_key), self.user_name, type(self.user_name), server_name, type(server_name), ram, type(ram)
+        #################################################################################
+        server = self.cs.servers.list ()
+        # print server
+        for servers in server:
+            print servers.name
+            if servers.name == server_name:
+                server_id = servers.id
+                print "server id", server_id
+                server = self.cs.servers.get (server_id)
+                print "server", server
+                flavor_id = self.describe_flavor(ram)
+                print "flavor id", flavor_id
+                server.resize (flavor_id)
+                print "after resize"
+                return 1
+            else:
+                return 0
+        ###################################################################################3
 
     def delete_instance(self, server_name):
         print "*************************************** INSIDE DELETE RACKSPACE ***********************"
         print self.user_name, self.api_key, server_name
-        #################################################################################
-        # for server in self.cs.servers.list ():
-        #     if server.name == server_name:
-        #         server.delete ()
-        #         return 1
-        # return 0
-        #################################################################################
+        ################################################################################
+        for server in self.cs.servers.list ():
+            if server.name == server_name:
+                print "server name", server_name
+                server.delete ()
+                return 1
+        return 0
+        ################################################################################
     def monitoring(self, instance_name, notification, email_id):
         print "*************************************** INSIDE MONITORING RACKSPACE ***********************"
         print self.user_name, self.api_key, instance_name, notification, email_id
@@ -200,42 +210,43 @@ class Rackspace:
     def instance_reboot(self, server_name, boot_type):
         print "*************************************** INSIDE REBOOT RACKSPACE ***********************"
         print self.user_name, self.api_key, server_name, boot_type
-        # servers = self.cs.servers.list ()
+        servers = self.cs.servers.list ()
+        # Find the first 'ACTIVE' server
+        try:
+            active = [server for server in servers
+                      if server.status == "ACTIVE" and server.name == server_name][0]
+        except IndexError:
+            print("There are no active servers in your account.")
+            print("Please create one before running this script.")
+        # Display server info
+        print("Server Name:", active.name)
+        print("Server ID:", active.id)
+        print("Server Status:", active.status)
+        print()
+
+        # servers = cs.servers.list()
         # # Find the first 'ACTIVE' server
         # try:
         #     active = [server for server in servers
-        #               if server.status == "ACTIVE" and server.name == server_name][0]
+        #             if server.status == "ACTIVE"][0]
         # except IndexError:
         #     print("There are no active servers in your account.")
         #     print("Please create one before running this script.")
+        #     sys.exit()
         # # Display server info
         # print("Server Name:", active.name)
         # print("Server ID:", active.id)
         # print("Server Status:", active.status)
         # print()
-        #
-        # # servers = cs.servers.list()
-        # # # Find the first 'ACTIVE' server
-        # # try:
-        # #     active = [server for server in servers
-        # #             if server.status == "ACTIVE"][0]
-        # # except IndexError:
-        # #     print("There are no active servers in your account.")
-        # #     print("Please create one before running this script.")
-        # #     sys.exit()
-        # # # Display server info
-        # # print("Server Name:", active.name)
-        # # print("Server ID:", active.id)
-        # # print("Server Status:", active.status)
-        # # print()
-        #
-        # answer = boot_type
-        # reboot_type = {"s": "soft", "h": "hard"}[answer]
-        # active.reboot (reboot_type)
-        # # Reload the server
-        # after_reboot = self.cs.servers.get (active.id)
-        #
-        # print("Server Status =", after_reboot.status)
+
+        answer = boot_type
+        reboot_type = {"s": "soft", "h": "hard"}[answer]
+        print "reboot_type %r" %reboot_type
+        active.reboot(reboot_type)
+        # Reload the server
+        after_reboot = self.cs.servers.get (active.id)
+
+        print("Server Status =", after_reboot.status)
 
 
 if __name__ == "__main__":

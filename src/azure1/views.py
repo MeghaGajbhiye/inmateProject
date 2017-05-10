@@ -108,17 +108,17 @@ def azure_create(request):
         if request.method == 'POST':
             print "I am here inside post"
 
-            choice = request.POST.get("choice")
-            user = request.POST.get("user")
-            password = request.POST.get("password")
-            res_grp_name = request.POST.get("res_grp_name")
-            vm_name = request.POST.get("vm_name")
-            loc = request.POST.get("loc")
-            vnet_name = request.POST.get("vnet_name")
-            snet_name = request.POST.get("snet_name")
-            nic_name = request.POST.get("nic_name")
-            ip_con = request.POST.get("ip_con")
-            d_name = request.POST.get("d_name")
+            choice = str(request.POST.get("choice"))
+            user = str(request.POST.get("user"))
+            password = str(request.POST.get("password"))
+            res_grp_name = str(request.POST.get("res_grp_name"))
+            vm_name = str(request.POST.get("vm_name"))
+            loc = str(request.POST.get("loc"))
+            vnet_name = str(request.POST.get("vnet_name"))
+            snet_name = str(request.POST.get("snet_name"))
+            nic_name = str(request.POST.get("nic_name"))
+            ip_con = str(request.POST.get("ip_con"))
+            d_name = str(request.POST.get("d_name"))
 
             print "I am here----", choice, user, password, res_grp_name, vm_name, loc, vnet_name, snet_name, nic_name, ip_con, d_name
             print "before azure request"
@@ -425,9 +425,9 @@ def azure_get_keys(request):
     usr_id = request.user.id
     print "after user id"
     azure_result = Azure.objects.get(id=usr_id)
-    subscription_id = azure_result.subscription_id
-    client_id = azure_result.client_id
-    secret_key = azure_result.secret_key
+    subscription_id = str(azure_result.subscription_id)
+    client_id = str(azure_result.client_id)
+    secret_key = str(azure_result.secret_key)
     tenant_id = azure_result.tenant_id
     print subscription_id, client_id, secret_key, tenant_id
     keys = {"subscription_id": subscription_id, "client_id": client_id, "secret_key": secret_key,

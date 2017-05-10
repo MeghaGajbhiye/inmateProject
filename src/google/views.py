@@ -68,6 +68,30 @@ def google(request):
             return render_to_response("Google_CP.html", context, context_instance=RequestContext(request))
 
 
+def google_cp(request):
+    if request.method == 'POST':
+        print "it is post"
+        form = GoogleForm(request.POST or None)
+        if form.is_valid():
+            project_id = form.cleaned_data['project_id']
+            encoded_project_id = encode(project_id)
+            client_secret = form.cleaned_data['client_secret']
+            encoded_client_secret = encode(client_secret)
+            refresh_token = form.cleaned_data['refresh_token']
+            encoded_refresh_token = encode(refresh_token)
+            keys = Google(id=usr_id, project_id=encoded_project_id, client_secret=encoded_client_secret,
+                          refresh_token=encoded_refresh_token)
+            save_keys = Google.save(keys)
+            print "Google KEYS HAS BEEN SAVED IN Google TABLE"
+            return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
+    else:
+        form = GoogleForm()
+        context = {
+            "form": form,
+        }
+        return render_to_response("Google_CP.html", context, context_instance=RequestContext(request))
+
+
 
 def google_home(request):
     print "google_home **************************"
