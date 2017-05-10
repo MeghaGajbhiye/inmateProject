@@ -47,93 +47,94 @@ class Google:
 
     def create_instance(self, project_id, zone, instance_name, bucket_name ):
 
-        print('Creating instance.')
+        print('********************************Creating instance*********************************')
+        print project_id, zone, instance_name, bucket_name
+        # getting latest debian-8 image.
+        # image_result = self.compute.images().getFromFamily(
+        #     project='debian-cloud', family='debian-8').execute()
+        # disk_image = image_result['selfLink']
 
-        #getting latest debian-8 image.
-        image_result = self.compute.images().getFromFamily(
-            project='debian-cloud', family='debian-8').execute()
-        disk_image = image_result['selfLink']
+        # # Configuring the virtual machine with machine type, startup script, and image configurations.
+        # machine_type = "zones/%s/machineTypes/n1-standard-1" % zone
+        # google_startup_script = open(
+        #     os.path.join(
+        #         os.path.dirname(__file__), 'startup-script.sh'), 'r').read()
+        # google_image_url = "http://storage.googleapis.com/gce-demo-input/photo.jpg"
+        # google_image_caption = "Ready for test!"
 
-        # Configuring the virtual machine with machine type, startup script, and image configurations.
-        machine_type = "zones/%s/machineTypes/n1-standard-1" % zone
-        google_startup_script = open(
-            os.path.join(
-                os.path.dirname(__file__), 'startup-script.sh'), 'r').read()
-        google_image_url = "http://storage.googleapis.com/gce-demo-input/photo.jpg"
-        google_image_caption = "Ready for test!"
+        # config = {
+        #     'name': instance_name,
+        #     'machineType': machine_type,
 
-        config = {
-            'name': instance_name,
-            'machineType': machine_type,
+        #     # Configuring boot disk.
+        #     'disks': [
+        #         {
+        #             'boot': True,
+        #             'autoDelete': True,
+        #             'initializeParams': {
+        #                 'sourceImage': disk_image,
+        #             }
+        #         }
+        #     ],
 
-            # Configuring boot disk.
-            'disks': [
-                {
-                    'boot': True,
-                    'autoDelete': True,
-                    'initializeParams': {
-                        'sourceImage': disk_image,
-                    }
-                }
-            ],
+        #     # COnfiguring network interface
+        #     'networkInterfaces': [{
+        #         'network': 'global/networks/default',
+        #         'accessConfigs': [
+        #             {'type': 'ONE_TO_ONE_NAT', 'name': 'External NAT'}
+        #         ]
+        #     }],
 
-            # COnfiguring network interface
-            'networkInterfaces': [{
-                'network': 'global/networks/default',
-                'accessConfigs': [
-                    {'type': 'ONE_TO_ONE_NAT', 'name': 'External NAT'}
-                ]
-            }],
+        #     # COnfiguring scope.
+        #     'serviceAccounts': [{
+        #         'email': 'default',
+        #         'scopes': [
+        #             'https://www.googleapis.com/auth/devstorage.read_write',
+        #             'https://www.googleapis.com/auth/logging.write'
+        #         ]
+        #     }],
 
-            # COnfiguring scope.
-            'serviceAccounts': [{
-                'email': 'default',
-                'scopes': [
-                    'https://www.googleapis.com/auth/devstorage.read_write',
-                    'https://www.googleapis.com/auth/logging.write'
-                ]
-            }],
+        #     # configuring metadata
+        #     'metadata': {
+        #         'items': [{
+        #             'key': 'startup-script',
+        #             'value': google_startup_script
+        #         }, {
+        #             'key': 'url',
+        #             'value': google_image_url
+        #         }, {
+        #             'key': 'text',
+        #             'value': google_image_caption
+        #         }, {
+        #             'key': 'bucket',
+        #             'value': bucket_name
+        #         }]
+        #     }
+        # }
 
-            # configuring metadata
-            'metadata': {
-                'items': [{
-                    'key': 'startup-script',
-                    'value': google_startup_script
-                }, {
-                    'key': 'url',
-                    'value': google_image_url
-                }, {
-                    'key': 'text',
-                    'value': google_image_caption
-                }, {
-                    'key': 'bucket',
-                    'value': bucket_name
-                }]
-            }
-        }
+        # operation= self.compute.instances().insert(
+        #     project=project_id,
+        #     zone=zone,
+        #     body=config).execute()
 
-        operation= self.compute.instances().insert(
-            project=project_id,
-            zone=zone,
-            body=config).execute()
-
-        self.operation_wait(project_id, zone, operation['name'])
-
+        # self.operation_wait(project_id, zone, operation['name'])
+###############
 
     def list_instances(self, project_id, zone):
-        # compute = googleapiclient.discovery.build('compute', 'v1')
-        compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
-        google_instances = compute_result['items']
-        print('Instances in project %s and zone %s:' % (project_id, zone))
-        for google_instance in google_instances:
-            print(' - ' + google_instance['name'])
+        print "*******************************************list_instances*********************************************"
+        print project_id, zone
+        # compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
+        # google_instances = compute_result['items']
+        # print('Instances in project %s and zone %s:' % (project_id, zone))
+        # for google_instance in google_instances:
+        #     print(' - ' + google_instance['name'])
 
 
     def delete_instance(self, project_id, zone, instance_name):
 
-        print('Deleting instance.')
-        operation = self.compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
-        self.operation_wait(project_id, zone, operation['name'])
+        print'*******************************************Deleting instance*******************************************'
+        # operation = self.compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
+        # self.operation_wait(project_id, zone, operation['name'])
 
 
     def format_rfc3339(self, datetime_instance=None):
@@ -143,6 +144,8 @@ class Google:
         return self.format_rfc3339 (datetime.datetime.utcnow ())
 
     def cloud_monitor(self, project_id):
+        print "****************************************cloud monitor*************************************************"
+ ##################
         GOOGLE_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
         google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
         set_now = self.get_now_rfc3339 ()
@@ -184,7 +187,7 @@ class Google:
                     print("Failed to read custom metric data, aborting: "
                           "exception={}".format (e))
                     raise
-
+######################
     #
     # Point:  2017 - 05 - 01
     # T05:17:23.000

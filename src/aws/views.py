@@ -102,7 +102,12 @@ def aws_create(request):
 
             aws = AWS(access_key, secret_key)
 
+
             aws.launch_instance(inst_name, image, inst_type, min, max, key_name, check_status)
+
+            print "here after aws setting keys"
+            aws.launch_instance("image_id_check", "region_name", min, max, key_name, inst_type, check_status)
+
 
             # return HttpResponse(json.dumps({'message': "Success"}), content_type="application/json")
 
