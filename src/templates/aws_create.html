@@ -167,32 +167,32 @@
         <script type="text/javascript">
           var myobject4;
         myobject4 = {
-            'ami-4836a428': 'Amazon Linux AMI 2017.03.0 (HVM), SSD Volume Type',
-            'ami-6f68cf0f': 'Red Hat Enterprise Linux 7.3 (HVM), SSD Volume Type',
-            'ami-e4a30084': 'SUSE Linux Enterprise Server 12 SP2 (HVM), SSD Volume Type'
-            'ami-efd0428f': 'Ubuntu Server 16.04 LTS (HVM), SSD Volume Type'
-            'ami-9b29b9fb': 'Microsoft Windows Server 2016 Base'
-            'ami-7c22b41c': 'Ubuntu Server 14.04 LTS (HVM), SSD Volume Type'
-            'ami-c737a5a7': 'Amazon Linux AMI 2017.03.0 (PV)'
+            'Amazon Linux AMI 2017.03.0 (HVM), SSD Volume Type': 'ami-4836a428',
+            'Red Hat Enterprise Linux 7.3 (HVM), SSD Volume Type': 'ami-6f68cf0f',
+            'SUSE Linux Enterprise Server 12 SP2 (HVM), SSD Volume Type': 'ami-e4a30084',
+            'Ubuntu Server 16.04 LTS (HVM), SSD Volume Type': 'ami-efd0428f',
+            'Microsoft Windows Server 2016 Base': 'ami-9b29b9fb',
+            'Ubuntu Server 14.04 LTS (HVM), SSD Volume Type': 'ami-7c22b41c',
+            'Amazon Linux AMI 2017.03.0 (PV)': 'ami-c737a5a7',
         };
         
 
         var select = document.getElementById("image");
         for (index in myobject4) {
-            select.options[select.options.length] = new Option(myobject4[index], myobject4[index]);
+            select.options[select.options.length] = new Option([index], myobject4[index]);
         }
         </script>
         <script type="text/javascript">
           var myobject5;
         myobject5 = {
-            't2.micro': 'vCPU:1, Memory(GiB): 0.5',
-            'm4.large': 'vCPU:2, Memory(GiB): 8',
-            'm3.medium': 'vCPU:1, Memory(GiB): 3.75',
-            'c3.xlarge': 'vCPU:2 Memory(GiB): 7.5',
+            'vCPU:1, Memory(GiB): 0.5': 't2.micro',
+            'vCPU:2, Memory(GiB): 8': 'm4.large',
+            'vCPU:1, Memory(GiB): 3.75': 'm3.medium',
+            'vCPU:2 Memory(GiB): 7.5': 'c3.xlarge',
         };
         var select = document.getElementById("inst_type");
         for (index in myobject5) {
-            select.options[select.options.length] = new Option(myobject5[index], myobject5[index]);
+            select.options[select.options.length] = new Option([index], myobject5[index]);
         }
 
 
