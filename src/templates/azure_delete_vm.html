@@ -120,18 +120,19 @@ function myFunction() {
   
 }
 </script>
-     <script type="text/javascript">
+      <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/azure_delete/",
+                url: "/azure_delete_vm/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     res_grp_name: $("#res_grp_name").val(),
                     vm_name: $("#vm_name").val(),
-                    
+
+
                 },
                 success: function (json) {
                     $('#output').html(json.message);
@@ -144,6 +145,8 @@ function myFunction() {
         }
 
     </script>
+
+
         </div>
 
 
