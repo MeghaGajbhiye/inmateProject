@@ -202,7 +202,7 @@ def aws_delete(request):
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            instance = request.POST.get("instance")
+            instance = str(request.POST.get("instance"))
 
             print instance
             # Get AWS Access key and secret key from database
@@ -247,4 +247,16 @@ def aws_get_keys(request):
     return keys
 
 def aws_monitor(request):
-    return render_to_response("aws_monitor.html", )
+
+    instance_id = "abc"
+    aws_result = aws_get_keys(request)
+    encoded_access_key = str(aws_result['access_key'])
+    access_key = decode(encoded_access_key)
+    encoded_secret_key = str(aws_result['secret_key'])
+    secret_key = decode(encoded_secret_key)
+    print encoded_access_key, access_key, encoded_secret_key, secret_key
+    print "I am here after encoding"
+
+    aws = AWS(access_key, secret_key)
+    monitor_dict = aws.get_metrics(instance_id)
+    return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
