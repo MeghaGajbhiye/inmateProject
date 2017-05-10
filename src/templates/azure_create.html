@@ -117,7 +117,9 @@
         </td>
         <td>
             <h3> Enter Location
-                <input type="text" size="12" value="Location" id="loc">
+                <h3><select id="loc">
+                    <option>Select Location</option>
+                </select></h3>
             </h3>
         </td>
         <td>
@@ -152,6 +154,36 @@
         };
 
     var select = document.getElementById("choice");
+    for (index in myobject) {
+        select.options[select.options.length] = new Option(myobject[index], index);
+    }
+
+</script>
+
+             <script type="text/javascript">
+    var myobject = {
+        'eastasia': 'eastasia',
+        'southeastasia': 'southeastasia',
+        'centralus': 'centralus',
+        'eastus': 'seastus',
+        'eastus2': 'eastus2',
+        'westus': 'westus',
+        'northcentralus': 'northcentralus',
+        'southcentralus': 'southcentralus',
+        'northeurope': 'northeurope',
+        'westeurope': 'westeurope',
+        'japanwest': 'japanwest',
+        'japaneast': 'japaneast',
+        'brazilsouth': 'brazilsouth',
+        'australiaeast': 'australiaeast',
+        'australiasoutheast': 'australiasoutheast',
+        'southindia': 'southindia',
+        'centralindia': 'centralindia',
+        'westindia': 'westindia',
+
+        };
+
+    var select = document.getElementById("loc");
     for (index in myobject) {
         select.options[select.options.length] = new Option(myobject[index], index);
     }

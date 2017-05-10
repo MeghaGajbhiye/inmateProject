@@ -191,17 +191,14 @@ def aws_home(request):
 
 def aws_delete(request):
     print "aws_delete **************************"
-    # aws_result = aws_get_keys(request)
-    # encoded_access_key = str(aws_result['access_key'])
-    # access_key = decode(encoded_access_key)
-    # encoded_secret_key = str(aws_result['secret_key'])
-    # secret_key = decode(encoded_secret_key)
-    # aws = AWS(access_key, secret_key)
-    # print "I am above instance list"
-    # instance_list = aws.describe_instances("us-west-2")
-    # print "printing instance list in get"
-    # print instance_list[0]
-    # instance_db = instance_list
+    aws_result = aws_get_keys(request)
+    encoded_access_key = str(aws_result['access_key'])
+    access_key = decode(encoded_access_key)
+    encoded_secret_key = str(aws_result['secret_key'])
+    secret_key = decode(encoded_secret_key)
+    aws = AWS(access_key, secret_key)
+    print "I am above instance list"
+
 
     if request.is_ajax():
         print "it's ajax"
@@ -209,57 +206,50 @@ def aws_delete(request):
             print 'in delete post1234'
 
             # print "I am here inside post"
+            region = request.POST.get("region")
             instance = request.POST.get("instance")
 
-            print instance
-            # # Get AWS Access key and secret key from database
-            # # Instantiate AWS class aws->aws.py and calling the launch_instance function
-            # aws_result = aws_get_keys(request)
-            # encoded_access_key = str(aws_result['access_key'])
-            # access_key = decode(encoded_access_key)
-            # encoded_secret_key = str(aws_result['secret_key'])
-            # secret_key = decode(encoded_secret_key)
-            # print encoded_access_key, access_key, encoded_secret_key, secret_key
-            # print "I am here after encoding"
-            # aws = AWS(access_key, secret_key)
-            #
-            #delete value you get from ajax call.
-            #
-            # aws.terminate_instance(instance)
-            # instance_list = aws.terminate_instance(instance)
-            # print "printing instance list"
-            # print instance_list
-            # print "printing instance list in get"
-            # print instance_list[0]
-            # instance_db = instance_list
-            return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
-        print "in get method"
-        return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
-
-def aws_view_delete(request):
-    print "aws_view_delete **************************"
-    if request.is_ajax():
-        print "it's ajax"
-        if request.method == 'POST':
-            print 'in delete post-view-del'
-            region = request.POST.get("region")
-            print region
+            print region, instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
-            # aws_result = aws_get_keys(request)
-            # encoded_access_key = str(aws_result['access_key'])
-            # access_key = decode(encoded_access_key)
-            # encoded_secret_key = str(aws_result['secret_key'])
-            # secret_key = decode(encoded_secret_key)
-            # print encoded_access_key, access_key, encoded_secret_key, secret_key
+            aws_result = aws_get_keys(request)
+            encoded_access_key = str(aws_result['access_key'])
+            access_key = decode(encoded_access_key)
+            encoded_secret_key = str(aws_result['secret_key'])
+            secret_key = decode(encoded_secret_key)
+            print encoded_access_key, access_key, encoded_secret_key, secret_key
             print "I am here after encoding"
-            #instance_db = [your data from db]
-            print 'in asw vie del'
-            # return render_to_response("aws_delete.html",{})
-            return render_to_response("aws_view.html", {})
-    else:
-        print 'google'
-        return render_to_response("aws_view_delete.html",{})
+            aws = AWS(access_key, secret_key)
+            aws.terminate_instance(region, instance)
+
+            return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
+    print "in get method"
+    return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
+
+# def aws_view_delete(request):
+#     print "aws_view_delete **************************"
+#     if request.is_ajax():
+#         print "it's ajax"
+#         if request.method == 'POST':
+#             print 'in delete post-view-del'
+#             region = request.POST.get("region")
+#             print region
+#             # Get AWS Access key and secret key from database
+#             # Instantiate AWS class aws->aws.py and calling the launch_instance function
+#             # aws_result = aws_get_keys(request)
+#             # encoded_access_key = str(aws_result['access_key'])
+#             # access_key = decode(encoded_access_key)
+#             # encoded_secret_key = str(aws_result['secret_key'])
+#             # secret_key = decode(encoded_secret_key)
+#             # print encoded_access_key, access_key, encoded_secret_key, secret_key
+#             print "I am here after encoding"
+#             #instance_db = [your data from db]
+#             print 'in asw vie del'
+#             # return render_to_response("aws_delete.html",{})
+#             return render_to_response("aws_view.html", {})
+#     else:
+#         print 'google'
+#         return render_to_response("aws_view_delete.html",{})
 
 
 def aws_view(request):
@@ -398,8 +388,5 @@ def aws_monitor(request):
 
     aws = AWS(access_key, secret_key)
     monitor_dict = aws.get_metrics(instance_id)
-    #return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
-    #aws = AWS(access_key, secret_key)
-    data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
-    return render_to_response("aws_monitor.html", {'data1': data1})
+    return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
 

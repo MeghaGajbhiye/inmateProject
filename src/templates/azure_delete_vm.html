@@ -102,14 +102,9 @@
         </td>
    <td>
     <h3> Select Virtual Machine Name
-        <select id="instance">
-
-            <option>VM Name</option>
-            {% for i in instance_db %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-        </select>
-<td>
+         <input type="text" size="12" value="Vm_Name" id="vm_name">
+            </h3>
+</td>
 
    <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
 
@@ -125,18 +120,19 @@ function myFunction() {
   
 }
 </script>
-     <script type="text/javascript">
+      <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/azure_delete/",
+                url: "/azure_delete_vm/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     res_grp_name: $("#res_grp_name").val(),
                     vm_name: $("#vm_name").val(),
-                    
+
+
                 },
                 success: function (json) {
                     $('#output').html(json.message);
@@ -149,6 +145,8 @@ function myFunction() {
         }
 
     </script>
+
+
         </div>
 
 
