@@ -102,14 +102,9 @@
         </td>
    <td>
     <h3> Select Virtual Machine Name
-        <select id="instance">
-
-            <option>VM Name</option>
-            {% for i in instance_db %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-        </select>
-<td>
+         <input type="text" size="12" value="Vm_Name" id="vm_name">
+            </h3>
+</td>
 
    <h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
 

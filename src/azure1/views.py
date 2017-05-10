@@ -81,6 +81,7 @@ def azure_cp(request):
             #
 
 def azure_cp1(request):
+    usr_id = request.user.id
     if request.method == 'POST':
         print "it is post"
         form = AzureForm(request.POST or None)
@@ -244,16 +245,10 @@ def azure_delete_vm(request):
             print subscription_id, client_id, secret_key, tenant_id
             azure = az(subscription_id, client_id, secret_key, tenant_id)
             azure.delete_vm(res_grp_name, vm_name)
-            instance_db = [u'instance_test', u'Server-02', u'vm1']
-            print "I am above instance_name"
-            instance_name = json.dumps(instance_db)
-            print instance_name
-            context = {"instance_name": instance_name}
             print "Gotcha instance"
             return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
-        instance_db = [u'instance_test', u'Server-02', u'vm1']
-        return render_to_response("azure_delete_vm.html", {'instance_db': instance_db})
+        return render_to_response("azure_delete_vm.html", {})
 # return render_to_response("azure_delete_vm.html", {})
 
 def azure_delete_rsgrp(request):
@@ -269,7 +264,7 @@ def azure_delete_rsgrp(request):
     encoded_tenant_id = str(azure_result["tenant_id"])
     tenant_id = decode(encoded_tenant_id)
     print subscription_id, client_id, secret_key, tenant_id
-    azure = az(subscription_id, client_id, secret_key, tenant_id)
+    # azure = az(subscription_id, client_id, secret_key, tenant_id)
 
     if request.is_ajax():
         print "it's ajax"
@@ -454,7 +449,7 @@ def azure_get_keys(request):
     subscription_id = str(azure_result.subscription_id)
     client_id = str(azure_result.client_id)
     secret_key = str(azure_result.secret_key)
-    tenant_id = azure_result.tenant_id
+    tenant_id = str(azure_result.tenant_id)
     print subscription_id, client_id, secret_key, tenant_id
     keys = {"subscription_id": subscription_id, "client_id": client_id, "secret_key": secret_key,
             "tenant_id": tenant_id}

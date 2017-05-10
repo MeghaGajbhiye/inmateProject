@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 
-from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor aws_view, aws_view_delete, aws_monitor_list
+from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor, aws_view, aws_view_delete, aws_monitor_list
 from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
 from ibm.views import ibm, ibm_home
 

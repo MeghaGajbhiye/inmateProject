@@ -389,8 +389,5 @@ def aws_monitor(request):
 
     aws = AWS(access_key, secret_key)
     monitor_dict = aws.get_metrics(instance_id)
-    //return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
-    //aws = AWS(access_key, secret_key)
-    data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
-    return render_to_response("aws_monitor.html", {'data1': data1})
+    return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
 
