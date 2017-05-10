@@ -18,7 +18,7 @@ class AWS:
 
     def describe_instances(self, region_name):
         print "*******************************inside describe images***********************************************"
-        print self.secret_key, self.access_key
+        print self.secret_key, self.access_key, region_name
         print ('Inside describe method')
         ec2 = boto3.client('ec2',aws_access_key_id=self.get_acccess_key(),aws_secret_access_key=self.get_secret_key(), region_name=region_name)
         next_token=''
