@@ -85,7 +85,7 @@
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={%static "img/azure.jpg" %} width = 100 height = 100></img>
-                    <form method="post" action="{% url 'azure' %}">
+                    <form method="post" action="{% url 'azure_cp' %}">
         <h2 class="form-signin-heading">Microsoft Cloud Provider Sign Up</h2>{% csrf_token %}
         {{form.as_p}}
       <!--   
@@ -102,7 +102,7 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                <a href = "{% url 'azure_home' %}">     <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button></a>
       </form>
 
     </div> <!-- /container -->

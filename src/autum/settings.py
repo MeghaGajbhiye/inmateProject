@@ -50,7 +50,7 @@ INSTALLED_APPS = (
     #My Apps
     'cloud',
     'aws',
-    'azure',
+    'azure1',
     'ibm',
     'rackspace',
     'google',
@@ -93,12 +93,12 @@ WSGI_APPLICATION = 'autum.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 #
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -113,18 +113,18 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'autum_db',
-        'USER': 'root',
-        'PASSWORD': 'Amma512akka',
-        # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',
-        # 'HOST': 'autum.cmxtlthf4esd.us-west-2.rds.amazonaws.com',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'autum_db',
+#         'USER': 'root',
+#         'PASSWORD': 'Amma512akka',
+#         # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',
+#         # 'HOST': 'autum.cmxtlthf4esd.us-west-2.rds.amazonaws.com',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # DATABASES = {
