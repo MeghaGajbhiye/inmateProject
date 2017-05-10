@@ -113,6 +113,19 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'autum_db',
+        'USER': 'root',
+        'PASSWORD': 'Amma512akka',
+        # 'HOST': 'autum.ccwrtq4nm7y2.us-west-2.rds.amazonaws.com',
+        # 'HOST': 'autum.cmxtlthf4esd.us-west-2.rds.amazonaws.com',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+
 
 # DATABASES = {
 #     'default': {

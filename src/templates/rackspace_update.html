@@ -23,7 +23,31 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
+<style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -90,16 +114,20 @@
                     <h1> Update Rackspace Instance</h1>
                 </div>
             </div>
-            <td>
-    <h3> Select Instance Name</h3>
-        <h3><select id="instance">
+  <td>
+      <h3> Enter instance</h3>
 
-            <option>Instance Name</option>
-            {% for i in instance_list %}
+      <h3>  <div class="tooltip"> abc
+  <span class="tooltiptext">view instances</span>
+</div><select id="instance">
+
+            <option>Select an instance</option>
+            {% for i in instance_db %}
    <option value="{{ i }}"> {{ i }}</option>
 {% endfor %}
-        </select></h3>
+  </select></h3>
 </td>
+
         <td><h3> Enter your RAM</h3>
            <h3><select id="selectram">
                 <option>Select a region</option>
@@ -108,48 +136,23 @@
 
             <script>
                 var myobject = {
-                    Value1: '512',
-                    Value2: '1024',
-                    Value3: '2048',
-                    Value4: '4096',
-                    Value5: '8192',
-                    Value6: '15360',
-                    Value7: '30720',
-                    Value8: '15360',
-                    Value9: '30720',
-                    Value10: '3840',
-                    Value11: '61440',
-                    Value12: '7680',
-                    Value13: '1024',
-                    Value14: '2048',
-                    Value15: '4096',
-                    Value16: '8192',
-                    Value17: '122880',
-                    Value18: '15360',
-                    Value19: '30720',
-                    Value20: '61440',
-                    Value21: '92160',
-                    Value22: '122880',
-                    Value23: '15360',
-                    Value24: '245760',
-                    Value25: '30720',
-                    Value26: '61440',
-                    Value27: '32768',
-                    Value28: '131072',
-                    Value29: '65536',
-                    Value30: '32768',
-                    Value31: '131072',
-                    Value32: '131072',
-                    Value33: '524288',
-                    Value34: '1024',
-                    Value35: '2048',
-                    Value36: '4096',
-                    Value37: '8192',
-                    Value38: '122880',
-                    Value39: '15360',
-                    Value40: '30720',
-                    Value41: '61440',
-                    Value42: '92160',
+                   '512': '512',
+                    '1024': '1024',
+                    '2048': '2048',
+                    '4096': '4096',
+                    '8192': '8192',
+                    '15360': '15360',
+                    '30720': '30720',
+                    '3840': '3840',
+                    '61440': '61440',
+                    '7680': '7680',
+                    '92160': '92160',
+                    '122880': '122880',
+                    '245760': '245760',
+                    '32768': '32768',
+                    '131072': '131072',
+                    '65536': '65536',
+                    '524288': '524288',
                 };
 
                 var select = document.getElementById("selectram");

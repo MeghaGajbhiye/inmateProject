@@ -96,7 +96,7 @@
         <h3><select id="instance">
 
             <option>Instance Name</option>
-            {% for i in instance_list %}
+            {% for i in instance_db %}
    <option value="{{ i }}"> {{ i }}</option>
 {% endfor %}
         </select></h3>
@@ -107,8 +107,8 @@
            </select></h3></td>
             <script>
                 var myobject = {
-                    Hard: 'h',
-                    Soft: 's',
+                    'h': 'Hard',
+                    's': 'Soft',
                      };
 
                 var select = document.getElementById("boot");
@@ -137,7 +137,7 @@
                         async: true,
                         data: {
                             csrfmiddlewaretoken: '{{ csrf_token }}',
-                            server: $("#server").val(),
+                            instance: $("#instance").val(),
                             boot: $("#boot").val(),
 
 

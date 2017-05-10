@@ -91,21 +91,38 @@
                 </div>
             </div>
 
+         <td>
+            <h4> Enter Instance Name
+                <input type="text" size="12" value="inst_name" id="inst_name">
+
+
+            </h4>
+        </td>
+            <td><h4> Enter Image ID</h4>
+           <h4><select id="image">
+                <option>Select image</option>
+           </select></h3></td>
+        <td><h4> Enter Instance Type</h4>
+           <h4><select id="inst_type">
+                <option>Select inst_type</option>
+           </select></h4></td>
+
+
 
         <td>
+
             <h4> Enter Minimum Count
-                <input type="text" size="4" value="0" id="min">
-{#                <input type="text" size="4" value="Min_Count" id="min">#}
+                <input type="text" size="12" value="0" id="min">
+              
 
             </h4>
         </td>
         <td>
             <h4> Enter Maximum Count
 
-                <input type="text" size="4" value="0" id="max">
-{#=======#}
-{#                <input type="text" size="4" value="Max_Count" id="max">#}
-{#>>>>>>> Seizon-sha-master#}
+                <input type="text" size="12" value="0" id="max">
+
+                
             </h4>
         </td>
         <td>
@@ -113,11 +130,7 @@
                 <input type="text" size="12" value="Key_Name" id="key_name">
             </h4>
         </td>
-        <td>
-            <h4> Enter Instance Type
-                <input type="text" size="12" value="Inst_Type" id="inst_type">
-            </h4>
-        </td>
+        
         <td>
             <h4> Monitoring Status
                 <select id="check_status">
@@ -127,58 +140,20 @@
         </td>
             <h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Create</button></h2>
     </div>
+        <p id="inst_name"></p>
+    <p id="image"></p>
+    <p id="inst_type"></p>
     <p id="min_count"></p>
     <p id="max_count"></p>
     <p id="key_name"></p>
-    <p id="inst_type"></p>
+    
     <p id="check_status"></p>
+
+    
+
 
     <script type="text/javascript">
 
-{#=======#}
-{#    <script type="text/javascript">#}
-{#>>>>>>> Seizon-sha-master#}
-
-
-
-
-{#=======#}
-{#        }#}
-{##}
-{#    </script>#}
-{#    <script>#}
-{#        var myobject1 = {#}
-{#            ValueA: 'Virginia_US',#}
-{#            ValueB: 'Dallas_US',#}
-{#            ValueC: 'Hongkong_China',#}
-{#            ValueD: 'Europe_UK',#}
-{#        };#}
-{##}
-{#        var select = document.getElementById("selectregion");#}
-{#        for (index in myobject1) {#}
-{#            select.options[select.options.length] = new Option(myobject1[index], myobject1[index]);#}
-{#        }#}
-{##}
-{#    </script>#}
-{##}
-{#    <script type="text/javascript">#}
-{#        var myobject2 = {#}
-{#            ValueA: 'image-1',#}
-{#            ValueB: 'image-2',#}
-{#            ValueC: 'image-3',#}
-{#            ValueD: 'image-4',#}
-{#        };#}
-{##}
-{#        var select = document.getElementById("selectimage");#}
-{#        for (index in myobject2) {#}
-{#            select.options[select.options.length] = new Option(myobject2[index], myobject2[index]);#}
-{#        }#}
-{##}
-{#    </script>#}
-{##}
-{##}
-{#    <script type="text/javascript">#}
-{#>>>>>>> Seizon-sha-master#}
         var myobject3;
         myobject3 = {
             ValueA: 'Enable',
@@ -188,25 +163,56 @@
         for (index in myobject3) {
             select.options[select.options.length] = new Option(myobject3[index], myobject3[index]);
         }
+        </script>
+        <script type="text/javascript">
+          var myobject4;
+        myobject4 = {
+            'ami-4836a428': 'Amazon Linux AMI 2017.03.0 (HVM), SSD Volume Type',
+            'ami-6f68cf0f': 'Red Hat Enterprise Linux 7.3 (HVM), SSD Volume Type',
+            'ami-e4a30084': 'SUSE Linux Enterprise Server 12 SP2 (HVM), SSD Volume Type'
+            'ami-efd0428f': 'Ubuntu Server 16.04 LTS (HVM), SSD Volume Type'
+            'ami-9b29b9fb': 'Microsoft Windows Server 2016 Base'
+            'ami-7c22b41c': 'Ubuntu Server 14.04 LTS (HVM), SSD Volume Type'
+            'ami-c737a5a7': 'Amazon Linux AMI 2017.03.0 (PV)'
+        };
+        
+
+        var select = document.getElementById("image");
+        for (index in myobject4) {
+            select.options[select.options.length] = new Option(myobject4[index], myobject4[index]);
+        }
+        </script>
+        <script type="text/javascript">
+          var myobject5;
+        myobject5 = {
+            't2.micro': 'vCPU:1, Memory(GiB): 0.5',
+            'm4.large': 'vCPU:2, Memory(GiB): 8',
+            'm3.medium': 'vCPU:1, Memory(GiB): 3.75',
+            'c3.xlarge': 'vCPU:2 Memory(GiB): 7.5',
+        };
+        var select = document.getElementById("inst_type");
+        for (index in myobject5) {
+            select.options[select.options.length] = new Option(myobject5[index], myobject5[index]);
+        }
 
 
 
-{#=======#}
-{#    </script>#}
-{#    <script>#}
-{#        function myFunction() {#}
-{#            document.getElementById("zone").innerHTML = "Zone selected";#}
-{#            document.getElementById("region").innerHTML = "Region selected";#}
-{#            document.getElementById("image").innerHTML = "Image selected";#}
-{#            document.getElementById("min_count").innerHTML = "min_count selected";#}
-{#            document.getElementById("max_count").innerHTML = "max_count selected";#}
-{#            document.getElementById("key_name").innerHTML = "key_name selected";#}
-{#            document.getElementById("inst_type").innerHTML = "inst_type selected";#}
-{#            document.getElementById("check_status").innerHTML = "monitoring selected";#}
-{#        }#}
-{#    </script>#}
-{#    <script type="text/javascript">#}
-{#>>>>>>> Seizon-sha-master#}
+
+    </script>
+    <script>
+        function myFunction() 
+            document.getElementById("inst_name").innerHTML = "Instance name selected";
+            document.getElementById("image").innerHTML = "Image selected";
+            document.getElementById("inst_type").innerHTML = "Instance type selected";
+            document.getElementById("min_count").innerHTML = "min_count selected";
+            document.getElementById("max_count").innerHTML = "max_count selected";
+            document.getElementById("key_name").innerHTML = "key_name selected";
+          
+         document.getElementById("check_status").innerHTML = "monitoring selected";
+      }
+   </script>
+    <script type="text/javascript">
+
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
@@ -215,13 +221,13 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    zone: $("#selectzone").val(),
-                    region: $("#selectregion").val(),
-                    image: $("#selectimage").val(),
+                    inst_name: $("#inst_name").val(),
+                    image: $("#image").val(),
+                    inst_type: $("#inst_type").val(),
                     min: $("#min").val(),
                     max: $("#max").val(),
                     key_name: $("#key_name").val(),
-                    inst_type: $("#inst_type").val(),
+                    
                     check_status: $("#check_status").val(),
                 },
                 success: function (json) { 
