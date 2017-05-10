@@ -64,6 +64,26 @@ def rackspace(request):
             return render_to_response("Rackspace.html", context, context_instance=RequestContext(request))
 
 
+def rackspace_cp(request):
+    if request.method == 'POST':
+        print "it is post"
+        form = RackspaceForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            api_key = form.cleaned_data['api_key']
+            encoded_api_key = encode(api_key)
+            keys = Rackspace(id=usr_id, username=username, api_key=encoded_api_key)
+            save_keys = Rackspace.save(keys)
+            print "Rackspace KEYS HAS BEEN SAVED IN Rackspace TABLE"
+            return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    else:
+        form = RackspaceForm()
+        context = {
+            "form": form,
+        }
+        return render_to_response("Rackspace.html", context, context_instance=RequestContext(request))
+
+
 def rackspace_create(request):
     print "rackspace_create **************************"
     # if request.is_ajax():

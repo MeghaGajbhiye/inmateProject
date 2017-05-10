@@ -80,6 +80,32 @@ def azure_cp(request):
             #     return render(request, 'Azure_CP.html', {'form': form})
             #
 
+def azure_cp1(request):
+    if request.method == 'POST':
+        print "it is post"
+        form = AzureForm(request.POST or None)
+        if form.is_valid():
+            subscription_id = form.cleaned_data['subscription_id']
+            encoded_subscription_id = encode(subscription_id)
+            client_id = form.cleaned_data['client_id']
+            encoded_client_id = encode(client_id)
+            secret_key = form.cleaned_data['secret_key']
+            encoded_secret_key = encode(secret_key)
+            tenant_id = form.cleaned_data['tenant_id']
+            encoded_tenant_id = encode(tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            keys = Azure(id=usr_id, subscription_id=encoded_subscription_id, client_id=encoded_client_id,
+                         secret_key=encoded_secret_key, tenant_id=encoded_tenant_id, )
+            save_keys = Azure.save(keys)
+            print "Azure KEYS HAS BEEN SAVED IN Azure TABLE"
+            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    else:
+        form = AzureForm()
+        context = {
+            "form": form,
+        }
+    return render_to_response("Azure_CP.html", context, context_instance=RequestContext(request))
+
 
 def azure_home(request):
     print "azure_home **************************"

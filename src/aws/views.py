@@ -83,6 +83,32 @@ def aws(request):
             return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
 
 
+def aws_cp(request):
+    if request.method == 'POST':
+        print "it is post"
+        form = AWSForm(request.POST or None)
+        if form.is_valid():
+            aws_key = form.cleaned_data['aws_access_key']
+            encoded_aws_key = encode(aws_key)
+            aws_secret = form.cleaned_data['aws_secret_key']
+            encoded_aws_secret = encode(aws_secret)
+            print encoded_aws_key, encoded_aws_secret
+            keys = AWSModel(user_id=usr_id, aws_access_key=encoded_aws_key, aws_secret_key=encoded_aws_secret)
+            save_keys = AWSModel.save(keys)
+            print "AWS KEYS HAS BEEN SAVED IN AWS TABLE"
+            return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
+    # Else if the request method is GET that means user is visiting the AWS Signup form, therefore AWS
+    # sign up form is shown to the user
+    else:
+        form = AWSForm()
+
+        context = {
+            "form": form,
+        }
+        print "I am printing aws cp"
+        return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
+
+
 def aws_create(request):
     print "aws create ********"
     # If the request method is Get, show the create form to the user
@@ -101,14 +127,14 @@ def aws_create(request):
             print "it's ajax"
         if request.method == 'POST':
             print "Inside post"
-            inst_name = request.POST.get("inst_name")
-            image = request.POST.get("image")
-            inst_type = request.POST.get("inst_type")
-            min = request.POST.get("min")
-            max = request.POST.get("max")
-            key_name = request.POST.get("key_name")
+            inst_name = str(request.POST.get("inst_name"))
+            image = str(request.POST.get("image"))
+            inst_type = str(request.POST.get("inst_type"))
+            min = int(request.POST.get("min"))
+            max = int(request.POST.get("max"))
+            key_name = int(request.POST.get("key_name"))
 
-            check_status = request.POST.get("check_status")
+            check_status = int(request.POST.get("check_status"))
 
             print inst_name, image, inst_type, min, max, key_name, check_status
 
@@ -214,8 +240,8 @@ def aws_get_keys(request):
     print "get keys"
     usr_id = request.user.id
     aws_result = AWSModel.objects.get(user_id=usr_id)
-    access_key = aws_result.aws_access_key
-    secret_key = aws_result.aws_secret_key
+    access_key = str(aws_result.aws_access_key)
+    secret_key = str(aws_result.aws_secret_key)
     print access_key, secret_key
     keys = {"access_key": access_key, "secret_key": secret_key}
     return keys

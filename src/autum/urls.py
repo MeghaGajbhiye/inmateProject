@@ -4,12 +4,12 @@ from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 
-from aws.views import aws, aws_home, aws_delete, aws_create, aws_monitor
-from azure1.views import azure_cp, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
+from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor
+from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
 from ibm.views import ibm, ibm_home
 
-from google.views import google, google_create, google_retrieve, google_delete, google_home, google_monitor
-from rackspace.views import rackspace, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot, rackspace_view, rackspace_monitor
+from google.views import google, google_cp, google_create, google_retrieve, google_delete, google_home, google_monitor
+from rackspace.views import rackspace, rackspace_cp, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot, rackspace_view, rackspace_monitor
 
 urlpatterns = [
     # Examples:
@@ -19,11 +19,13 @@ urlpatterns = [
     # url(r'^cp_final/$', cp_final, name='cp_final'),
     url(r'^cpfinal/$', cpfinal, name='cpfinal'),
     url(r'^aws/$', aws, name='aws'),
+    url(r'^aws_cp/$', aws_cp, name='aws'),
     url(r'^aws_create/$', aws_create, name='aws_create'),
     url(r'^aws_home/$', aws_home, name='aws_home'),
     url(r'^aws_delete/$', aws_delete, name='aws_delete'),
     url(r'^aws_monitor/$', aws_monitor, name='aws_monitor'),
     url(r'^azure/$', azure_cp, name='azure_cp'),
+    url(r'^azure_cp/$', azure_cp1, name='azure_cp'),
     # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^azure_home/$', azure_home, name='azure_home'),
     url(r'^azure_start/$', azure_start, name='azure_start'),
@@ -41,12 +43,14 @@ urlpatterns = [
     url(r'^ibm/$', ibm, name='ibm'),
     url(r'^IBM_Home/$', ibm_home, name='ibm_home'),
     url(r'^google/$', google, name='google'),
+    url(r'^google_cp/$', google_cp, name='google'),
     url(r'^google_home/$', google_home, name='google_home'),
     url(r'^google_create/$', google_create, name='google_create'),
     url(r'^google_retrieve/$', google_retrieve, name='google_retrieve'),
     url(r'^google_delete/$', google_delete, name='google_delete'),
     url(r'^google_monitor/$', google_monitor, name='google_monitor'),
     url(r'^rackspace/$', rackspace, name='rackspace'),
+    url(r'^rackspace_cp/$', rackspace_cp, name='rackspace'),
     url(r'^rackspace_reboot/$', rackspace_reboot, name='rackspace_reboot'),
     url(r'^rackspace_create/$', rackspace_create, name='rackspace_create'),
     url(r'^rackspace_home/$', rackspace_home, name='rackspace_home'),
