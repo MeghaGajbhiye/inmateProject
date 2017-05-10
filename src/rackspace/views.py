@@ -64,6 +64,26 @@ def rackspace(request):
             return render_to_response("Rackspace.html", context, context_instance=RequestContext(request))
 
 
+def rackspace_cp(request):
+    if request.method == 'POST':
+        print "it is post"
+        form = RackspaceForm(request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            api_key = form.cleaned_data['api_key']
+            encoded_api_key = encode(api_key)
+            keys = Rackspace(id=usr_id, username=username, api_key=encoded_api_key)
+            save_keys = Rackspace.save(keys)
+            print "Rackspace KEYS HAS BEEN SAVED IN Rackspace TABLE"
+            return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    else:
+        form = RackspaceForm()
+        context = {
+            "form": form,
+        }
+        return render_to_response("Rackspace.html", context, context_instance=RequestContext(request))
+
+
 def rackspace_create(request):
     print "rackspace_create **************************"
     # if request.is_ajax():
@@ -72,11 +92,11 @@ def rackspace_create(request):
         return render_to_response("rackspace_create.html", {}, context_instance=RequestContext(request))
     if request.method == 'POST':
         print "I am here inside post"
-        instance = request.POST.get("instance")
-        selectram = request.POST.get("selectram")
-        selectimage = request.POST.get("selectimage")
+        instance = str(request.POST.get("instance"))
+        selectram = int(request.POST.get("selectram"))
+        selectimage = str(request.POST.get("selectimage"))
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
@@ -110,10 +130,10 @@ def rackspace_update(request):
     if request.method == 'POST':
 
         print "I am here inside post"
-        instance = request.POST.get("instance")
-        selectram = request.POST.get("selectram")
+        instance = str(request.POST.get("instance"))
+        selectram = int(request.POST.get("selectram"))
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
@@ -130,7 +150,7 @@ def rackspace_update(request):
     else:
         print "in get"
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
@@ -151,7 +171,7 @@ def rackspace_delete(request):
         instance = request.POST.get("instance")
 
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
@@ -169,7 +189,7 @@ def rackspace_delete(request):
         print "in get"
         rackspace_result = rackspace_get_keys(request)
         username = rackspace_result['username']
-        encoded_api_key = str(rackspace_result['api_key'])
+        encoded_api_key = rackspace_result['api_key']
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
         instance_list = rackspace.view_instances()
@@ -188,10 +208,10 @@ def rackspace_reboot(request):
     if request.method == 'POST':
 
         print "I am here inside post"
-        instance = request.POST.get("instance")
-        boot = request.POST.get("boot")
+        instance = str(request.POST.get("instance"))
+        boot = str(request.POST.get("boot"))
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
@@ -208,7 +228,7 @@ def rackspace_reboot(request):
     else:
         print "in get"
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
@@ -229,7 +249,7 @@ def rackspace_view(request):
         print "I am here inside post"
 
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         print username, encoded_api_key
         api_key = decode(encoded_api_key)
@@ -246,7 +266,7 @@ def rackspace_view(request):
     else:
         print "in get"
         rackspace_result = rackspace_get_keys(request)
-        username = rackspace_result['username']
+        username = str(rackspace_result['username'])
         encoded_api_key = str(rackspace_result['api_key'])
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
@@ -261,8 +281,8 @@ def rackspace_view(request):
 def rackspace_get_keys(request):
     usr_id = request.user.id
     rackspace_result = Rackspace.objects.get(id=usr_id)
-    username = rackspace_result.username
-    api_key = rackspace_result.api_key
+    username = str(rackspace_result.username)
+    api_key = str(rackspace_result.api_key)
     print username, api_key, "inside get keys"
     keys = {"username": username, "api_key": api_key}
     return keys
@@ -286,8 +306,8 @@ def rackspace_monitor(request):
         if request.method == 'POST':
             print "I am here inside post"
             instance_name = request.POST.get("instance_name")
-            alarm = request.POST.get("alarm")
-            email = request.POST.get("email")
+            alarm = str(request.POST.get("alarm"))
+            email = str(request.POST.get("email"))
             print instance_name, alarm, email
             instance_list = json.dumps(rackspace.view_instances()) # list of instances - pushpa
             print instance_list
