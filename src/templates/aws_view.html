@@ -51,7 +51,8 @@
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
              <ul class="nav navbar-nav navbar-left">
-                  <li><a href="/rackspace_home/">Rackspace Home</a></li>
+
+                  <li><a href="/aws_home/">AWS Home</a></li>
              </ul>
 
         </div>
@@ -77,23 +78,72 @@
                 <li><a href="/dashboard">Overview </a></li>
                 <li><a href="/monitor">Monitor</a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
+
                 <li class="active"><a href="/cpfinal"> Manage Instances <span class="sr-only">(current)</span></a></li>
+
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">AWS_View</h1>
+
+            <h1 class="page-header">AWS_Create</h1>
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
-                    <img src={% static "img/rack.jpg" %} width= 100 height=100></img>
-                    <h1> View AWS Instance</h1>
+                    <img src={% static "img/aws.png" %} width= 100 height=100></img>
+                    <h1> View AWS Instances</h1>
                 </div>
             </div>
-    
- 
+            <td><h3> Select Region</h3>
+           <h3><select id="region">
+                <option>Region</option>
+           </select></h3></td>
+
+                <h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h2>
+{% for i in instance_db %}
+   <p>{{ i }}</p>
+{% endfor %}
+    </div>
+        <p id="region"></p>
+
+
+
+
+    <script type="text/javascript">
+
+        var myobject3;
+        myobject3 = {
+            'US East (Ohio)': 'us-east-2',
+            'US East (N. Virginia)': 'us-east-1',
+            'US West (N. California)': 'us-west-1',
+            'US West (Oregon)': 'us-west-2',
+            'Asia Pacific (Mumbai)': 'ap-south-1',
+            'Asia Pacific (Seoul)': 'ap-northeast-2',
+            'Asia Pacific (Singapore)': 'ap-southeast-1',
+            'Asia Pacific (Sydney)': 'ap-southeast-2',
+            'Asia Pacific (Tokyo)': 'ap-northeast-1',
+            'EU (Frankfurt)': 'eu-central-1',
+            'EU (Ireland)': 'eu-west-1',
+            'EU (London)': 'eu-west-2',
+        };
+        var select = document.getElementById("region");
+        for (index in myobject3) {
+            select.options[select.options.length] = new Option([index], myobject3[index]);
+        }
+        </script>
+        <script>
+        function myFunction() {
+            document.getElementById("region").innerHTML = "Region selected";
+
+      }
+   </script>
+    <script type="text/javascript">
+
+
+
 </script>
      <script type="text/javascript">
+
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
@@ -102,10 +152,17 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    
-                    
+
+                    region: $("#region").val(),
+
                 },
                 success: function (json) {
+                    console.log(json.message);
+
+
+                },
+                success: function (json) {
+
                     $('#output').html(json.message);
                     $('.ajaxProgress').hide();
                 },
@@ -117,6 +174,23 @@
 
     </script>
 
+
+</div>
+</div>
+
+{% block row %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+
+{% include 'javascript.html' %}
+</body>
+</html>
+
+=======
 
       <!-- FOOTER -->
       <footer>
@@ -131,3 +205,4 @@
  {%include 'javascript.html' %}
   </body>
 </html>
+>>>>>>> 9064a686e9c55fd08126b8e7e328d20b067c7fc3

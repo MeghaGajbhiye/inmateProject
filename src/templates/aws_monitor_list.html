@@ -86,7 +86,7 @@
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/aws.png" %} width= 100 height=100></img>
-                    <h1> Delete AWS Instance</h1>
+                    <h1> AWS Monitor List</h1>
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
             $('.ajaxProgress').show();
             $.ajax({
                 type: "POST",
-                url: "/aws_delete/",
+                url: "/aws_monitor_list/",
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',

@@ -13,10 +13,10 @@
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    {#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">#}
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    {#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
+{#    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
@@ -25,9 +25,10 @@
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 
 
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    {#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
+{#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,15 +51,12 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
-             <ul class="nav navbar-nav navbar-left">
-                  <li><a href="/aws_home/">AWS Home</a></li>
-             </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/dashboard/">Dashboard</a></li>
                 <li><a href="/support">Support</a></li>
-                <li><a href="{% url 'home' %} "> Logout </a></li>
+                <li><a href="{% url 'home' %}" > Logout </a></li>
 
 
             </ul>
@@ -73,84 +71,47 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="/dashboard">Overview </a></li>
+                <li class="active"><a href="/dashboard">Overview <span class="sr-only">(current)</span></a></li>
                 <li><a href="/monitor">Monitor</a></li>
                 <li><a href="/instance">Register for Cloud</a></li>
-                <li class="active"><a href="/cpfinal">Manage Instances <span class="sr-only">(current)</span></a></li>
+                <li><a href="/cpfinal">Manage Instances</a></li>
                 <li><a href="/migration">Migrate</a></li>
             </ul>
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">AWS_Delete</h1>
+            <h1 class="page-header">Microsoft Cloud Provider Sign Up</h1>
+
             <div class="row placeholders">
-             <div class="col-xs-6 col-sm-3 placeholder">
-                    <img src={% static "img/aws.png" %} width= 100 height=100></img>
-                    <h1> Delete AWS Instance</h1>
-                </div>
-            </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src={%static "img/azure.jpg" %} width = 100 height = 100></img>
+                    <form method="post" action="{% url 'azure_cp' %}">
+        <h2 class="form-signin-heading">Microsoft Cloud Provider Sign Up</h2>{% csrf_token %}
+        {{form.as_p}}
+      <!--   
+       <td> <label for="inputPassword" class="sr-only">Subscription ID</label></td>
 
- <td>
-    <h2> Enter Instance ID
-        <select id="instance">
+        <td><label for="inputPassword" class="sr-only">Client ID</label></td>
 
-            <option>Select an instance</option>
-            {% for i in instance_db %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
+        <td> <label for="inputPassword" class="sr-only">Secret Key</label></td>
 
-        </select>
-</td>
+         <td>  <label for="inputPassword" class="sr-only">Tenant ID</label></td> -->
+        
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+<<<<<<< HEAD
+                <a href = "{% url 'azure_home' %}">     <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button></a>
+=======
+                          <a href = "{% url 'azure_home' %}">    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button></a>
+>>>>>>> Seizon-sha-master
+      </form>
 
-
-    <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Delete</button><h2>
-        <p id="instance"></p>
-
-        <script type="text/javascript">
-    function myFunction() {
-            document.getElementById("instance").innerHTML = "Instance name selected";
-            
-        }
-    </script>
-
-    <script type="text/javascript">
-        function myFunction() {
-            $('.ajaxProgress').show();
-            $.ajax({
-                type: "POST",
-                url: "/aws_delete/",
-                async: true,
-                data: {
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    instance: $("#instance").val(),
-                    
-                   
-                },
-                success: function (json) {
-                    $('#output').html(json.message);
-                    $('.ajaxProgress').hide();
-                },
-                fail: function () {
-                    alert("failed")
-                }
-            });
-        }
-
-    </script>
+    </div> <!-- /container -->
 
 
-</div>
-</div>
-
-{% block row %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-
-
-{% include 'javascript.html' %}
-</body>
+   {%  include 'javascript.html' %}
+  </body>
 </html>
-
