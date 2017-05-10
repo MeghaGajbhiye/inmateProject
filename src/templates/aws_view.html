@@ -96,12 +96,12 @@
            </select></h3></td>
 
                 <h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h2>
-
-
-
+{% for i in instance_db %}
+   <p>{{ i }}</p>
+{% endfor %}
     </div>
         <p id="region"></p>
-   
+
     
 
 

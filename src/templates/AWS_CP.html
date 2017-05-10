@@ -24,7 +24,31 @@
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 
+<style>
+.tooltip12 {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.tooltip12 .tooltiptext12 {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip12:hover .tooltiptext12 {
+    visibility: visible;
+}
+</style>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -86,7 +110,9 @@
                 <div class="col-xs-6 col-sm-3 placeholder">
                   <img src={%static "img/aws.png" %} width= 100 height = 100></img>
                     <form method="post" action="{% url 'aws' %}">
-        <h2 class="form-signin-heading">AWS Cloud Provider Sign Up</h2>{% csrf_token %}
+        <h2 class="form-signin-heading">AWS Cloud Provider Sign Up</h2>{% csrf_token %} <div class="tooltip12">?
+  <span class="tooltiptext12">view instances</span>
+</div>
         {{form.as_p}}
 
 {#        <label for="inputPassword" class="sr-only">Access Key</label>#}
