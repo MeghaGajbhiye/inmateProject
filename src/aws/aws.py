@@ -17,22 +17,25 @@ class AWS:
         #return self.secret_key
 
     def describe_instances(self, region_name):
-        print "*******************************inside describe images***********************************************"
-        print self.secret_key, self.access_key, region_name
+        print "*******************************inside describe images through region***********************************************"
+        print (self.secret_key, type(self.secret_key), self.access_key, type(self.access_key), region_name, type(region_name))
         print ('Inside describe method')
-        ec2 = boto3.client('ec2',aws_access_key_id=self.get_acccess_key(),aws_secret_access_key=self.get_secret_key(), region_name=region_name)
-        next_token=''
+        ec2 = boto3.client('ec2',aws_access_key_id=self.access_key,aws_secret_access_key=self.secret_key, region_name=region_name)
+        print "authentication done"
+        # next_token=''
         ec2_out = ec2.describe_instances(Filters=[{
 		'Name':'instance-state-name',
 		'Values':[
 		'running'
-		]}],
-		NextToken=next_token)
+		]}])
+         #    ,
+		# NextToken=next_token)
         list_instanceid = []
+        print "inside list instances", list_instanceid
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
-            print str(instance_id)
-            list_instanceid.append(instance_id)
+            list_instanceid.append(str(instance_id))
+        print "list is", list_instanceid
         return list_instanceid
 
     def describe_key_pair(self):
@@ -85,7 +88,7 @@ class AWS:
 
     def terminate_instance(self, instance_id):
         print "***********************************inside terminate instance****************************************"
-        print self.access_key, self.secret_key, instance_ids
+        print self.access_key, self.secret_key, instance_id
         # ec2 = boto3.client ('ec2', aws_access_key_id=self.get_acccess_key(),
         #                     aws_secret_access_key=self.get_secret_key())
         # ec2_out = ec2.terminate_instances (InstanceIds=[instance_id])
@@ -100,7 +103,7 @@ class AWS:
         start = now - timedelta(hours=3)
 
         metric_response = {}
-        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName=metric_name, Dimensions=[{'Name': 'InstanceId', 'Value': instance_id },], StartTime=start,EndTime=now, Period=120, Statistics=[ 'Average'])
+        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName='CPUUtilization', Dimensions=[{'Name': 'InstanceId', 'Value': instance_id },], StartTime=start,EndTime=now, Period=120, Statistics=[ 'Average'])
         print (response['Label'])
         for datapoint in response['Datapoints']:
             metric_response[datapoint['Timestamp']] = datapoint['Average']
@@ -146,11 +149,9 @@ class AWS:
     #         print (cw_out)
 
 
-
-
 if __name__ == "__main__":
     # aws_access_key_id = '', aws_secret_access_key = 'ZOcCCejDCDWLoMNhzpr0R+YJQvr0n2mvwHAhy9zy'
-    aws = AWS("AKIAIR6NSMV54GLQET2A", "Z51MMk4s0eyeWPyaS2jMi0XMlIkZ7BJTZAtZ3tY+")
+    aws = AWS("AKIAJWEDCTRMZZBKW54Q", "EOa6Wbhw3KWzfJtHij4iqbiKXJE6lOr7H+AMtX0Y")
     instances = aws.describe_instances("us-west-2")
     # aws.describe_key_pair()
     # for instance in instances:

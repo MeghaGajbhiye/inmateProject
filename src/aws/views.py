@@ -36,34 +36,43 @@ def decode(enc):
 
 def aws(request):
     print "In aws function 123"
-
-    # Get the user Id of logged in user
     usr_id = request.user.id
-
-    if request.method == 'POST':
-        print "it is post"
-        form = AWSForm(request.POST or None)
-        if form.is_valid():
-            aws_key = form.cleaned_data['aws_access_key']
-            encoded_aws_key = encode(aws_key)
-            aws_secret = form.cleaned_data['aws_secret_key']
-            encoded_aws_secret = encode(aws_secret)
-            print encoded_aws_key, encoded_aws_secret
-            keys = AWSModel(user_id=usr_id, aws_access_key=encoded_aws_key, aws_secret_key=encoded_aws_secret)
-            save_keys = AWSModel.save(keys)
-            print "AWS KEYS HAS BEEN SAVED IN AWS TABLE"
-            return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
+    print usr_id
+    # Get the user Id of logged in user
+    try:
+        aws_result = AWSModel.objects.get(user_id=usr_id)
+        print "aws reult is", aws_result
+    except:
+        aws_result = None
+    if aws_result is not None:
+        print "not none"
+        return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
     else:
-        form = AWSForm()
+        if request.method == 'POST':
+            print "it is post"
+            form = AWSForm(request.POST or None)
+            if form.is_valid():
+                aws_key = form.cleaned_data['aws_access_key']
+                encoded_aws_key = encode(aws_key)
+                aws_secret = form.cleaned_data['aws_secret_key']
+                encoded_aws_secret = encode(aws_secret)
+                print encoded_aws_key, encoded_aws_secret
+                keys = AWSModel(user_id=usr_id, aws_access_key=encoded_aws_key, aws_secret_key=encoded_aws_secret)
+                save_keys = AWSModel.save(keys)
+                print "AWS KEYS HAS BEEN SAVED IN AWS TABLE"
+                return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
+        else:
+            form = AWSForm()
 
-        context = {
-            "form": form,
-        }
-        print "I am printing aws cp"
-        return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
+            context = {
+                "form": form,
+            }
+            print "I am printing aws cp"
+            return render_to_response("AWS_CP.html", context, context_instance=RequestContext(request))
 
 
 def aws_cp(request):
+    usr_id = request.user.id
     if request.method == 'POST':
         print "it is post"
         form = AWSForm(request.POST or None)
@@ -260,7 +269,7 @@ def aws_view(request):
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            region = request.POST.get("region")
+            region = str(request.POST.get("region"))
 
             print region
             # Get AWS Access key and secret key from database
@@ -273,12 +282,12 @@ def aws_view(request):
             print encoded_access_key, access_key, encoded_secret_key, secret_key
             print "I am here after encoding"
             aws = AWS(access_key, secret_key)
-            aws.describe_instances(region)
-            instance_list = aws.describe_instances()
+            # aws.describe_instances(region)
+            instance_list = aws.describe_instances(region)
             print "printing instance list in get"
-            print instance_list[0]
+            print instance_list
             instance_db = instance_list
-            return render_to_response("aws_view.html", {'instance_db': instance_db})
+            return render_to_response("aws_view.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
     print 'for get response'
     return render_to_response("aws_view.html", {}, context_instance=RequestContext(request))
 
@@ -389,8 +398,8 @@ def aws_monitor(request):
 
     aws = AWS(access_key, secret_key)
     monitor_dict = aws.get_metrics(instance_id)
-    //return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
-    //aws = AWS(access_key, secret_key)
+    #return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
+    #aws = AWS(access_key, secret_key)
     data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
     return render_to_response("aws_monitor.html", {'data1': data1})
 
