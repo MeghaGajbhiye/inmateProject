@@ -10,7 +10,10 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from azure_python import Azure_class as az
 import base64
-
+par = ""
+days = 0
+group_name= ""
+vm_name1 = ""
 # Create your views here.
 # def azure(request):
 # 	form = AzureForm()
@@ -533,6 +536,42 @@ def azure_get_keys(request):
     keys = {"subscription_id": subscription_id, "client_id": client_id, "secret_key": secret_key,
             "tenant_id": tenant_id}
     return keys
+
+def azure_monitor_list(request):
+    print "azure_monitor_list **************************"
+    global  par, days, group_name, vm_name1
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+
+            par = str(request.POST.get("par"))
+            group_name = str(request.POST.get("group_name"))
+            days = int(request.POST.get("days"))
+            vm_name1 = int(request.POST.get("vm_name1"))
+
+            print par, days, group_name, vm_name1
+            # Get AWS Access key and secret key from database
+            # Instantiate AWS class aws->aws.py and calling the launch_instance function
+
+            azure_result = azure_get_keys(request)
+            print "I got the azure keys"
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            subscription_id = decode(encoded_subscription_id)
+            encoded_client_id = str(azure_result["client_id"])
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
+            azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+
+            print "printing instance list in get"
+
+            # return render_to_response("aws_monitor.html", {}, context_instance=RequestContext(request))
+    return render_to_response("azure_monitor_list.html", {"par": par}, context_instance=RequestContext(request))
+
 
 def azure_monitor(request):
     azure_result = azure_get_keys(request)
