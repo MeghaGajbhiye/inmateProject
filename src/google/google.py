@@ -123,11 +123,11 @@ class Google:
     def list_instances(self, project_id, zone):
         print "*******************************************list_instances*********************************************"
         print project_id, zone
-        # compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
-        # google_instances = compute_result['items']
-        # print('Instances in project %s and zone %s:' % (project_id, zone))
-        # for google_instance in google_instances:
-        #     print(' - ' + google_instance['name'])
+        compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
+        google_instances = compute_result['items']
+        print('Instances in project %s and zone %s:' % (project_id, zone))
+        for google_instance in google_instances:
+            print(' - ' + google_instance['name'])
 
 
     def delete_instance(self, project_id, zone, instance_name):

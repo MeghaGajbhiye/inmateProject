@@ -105,7 +105,7 @@ class AWS:
         start = now - timedelta(hours=3)
 
         metric_response = {}
-        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName='DiskReadOps',
+        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName='StatusCheckFailed_Instance',
                                                  Dimensions=[{'Name': 'InstanceId', 'Value': instance_id},],
                                                  StartTime=start,EndTime=now, Period=120, Statistics=[ 'Average'])
         # print (response)
