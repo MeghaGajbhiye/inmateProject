@@ -99,6 +99,7 @@
                 <option>Region</option>
            </select></h3></td>
 
+
             <h2><a href="{% url 'aws_view_list' %}"><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></a>   </h2>
 
     </div>
@@ -133,13 +134,10 @@
         function myFunction() {
             document.getElementById("region").innerHTML = "Region selected";
 
+
       }
    </script>
-    <script type="text/javascript">
 
-
-
-</script>
      <script type="text/javascript">
 
         function myFunction() {
@@ -152,6 +150,7 @@
                     csrfmiddlewaretoken: '{{ csrf_token }}',
 
                     region: $("#region").val(),
+
 
                 },
                 success: function (json) {

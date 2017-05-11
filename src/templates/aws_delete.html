@@ -93,12 +93,19 @@
            <h3><select id="region">
                 <option>Region</option>
            </select></h3></td>
+               <td>
+      <h3> Enter instance</h3>
 
+      <h3>  <select id="instance">
 
- <td>
-     <h3> Enter Instance ID</h3>
-     <h3><input type="text" size="12" value="instance" id="instance"></h3>
+            <option>Select an instance</option>
+            {% for i in instance_db %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
+  </select></h3>
 </td>
+
+
 
 
 
@@ -125,12 +132,7 @@
             select.options[select.options.length] = new Option([index], myobject3[index]);
         }
         </script>
-        <script>
-        function myFunction() {
-            document.getElementById("region").innerHTML = "Region selected";
 
-      }
-   </script>
 
 
     <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Delete</button><h2>
