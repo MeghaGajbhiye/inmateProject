@@ -90,24 +90,58 @@
                 </div>
             </div>
 
+
+             <td><h3> Select Region</h3>
+           <h3><select id="region">
+                <option>Region</option>
+           </select></h3></td>
+
+
  <td>
-    <h2> Enter Instance ID
-        <select id="instance">
-
-            <option>Select an instance</option>
-            {% for i in instance_db %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-
-        </select>
+     <h3> Enter Instance ID</h3>
+     <h3><input type="text" size="12" value="instance" id="instance"></h3>
 </td>
 
 
-    <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Delete</button><h2>
+
+
+    <script type="text/javascript">
+
+        var myobject3;
+        myobject3 = {
+            'US East (Ohio)': 'us-east-2',
+            'US East (N. Virginia)': 'us-east-1',
+            'US West (N. California)': 'us-west-1',
+            'US West (Oregon)': 'us-west-2',
+            'Asia Pacific (Mumbai)': 'ap-south-1',
+            'Asia Pacific (Seoul)': 'ap-northeast-2',
+            'Asia Pacific (Singapore)': 'ap-southeast-1',
+            'Asia Pacific (Sydney)': 'ap-southeast-2',
+            'Asia Pacific (Tokyo)': 'ap-northeast-1',
+            'EU (Frankfurt)': 'eu-central-1',
+            'EU (Ireland)': 'eu-west-1',
+            'EU (London)': 'eu-west-2',
+        };
+        var select = document.getElementById("region");
+        for (index in myobject3) {
+            select.options[select.options.length] = new Option([index], myobject3[index]);
+        }
+        </script>
+        <script>
+        function myFunction() {
+            document.getElementById("region").innerHTML = "Region selected";
+
+      }
+   </script>
+
+
+    <td><h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Monitor</button><h2>
+         <p id="region"></p>
         <p id="instance"></p>
 
         <script type="text/javascript">
     function myFunction() {
+        document.getElementById("region").innerHTML = "Region selected";
             document.getElementById("instance").innerHTML = "Instance name selected";
             
         }
@@ -122,7 +156,9 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
+                    region: $("#region").val(),
                     instance: $("#instance").val(),
+
                     
                    
                 },

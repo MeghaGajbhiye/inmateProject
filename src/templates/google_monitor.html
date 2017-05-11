@@ -96,7 +96,7 @@
                         function drawChart() {
                              var data = new google.visualization.DataTable();
                                 data.addColumn('string', 'Time');
-  data.addColumn('number', 'CPU Utilization Time');
+  data.addColumn('number', 'CPU Utilization');
                                 data.addRows( {{ data1|safe }});
                             var options = {
                                 title: 'Time chart',

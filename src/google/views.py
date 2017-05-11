@@ -200,7 +200,7 @@ def google_monitor(request):
     encoded_refresh_token = str(google_result["refresh_token"])
     refresh_token = decode(encoded_refresh_token)
     print project_id, client_secret, refresh_token
-    google = G(project_id, client_secret, refresh_token)
+    # google = G(project_id, client_secret, refresh_token)
     
     data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
     return render_to_response("google_monitor.html", {'data1': data1})
