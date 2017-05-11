@@ -76,65 +76,65 @@ class Azure_class:
         print "*****************************************inside create instance**********************************"
         print self.SUB_ID, self.CLIENT_ID, self.TENANT_ID, self.SECRET_KEY, choice, admin_username, admin_password, resource_group_name, vm_name, location, vnet_name
         subnet_name, nic_name, ip_config_name, os_disk_name
-        # self.create_resource_group (resource_group_name, location)
-        # self.create_storage_account (resource_group_name, location)
-        # self.create_vnet (self.network_client, resource_group_name, vnet_name, location)
-        # subnet_info = self.create_subnet (self.network_client, resource_group_name, vnet_name, subnet_name)
-        # nic = self.create_nic (self.network_client, subnet_info, resource_group_name, nic_name, location,
-        #                        ip_config_name)
-        #
-        # if choice == 'linux':
-        #     # Launching Linux Virtual Machine
-        #     vm_params = self.create_parameters (nic.id, self.VM_OS['linux'], location, vm_name,
-        #                                         admin_username, admin_password, os_disk_name)
-        #     vm_creation = self.compute_client.virtual_machines.create_or_update (
-        #         resource_group_name, vm_name, vm_params)
-        #     vm_creation.wait ()
-        #
-        #     # Tag the Virtual Machine
-        #     vm_update = self.compute_client.virtual_machines.create_or_update (
-        #         resource_group_name,
-        #         vm_name,
-        #         {
-        #             'location': location,
-        #             'tags': {
-        #                 'who-rocks': 'python',
-        #                 'where': 'on azure'
-        #             }
-        #         }
-        #     )
-        #     vm_update.wait ()
-        #
-        #     # Attach the data disk to virtual machine.
-        #     vm_update = self.compute_client.virtual_machines.create_or_update (
-        #         resource_group_name,
-        #         vm_name,
-        #         {
-        #             'location': location,
-        #             'storage_profile': {
-        #                 'data_disks': [{
-        #                     'name': 'mydatadisk1',
-        #                     'disk_size_gb': 1,
-        #                     'lun': 0,
-        #                     'vhd': {
-        #                         'uri': "http://{}.blob.core.windows.net/vhds/mydatadisk1.vhd".format(
-        #                             self.STORAGE_ACC_NAME)
-        #                     },
-        #                     'create_option': 'Empty'
-        #                 }]
-        #             }
-        #         }
-        #     )
-        #     vm_update.wait ()
-        #
-        # elif self.choice == 'windows':
-        #     # Create Windows VM
-        #     print('\nCreating Windows Virtual Machine')
-        #     vm_params = self.create_parameters (nic.id, self.VM_OS['windows'], location, vm_name,
-        #                                         admin_username, admin_password, os_disk_name)
-        #     vm_creation = self.compute_client.virtual_machines.create_or_update (
-        #         resource_group_name, vm_name, vm_params)
-        #     vm_creation.wait ()
+        self.create_resource_group (resource_group_name, location)
+        self.create_storage_account (resource_group_name, location)
+        self.create_vnet (self.network_client, resource_group_name, vnet_name, location)
+        subnet_info = self.create_subnet (self.network_client, resource_group_name, vnet_name, subnet_name)
+        nic = self.create_nic (self.network_client, subnet_info, resource_group_name, nic_name, location,
+                               ip_config_name)
+
+        if choice == 'linux':
+            # Launching Linux Virtual Machine
+            vm_params = self.create_parameters (nic.id, self.VM_OS['linux'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
+
+            # Tag the Virtual Machine
+            vm_update = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name,
+                vm_name,
+                {
+                    'location': location,
+                    'tags': {
+                        'who-rocks': 'python',
+                        'where': 'on azure'
+                    }
+                }
+            )
+            vm_update.wait ()
+
+            # Attach the data disk to virtual machine.
+            vm_update = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name,
+                vm_name,
+                {
+                    'location': location,
+                    'storage_profile': {
+                        'data_disks': [{
+                            'name': 'mydatadisk1',
+                            'disk_size_gb': 1,
+                            'lun': 0,
+                            'vhd': {
+                                'uri': "http://{}.blob.core.windows.net/vhds/mydatadisk1.vhd".format(
+                                    self.STORAGE_ACC_NAME)
+                            },
+                            'create_option': 'Empty'
+                        }]
+                    }
+                }
+            )
+            vm_update.wait ()
+
+        elif self.choice == 'windows':
+            # Create Windows VM
+            print('\nCreating Windows Virtual Machine')
+            vm_params = self.create_parameters (nic.id, self.VM_OS['windows'], location, vm_name,
+                                                admin_username, admin_password, os_disk_name)
+            vm_creation = self.compute_client.virtual_machines.create_or_update (
+                resource_group_name, vm_name, vm_params)
+            vm_creation.wait ()
 
     def update_instance(self, add_size, resource_group_name, vm_name):
 
@@ -174,7 +174,7 @@ class Azure_class:
         virtual_machine = async_vm_update.result ()
 
     def start_vm(self, resource_group_name, vm_name):
-        print('\nStart VM')
+        print('\nStart VM inside file')
         async_vm_start = self.compute_client.virtual_machines.start (resource_group_name, vm_name)
         async_vm_start.wait ()
 

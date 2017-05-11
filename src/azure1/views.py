@@ -177,9 +177,9 @@ def azure_update(request):
 
         if request.method == 'POST':
             print "I am here inside post"
-            size = request.POST.get("size")
-            res_grp_name = request.POST.get("res_grp_name")
-            vm_name = request.POST.get("vm_name")
+            size = int(request.POST.get("size"))
+            res_grp_name = str(request.POST.get("res_grp_name"))
+            vm_name = str(request.POST.get("vm_name"))
             print size, res_grp_name, vm_name
             azure_result = azure_get_keys(request)
             encoded_subscription_id = str(azure_result["subscription_id"])
@@ -191,8 +191,8 @@ def azure_update(request):
             encoded_tenant_id = str(azure_result["tenant_id"])
             tenant_id = decode(encoded_tenant_id)
             print subscription_id, client_id, secret_key, tenant_id
-            azure = az(subscription_id, client_id, secret_key, tenant_id)
-            azure.update_instance(size, res_grp_name, vm_name)
+            azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+            azure_object.update_instance(size, res_grp_name, vm_name)
             print "I got the azure keys"
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_update.html", {}, context_instance=RequestContext(request))
@@ -207,17 +207,7 @@ def azure_delete(request):
             selectOP = request.POST.get("selectOP")
 
             print selectOP
-            azure_result = azure_get_keys(request)
-            encoded_subscription_id = str(azure_result["subscription_id"])
-            subscription_id = decode(encoded_subscription_id)
-            encoded_client_id = str(azure_result["client_id"])
-            client_id = decode(encoded_client_id)
-            encoded_secret_key = str(azure_result["secret_key"])
-            secret_key = decode(encoded_secret_key)
-            encoded_tenant_id = str(azure_result["tenant_id"])
-            tenant_id = decode(encoded_tenant_id)
-            print subscription_id, client_id, secret_key, tenant_id
-            azure = az(subscription_id, client_id, secret_key, tenant_id)
+
 
 
         return render_to_response("azure_delete.html", {}, context_instance=RequestContext(request))
@@ -230,8 +220,8 @@ def azure_delete_vm(request):
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            res_grp_name = request.POST.get("res_grp_name")
-            vm_name = request.POST.get("vm_name")
+            res_grp_name = str(request.POST.get("res_grp_name"))
+            vm_name = str(request.POST.get("vm_name"))
             print res_grp_name, vm_name
             azure_result = azure_get_keys(request)
             encoded_subscription_id = str(azure_result["subscription_id"])
@@ -243,8 +233,8 @@ def azure_delete_vm(request):
             encoded_tenant_id = str(azure_result["tenant_id"])
             tenant_id = decode(encoded_tenant_id)
             print subscription_id, client_id, secret_key, tenant_id
-            azure = az(subscription_id, client_id, secret_key, tenant_id)
-            azure.delete_vm(res_grp_name, vm_name)
+            azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+            azure_object.delete_vm(res_grp_name, vm_name)
             print "Gotcha instance"
             return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
@@ -290,16 +280,16 @@ def azure_stop(request):
     encoded_tenant_id = str(azure_result["tenant_id"])
     tenant_id = decode(encoded_tenant_id)
     print subscription_id, client_id, secret_key, tenant_id
-    azure = az(subscription_id, client_id, secret_key, tenant_id)
+    azure_object = az(subscription_id, client_id, secret_key, tenant_id)
 
     if request.is_ajax():
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            res_grp_name = request.POST.get("res_grp_name")
-            vm_name = request.POST.get("vm_name")
+            res_grp_name = str(request.POST.get("res_grp_name"))
+            vm_name = str(request.POST.get("vm_name"))
             print res_grp_name, vm_name
-            az.stop_vm(res_grp_name, vm_name)
+            azure_object.stop_vm(res_grp_name, vm_name)
             print "I got the azure keys"
             return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_stop.html", {}, context_instance=RequestContext(request))
@@ -326,8 +316,8 @@ def azure_start(request):
         encoded_tenant_id = str(azure_result["tenant_id"])
         tenant_id = decode(encoded_tenant_id)
         print subscription_id, client_id, secret_key, tenant_id
-        azure = az(subscription_id, client_id, secret_key, tenant_id)
-        az.start_vm(res_grp_name, vm_name)
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        azure_object.start_vm(res_grp_name, vm_name)
         
         # print res_grp_name, vm_name
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
@@ -337,22 +327,22 @@ def azure_start(request):
 def azure_view(request):
     print "azure_view **************************"
 
-    if request.is_ajax():
-        print "it's ajax"
-    if request.method == 'POST':
-        print "I am here inside post"
-        view = request.POST.get("view")
-        azure_result = azure_get_keys(request)
-        encoded_subscription_id = str(azure_result["subscription_id"])
-        subscription_id = decode(encoded_subscription_id)
-        encoded_client_id = str(azure_result["client_id"])
-        client_id = decode(encoded_client_id)
-        encoded_secret_key = str(azure_result["secret_key"])
-        secret_key = decode(encoded_secret_key)
-        encoded_tenant_id = str(azure_result["tenant_id"])
-        tenant_id = decode(encoded_tenant_id)
-        print subscription_id, client_id, secret_key, tenant_id
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    # if request.is_ajax():
+    #     print "it's ajax"
+    # if request.method == 'POST':
+    #     print "I am here inside post"
+    #     selectOP = request.POST.get("view")
+    #     azure_result = azure_get_keys(request)
+    #     encoded_subscription_id = str(azure_result["subscription_id"])
+    #     subscription_id = decode(encoded_subscription_id)
+    #     encoded_client_id = str(azure_result["client_id"])
+    #     client_id = decode(encoded_client_id)
+    #     encoded_secret_key = str(azure_result["secret_key"])
+    #     secret_key = decode(encoded_secret_key)
+    #     encoded_tenant_id = str(azure_result["tenant_id"])
+    #     tenant_id = decode(encoded_tenant_id)
+    #     print subscription_id, client_id, secret_key, tenant_id
+    #     return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
 
 
@@ -376,7 +366,7 @@ def sub(request):
         azure_object = az(subscription_id, client_id, secret_key, tenant_id)
         instance_db = azure_object.view_instances_sub()
         print "I got the azure keys"
-        instance_list = azure.view_instances_sub()
+        instance_list = azure_object.view_instances_sub()
         print "printing instance list"
         print instance_list
 
@@ -441,8 +431,8 @@ def azure_reboot(request):
         encoded_tenant_id = str(azure_result["tenant_id"])
         tenant_id = decode(encoded_tenant_id)
         print subscription_id, client_id, secret_key, tenant_id
-        azure = az(subscription_id, client_id, secret_key, tenant_id)
-        az.restart_vm(res_grp_name, vm_name)
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        azure_object.restart_vm(res_grp_name, vm_name)
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     # print res_grp_name, vm_name
 
