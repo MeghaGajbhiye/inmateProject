@@ -27,6 +27,9 @@ class Google:
         auth_response = json.load(urlopen(auth_request))
         google_access_token= auth_response['access_token']
         google_credentials = AccessTokenCredentials(google_access_token, "MyAgent/1.0", None)
+        self.GOOGLE_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
+        self.google_monitor_client = googleapiclient.discovery.build('cloudmonitoring', 'v2beta2', credentials=google_credentials)
+
         self.compute = build('compute', 'v1', credentials=google_credentials)
 
     def operation_wait(self, project_id, google_zone, operation_name):
@@ -122,12 +125,15 @@ class Google:
 
     def list_instances(self, project_id, zone):
         print "*******************************************list_instances*********************************************"
-        print project_id, zone
+        print project_id,type(project_id), zone, type(zone)
         compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
         google_instances = compute_result['items']
         print('Instances in project %s and zone %s:' % (project_id, zone))
+        instance_list = []
         for google_instance in google_instances:
-            print(' - ' + google_instance['name'])
+            instance_list.append(google_instance['name'])
+        print instance_list
+        return instance_list
 
 
     def delete_instance(self, project_id, zone, instance_name):
@@ -146,11 +152,10 @@ class Google:
     def cloud_monitor(self, project_id):
         print "****************************************cloud monitor*************************************************"
  ##################
-        GOOGLE_METRIC_NAME = "custom.cloudmonitoring.googleapis.com/pid"
-        google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
+        # self.google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
         set_now = self.get_now_rfc3339 ()
         description = {"project": project_id,
-                "metric": GOOGLE_METRIC_NAME}
+                "metric": self.GOOGLE_METRIC_NAME}
         point = {"start": set_now,
                  "end": set_now,
                  "doubleValue": os.getpid ()}
@@ -158,7 +163,7 @@ class Google:
 
         # Write a new data point.
         try:
-            write_request = google_client.timeseries ().write (
+            write_request = self.google_monitor_client.timeseries ().write (
                 project=project_id,
                 body={"timeseries": [{"timeseriesDesc": description, "point": point}]})
             write_request.execute ()  # Ignore the response.
@@ -167,9 +172,9 @@ class Google:
             raise
 
         print("Reading data from custom metric timeseries...")
-        read_request = google_client.timeseries ().list (
+        read_request = self.google_monitor_client.timeseries ().list (
             project=project_id,
-            metric=GOOGLE_METRIC_NAME,
+            metric=self.GOOGLE_METRIC_NAME,
             youngest=set_now)
         start = time.time ()
         while True:
@@ -198,11 +203,11 @@ class Google:
 
 if __name__ == '__main__':
     gc= Google("32555940559.apps.googleusercontent.com", "ZmssLNjJy2998hD4CTg2ejr2", "1/Czt1brCXjU5UzTRfVrE4OUmHUL9RfUHRHd-K1HelXPo")
-    gc.list_instances("autum-165318", "us-central1-f")
+    # gc.list_instances("autum-165318", "us-central1-f")
     # gc.set_pid("autum-165318")
     # gc.set_bucket_name("autum")
     # gc.set_zone("us-central1-f")
     # gc.set_instance_name("autumtest2")
     # gc.create_instance("autum-165318","us-central1-f","autumtest-3","autum3" )
     # gc.delete_instance("autum-165318", "us-central1-f", "autumtest-3")
-    # gc.cloud_monitor("autum-165318")
+    gc.cloud_monitor("autum-165318")
