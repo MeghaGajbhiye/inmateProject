@@ -299,9 +299,7 @@ def rackspace_monitor(request):
     api_key = decode(encoded_api_key)
     # print "I am here after encoding"
     print (username, api_key)
-    rackspace = r(username, api_key)
-    instance_list = json.dumps(rackspace.view_instances())  # list of instances - pushpa
-    print instance_list
+    alarm_db = []
 
     if request.is_ajax():
         print "it's ajax"
@@ -310,10 +308,12 @@ def rackspace_monitor(request):
             instance_name = str(request.POST.get("instance_name"))
             alarm = str(request.POST.get("alarm"))
             email = str(request.POST.get("email"))
-            print instance_name, alarm, email
+            entity = str(request.POST.get("entity"))
+            print instance_name, alarm, email, entity
+            rackspace_object = r(username, api_key)
+            rackspace_object.monitoring(instance_name, alarm,email, entity)
             return render_to_response("rackspace_monitor.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
-        instance_db = instance_list
         alarm_db = [u'CPU', u'Memory', u'Ping', u'5-Minute Load Average']
-        return render_to_response("rackspace_monitor.html", {'alarm_db': alarm_db, 'instance_db': instance_list})
+    return render_to_response("rackspace_monitor.html", {'alarm_db': alarm_db}, context_instance=RequestContext(request))
 

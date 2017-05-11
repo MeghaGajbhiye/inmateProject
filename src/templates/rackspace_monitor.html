@@ -87,16 +87,13 @@
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
-                   <td>
-    <h4> Enter Instance Name
-        <select id="instance_name">
+               <td>
+            <h4> Enter Instance Name
+                <input type="text" size="12" value="instance" id="instance_name">
+            </h4>
+        </td>
 
-            <option>instance name</option>
-            {% for i in instance_list %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-        </select>
-    </h4></td>
+
                     <td>
     <h4> Create Alarm
         <select id="alarm">
@@ -112,18 +109,25 @@
                 <input type="text" size="12" value="email" id="email">
             </h4>
         </td>
+                <td>
+            <h4> Enter Entity Name
+                <input type="text" size="12" value="entity" id="entity">
+            </h4>
+        </td>
 
                     <td><h3><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button></h3></td>
         <p id="instance_name"></p>
         <p id="alarm"></p>
         <p id="email"></p>
+        <p id="entity"></p>
 
         <script type="text/javascript">
     function myFunction() {
         document.getElementById("instance_name").innerHTML = "Instance Name selected";
             document.getElementById("alarm").innerHTML = "Alarm selected";
             document.getElementById("email").innerHTML = "Instance name selected";
-            
+            document.getElementById("entity").innerHTML = "Entity name selected";
+
         }
     </script>
 
@@ -139,6 +143,7 @@
                     instance_name: $("#instance_name").val(),
                     alarm: $("#alarm").val(),
                     email: $("#email").val(),
+                    entity: $("#entity").val(),
                     
                    
                 },

@@ -89,6 +89,15 @@
                     <h1> AWS Monitor List</h1>
                 </div>
             </div>
+<td>
+     <h3> Enter group name</h3>
+     <h3><input type="text" size="12" value="group" id="group_name"></h3>
+</td>
+
+            <td>
+     <h3> Enter virtual machine name</h3>
+     <h3><input type="text" size="12" value="virtual machine" id="vm_name1"></h3>
+</td>
 
 
 
@@ -107,18 +116,14 @@
 
         var myobject4;
         myobject4 = {
-            'CPU Utilization': 'CPUUtilization',
-            'Read Operations': 'DiskReadOps',
-            'Write Operations': 'DiskWriteOps',
-            'Bytes Read from all store Volumes': 'DiskReadBytes',
-            'Bytes written to all store volumes': 'DiskWriteBytes',
-            'Bytes received on all Network Interface': 'NetworkIn',
-            'Bytes sent out on all Network Interface': 'NetworkOut',
-            'Packets received on all Network Interface': 'NetworkPacketsIn',
-            'Packets sent out on all network interfaces': 'NetworkPacketsOut',
-            'Status Check': 'StatusCheckFailed',
-            'Instance Status Check': 'StatusCheckFailed_Instance',
-            'System Status Check': 'StatusCheckFailed_System',
+            'Percentage CPU(Unit-percent)': 'Percentage CPU',
+            'Network In(Unit-bytes)': 'Network In',
+            'Network Out(Unit-bytes)': 'Network Out',
+            'Disk Read Bytes(Unit-bytes)': 'Disk Read Bytes',
+            'Disk Write Bytes(Unit-bytes)': 'Disk Write Bytes',
+            'Disk Write Bytes(Unit-bytes)': 'Disk Write Bytes',
+            'Disk Read Operations/Sec(Unit.count_per_second)': 'Disk Read Operations/Sec',
+            'Disk Write Operations/Sec(Unit.count_per_second)': 'Disk Write Operations/Sec',
         };
         var select = document.getElementById("par");
         for (index in myobject4) {
@@ -132,10 +137,13 @@
          
         <p id="par"></p>
         <p id="days"></p>
+        <p id="group_name"></p>
+        <p id="vm_name1"></p>
 
         <script type="text/javascript">
     function myFunction() {
-        
+             document.getElementById("group_name").innerHTML = "Region selected";
+            document.getElementById("vm_name1").innerHTML = "Instance name selected";
              document.getElementById("par").innerHTML = "Region selected";
             document.getElementById("days").innerHTML = "Instance name selected";
             
@@ -151,11 +159,11 @@
                 async: true,
                 data: {
                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                    region: $("#region").val(),
-                    instance: $("#instance").val(),
-                    par: $("#par").val(),
-                    hours: $("#hours").val(),
 
+                    par: $("#par").val(),
+                    days: $("#days").val(),
+                    vm_name1: $("#vm_name1").val(),
+                    group_name: $("#group_name").val(),
                     
                     
                    
