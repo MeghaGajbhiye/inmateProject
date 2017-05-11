@@ -99,114 +99,114 @@ class Rackspace:
                 return 1
         return 0
         ################################################################################
-    def monitoring(self, instance_name, notification, email_id):
+    def monitoring(self, instance_name, notification, email_id, entity_name):
         print "*************************************** INSIDE MONITORING RACKSPACE ***********************"
         print self.user_name, self.api_key, instance_name, notification, email_id
-        # #################################################################################
-        # cm = pyrax.cloud_monitoring
-        # lst_entities = cm.list_entities ()
-        # for entity in lst_entities:
-        #     print entity.id
-        #     lst_alarms = cm.list_alarms (entity.id)  # this call seem to have some issue
-        #     print lst_alarms
-        #     break
-        #
-        # server = self.cs.servers.list ()
-        # ipAddress = ''
-        # if server is not None:
-        #     for servers in server:
-        #         if servers.name == instance_name:
-        #             ipAddress = servers.accessIPv4
-        #
-        # host = "http://" + ipAddress
-        # print instance_name
-        # print ipAddress
-        # print host
-        #
-        # # To list the available check types
-        # chk_types = cm.list_check_types ()
-        # # for checktypes in chk_types:
-        # #     print checktypes
-        #
-        # # lists all the monitoring zones
-        # monitoring_zones = cm.list_monitoring_zones ()
-        # # for MonitoringZones in monitoring_zones:
-        # #     print MonitoringZones
-        #
-        # # to Crete email notifications.
-        # email = cm.create_notification ("email", label="my_email_notification",
-        #                                 details={"address": "megha.gajbhiye@sjsu.edu"})
-        # # To create entity. We need input of the sevres ip address and host. host can be http://ipaddress.
-        #
-        # ent = cm.create_entity (name="sample_entity123", ip_addresses={"example": ipAddress},
-        #                         metadata={"description": "Just a test entity"})
-        #
-        # email = cm.create_notification ("email", label="my_email_notification",
-        #                                 details={"address": email_id})
-        # plan = cm.create_notification_plan (label="default", ok_state=email, warning_state=email,
-        #                                     critical_state=email)
-        #
-        # if notification =="Duration":
-        #     print "inside Duration"
-        #     chk = cm.create_check (ent, label="check_duration", check_type="remote.http", details={"url": host}, period=900,
-        #                            timeout=20, target_hostname=ipAddress)
+        #################################################################################
+        cm = pyrax.cloud_monitoring
+        lst_entities = cm.list_entities ()
+        for entity in lst_entities:
+            print entity.id
+            lst_alarms = cm.list_alarms (entity.id)  # this call seem to have some issue
+            print lst_alarms
+            break
+
+        server = self.cs.servers.list ()
+        ipAddress = ''
+        if server is not None:
+            for servers in server:
+                if servers.name == instance_name:
+                    ipAddress = servers.accessIPv4
+
+        host = "http://" + ipAddress
+        print instance_name
+        print ipAddress
+        print host
+
+        # To list the available check types
+        chk_types = cm.list_check_types ()
+        # for checktypes in chk_types:
+        #     print checktypes
+
+        # lists all the monitoring zones
+        monitoring_zones = cm.list_monitoring_zones ()
+        # for MonitoringZones in monitoring_zones:
+        #     print MonitoringZones
+
+        # to Crete email notifications.
+        email = cm.create_notification ("email", label="my_email_notification",
+                                        details={"address": "megha.gajbhiye@sjsu.edu"})
+        # To create entity. We need input of the sevres ip address and host. host can be http://ipaddress.
+
+        ent = cm.create_entity (name=entity_name, ip_addresses={"example": ipAddress},
+                                metadata={"description": "Just a test entity"})
+
+        email = cm.create_notification ("email", label="my_email_notification",
+                                        details={"address": email_id})
+        plan = cm.create_notification_plan (label="default", ok_state=email, warning_state=email,
+                                            critical_state=email)
+
+        if notification =="Duration":
+            print "inside Duration"
+            chk = cm.create_check (ent, label="check_duration", check_type="remote.http", details={"url": host}, period=900,
+                                   timeout=20, target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (metric['duration'] > 2000) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+
+        if notification == "CPU":
+            print "inside cpu"
+            chk = cm.create_check (ent, label="check_cpu", check_type="agent.cpu", details={"url": host}, period=900,
+                                   timeout=20, target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (rate(metric['usage_average']) > 10) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+
+        elif notification == "Memory":
+            print "inside memory"
+            chk = cm.create_check (ent, label="check_memory", check_type="agent.memory", details={"url": host},
+                                   period=900,
+                                   timeout=20, target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (percentage(metric['actual_used'], metric['total']) > 90) { return new "
+                                     "AlarmStatus(WARNING); } return new AlarmStatus(OK);")
+
+        elif notification == "Ping":
+            print "Inside ping"
+            chk = cm.create_check (ent, label="sample_check", check_type="remote.http", details={"url": host},
+                                   period=900,
+                                   timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
+                                   target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (rate(metric['average']) > 10) { return new AlarmStatus(WARNING); } return "
+                                     "new AlarmStatus(OK);")
+
+        elif notification == "5 minute load average":
+            print "inside 5min load"
+            chk = cm.create_check (ent, label="sample_check", check_type="agent.load_average", details={"url": host},
+                                   period=900,
+                                   timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
+                                   target_hostname=ipAddress)
+            alarm = cm.create_alarm (ent, chk, plan,
+                                     "if (metric['5m'] > ${critical_threshold}) { return new AlarmStatus(WARNING); } "
+                                     "return new AlarmStatus(OK);")
+
+        # print("Name:", ent.name)
+        # print("ID:", ent.id)
+        # print("IPs:", ent.ip_addresses)
+        # print("Meta:", ent.metadata)
+        # elif notification == "Memory":
+        # elif notification == "Ping":
         #     alarm = cm.create_alarm (ent, chk, plan,
         #                              "if (metric['duration'] > 2000) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
-        #
-        # if notification == "CPU":
-        #     print "inside cpu"
-        #     chk = cm.create_check (ent, label="check_cpu", check_type="agent.cpu", details={"url": host}, period=900,
-        #                            timeout=20, target_hostname=ipAddress)
-        #     alarm = cm.create_alarm (ent, chk, plan,
-        #                              "if (rate(metric['usage_average']) > 10) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
-        #
-        # elif notification == "Memory":
-        #     print "inside memory"
-        #     chk = cm.create_check (ent, label="check_memory", check_type="agent.memory", details={"url": host},
-        #                            period=900,
-        #                            timeout=20, target_hostname=ipAddress)
-        #     alarm = cm.create_alarm (ent, chk, plan,
-        #                              "if (percentage(metric['actual_used'], metric['total']) > 90) { return new "
-        #                              "AlarmStatus(WARNING); } return new AlarmStatus(OK);")
-        #
-        # elif notification == "Ping":
-        #     print "Inside ping"
-        #     chk = cm.create_check (ent, label="sample_check", check_type="remote.http", details={"url": host},
-        #                            period=900,
-        #                            timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
-        #                            target_hostname=ipAddress)
-        #     alarm = cm.create_alarm (ent, chk, plan,
-        #                              "if (rate(metric['average']) > 10) { return new AlarmStatus(WARNING); } return "
-        #                              "new AlarmStatus(OK);")
-        #
-        # elif notification == "5 minute load average":
-        #     print "inside 5min load"
-        #     chk = cm.create_check (ent, label="sample_check", check_type="agent.load_average", details={"url": host},
-        #                            period=900,
-        #                            timeout=20, monitoring_zones_poll=["mzdfw", "mzlon", "mzsyd"],
-        #                            target_hostname=ipAddress)
-        #     alarm = cm.create_alarm (ent, chk, plan,
-        #                              "if (metric['5m'] > ${critical_threshold}) { return new AlarmStatus(WARNING); } "
-        #                              "return new AlarmStatus(OK);")
-        #
-        # # print("Name:", ent.name)
-        # # print("ID:", ent.id)
-        # # print("IPs:", ent.ip_addresses)
-        # # print("Meta:", ent.metadata)
-        # # elif notification == "Memory":
-        # # elif notification == "Ping":
-        # #     alarm = cm.create_alarm (ent, chk, plan,
-        # #                              "if (metric['duration'] > 2000) { return new AlarmStatus(WARNING); } return new AlarmStatus(OK);")
-        #
-        # # lst_entities = cm.list_entities ()
-        # # chglogs = cm.get_changelogs (ent)
-        # # print chglogs
-        #
-        # lst_alarms = cm.list_alarms (ent.id)
-        # # print lst_alarms
-        # #     break
-        # # print chk.list_metrics
-        # #################################################################################
+
+        # lst_entities = cm.list_entities ()
+        # chglogs = cm.get_changelogs (ent)
+        # print chglogs
+
+        lst_alarms = cm.list_alarms (ent.id)
+        # print lst_alarms
+        #     break
+        # print chk.list_metrics
+        #################################################################################
     def instance_reboot(self, server_name, boot_type):
         print "*************************************** INSIDE REBOOT RACKSPACE ***********************"
         print self.user_name, self.api_key, server_name, boot_type
