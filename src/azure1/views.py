@@ -341,7 +341,8 @@ def azure_view(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        view = request.POST.get("view")
+        selectOP = request.POST.get("selectOP")
+        print selectOP
         azure_result = azure_get_keys(request)
         encoded_subscription_id = str(azure_result["subscription_id"])
         subscription_id = decode(encoded_subscription_id)
@@ -397,11 +398,14 @@ def sub(request):
 def res(request):
     print "resource group **************************"
 
+
+
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-
+        res_grp_name = request.POST.get("res_grp_name")
+        print res_grp_name
         keys = azure_get_keys(request)
 
         subscription_id = keys["subscription_id"]
@@ -409,15 +413,25 @@ def res(request):
         secret_key = keys["secret_key"]
         tenant_id = keys["tenant_id"]
         azure_object = az(subscription_id, client_id, secret_key, tenant_id)
-        instance_db = azure_object.view_instances_rgroup_name()
-
+        instance_db = azure_object.view_instances_rgroup_name(res_grp_name)
         print "I got the azure keys"
+        instance_list = azure.view_instances_rgroup_name(res_grp_name)
+        print "printing instance list"
+        print instance_list
 
-        # print res_grp_name
-        return render_to_response("azure_home.html", {"instance_db" : instance_db}, context_instance=RequestContext(request))
-    return render_to_response("res.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    else:
+        keys = azure_get_keys(request)
 
-
+        subscription_id = keys["subscription_id"]
+        client_id = keys["client_id"]
+        secret_key = keys["secret_key"]
+        tenant_id = keys["tenant_id"]
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        instance_list = azure_object.view_instances_rgroup_name(res_grp_name)
+        instance_db = instance_list
+        print "I got the azure keys"
+        return render_to_response("sub.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
 
 
 def azure_reboot(request):
