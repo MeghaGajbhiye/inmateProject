@@ -11,7 +11,8 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from google import Google as G
 import base64
-
+pro_id = ""
+zone = ""
 
 
 def encode(value):
@@ -132,15 +133,16 @@ def google_create(request):
     elif request.method == 'GET':
         return render_to_response("google_create.html", {}, context_instance=RequestContext(request))
 
-def google_update(request):
+def google_retrieve(request):
     print "google_update **************************"
+    global pro_id, zone
 
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        selectzone = request.POST.get("selectzone")
-        Pro_id = request.POST.get("Pro_id")
+        zone = str(request.POST.get("selectzone"))
+        pro_id = str(request.POST.get("pro_id"))
         google_result = google_get_keys(request)
         encoded_project_id = str(google_result["project_id"])
         project_id = decode(encoded_project_id)
@@ -149,15 +151,15 @@ def google_update(request):
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
         print project_id, client_secret, refresh_token
-        google = G(project_id, client_secret, refresh_token)
-        google.list_instances(selectzone, Pro_id)
-        # print selectzone, Pro_id
+        # google = G(project_id, client_secret, refresh_token)
+        # google.list_instances(selectzone, Pro_id)
+        print zone, pro_id
         return render_to_response("google_view.html", {}, context_instance=RequestContext(request))
-    return render_to_response("google_update.html", {}, context_instance=RequestContext(request))
+    return render_to_response("google_retrieve.html", {}, context_instance=RequestContext(request))
 
 def google_view(request):
     print "google_view **************************"
-    print "rackspace_view **************************"
+    print pro_id, zone
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
@@ -173,13 +175,11 @@ def google_view(request):
         refresh_token = decode(encoded_refresh_token)
         print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
-        google.list_instances()
-
         print "I am above instance_list"
-        instance_list = json.dumps(google.list_instances())
+        instance_list = json.dumps(google.list_instances(pro_id, zone))
         print "printing instance list"
         print instance_list
-        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+        return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     else:
         print "in get"
         google_result = google_get_keys(request)
@@ -191,16 +191,16 @@ def google_view(request):
         refresh_token = decode(encoded_refresh_token)
         print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
-        google.list_instances()
+        google.list_instances(pro_id, zone)
 
         print "I am above instance_list"
-        instance_list = json.dumps(google.list_instances())
+        instance_list = json.dumps(google.list_instances(pro_id, zone))
         print "printing instance list in get"
         print instance_list[0]
         print instance_list
         instance_db = instance_list
 
-        return render_to_response("rackspace_view.html", {'instance_db': instance_db, "message": message},
+        return render_to_response("google_view.html", {'instance_db': instance_db},
                                   context_instance=RequestContext(request))
 
 
@@ -251,7 +251,7 @@ def google_monitor(request):
     encoded_refresh_token = str(google_result["refresh_token"])
     refresh_token = decode(encoded_refresh_token)
     print project_id, client_secret, refresh_token
-    # google = G(project_id, client_secret, refresh_token)
+    google = G(project_id, client_secret, refresh_token)
     
     data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
     return render_to_response("google_monitor.html", {'data1': data1})

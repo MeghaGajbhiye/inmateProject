@@ -100,7 +100,7 @@
         </select>
 <td>
     <h3> Enter Project ID
-        <input type="text" size="13" value="project id" id="Pro_id">
+        <input type="text" size="13" value="project id" id="pro_id">
     </h3>
 </td>
 
@@ -131,19 +131,19 @@
 
     var select = document.getElementById("selectzone");
     for (index in myobject) {
-        select.options[select.options.length] = new Option(myobject[index], index);
+        select.options[select.options.length] = new Option(myobject[index], myobject[index]);
     }
 
 </script>
 
-<h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Retrieve</button></h1>
+            <h1><a href="{% url 'google_view' %}" ><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Retrieve</button></a></h1>
 
-<p id="zone"></p>
+<p id="selectzone"></p>
 <p id="pro_id"></p>
 
 <script>
     function myFunction() {
-        document.getElementById("zone").innerHTML = "Zone selected";
+        document.getElementById("selectzone").innerHTML = "Zone selected";
         document.getElementById("pro_id").innerHTML = "Project selected";
         
     }
@@ -158,10 +158,11 @@
             data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 selectzone: $("#selectzone").val(),
-                Pro_id: $("#Pro_id").val(),
+                pro_id: $("#pro_id").val(),
                 
             },
             success: function (json) {
+{#                window.open("/google_view");#}
                 $('#output').html(json.message);
                 $('.ajaxProgress').hide();
             },
