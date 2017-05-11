@@ -99,10 +99,8 @@
                 <option>Region</option>
            </select></h3></td>
 
-                <h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></h2>
-{% for i in instance_db %}
-   <p>{{ i }}</p>
-{% endfor %}
+            <h2><a href="{% url 'aws_view_list' %}"><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">View</button></a>   </h2>
+
     </div>
         <p id="region"></p>
 
@@ -190,7 +188,7 @@
 </body>
 </html>
 
-=======
+
 
       <!-- FOOTER -->
       <footer>
