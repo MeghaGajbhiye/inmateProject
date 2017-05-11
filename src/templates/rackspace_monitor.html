@@ -87,16 +87,23 @@
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
-                   <td>
-    <h4> Enter Instance Name
-        <select id="instance_name">
+{#                   <td>#}
+{#    <h4> Enter Instance Name#}
+{#        <select id="instance_name">#}
+{##}
+{#            <option>instance name</option>#}
+{#            {% for i in instance_list %}#}
+{#   <option value="{{ i }}"> {{ i }}</option>#}
+{#{% endfor %}#}
+{#        </select>#}
+{#    </h4></td>#}
+                <td>
+            <h4> Enter Instance Name
+                <input type="text" size="12" value="instance" id="instance_name">
+            </h4>
+        </td>
 
-            <option>instance name</option>
-            {% for i in instance_list %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-        </select>
-    </h4></td>
+
                     <td>
     <h4> Create Alarm
         <select id="alarm">
