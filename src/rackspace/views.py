@@ -270,15 +270,13 @@ def rackspace_view(request):
         encoded_api_key = str(rackspace_result['api_key'])
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
-        try:
-            instance_list = rackspace.view_instances()
-        except:
-            if instance_list is None:
-                message = "You don't have any instance."
+
+        instance_list = rackspace.view_instances()
+
         print "printing instance list in get"
         print instance_list[0]
         instance_db = instance_list
-        return render_to_response("rackspace_view.html", {'instance_db': instance_db, "message": message},
+        return render_to_response("rackspace_view.html", {'instance_db': instance_db},
                                   context_instance=RequestContext(request))
 
 
@@ -309,21 +307,10 @@ def rackspace_monitor(request):
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            instance_name = request.POST.get("instance_name")
+            instance_name = str(request.POST.get("instance_name"))
             alarm = str(request.POST.get("alarm"))
             email = str(request.POST.get("email"))
             print instance_name, alarm, email
-            instance_list = json.dumps(rackspace.view_instances()) # list of instances - pushpa
-            print instance_list
-            context = {"instance_list": instance_list}
-            print instance_list
-            
-            alarm_db = [u'CPU', u'Memory', u'Ping', u'5-Minute Load Average']
-            print "I am above alarm"
-            alarm_name = json.dumps(alarm_db)
-            print alarm_name
-            context = {"alarm_name": alarm_name}
-            print "Gotcha instance"
             return render_to_response("rackspace_monitor.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
         instance_db = instance_list

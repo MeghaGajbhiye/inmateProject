@@ -96,16 +96,17 @@ class AWS:
         ec2_out = ec2.terminate_instances (InstanceIds=[instance_id])
         print (ec2_out)
 
-    def get_metrics(self, instance_id, region_name):
+    def get_metrics(self, instance_id, region_name, hours, parameter):
         print "*****************************inside get metrics*************************************"
-        print self.access_key, self.secret_key, instance_id
+        print self.access_key, type(self.access_key), self.secret_key, type(self.secret_key), \
+            instance_id, type(instance_id), region_name, type(region_name), hours, type(hours), parameter, type(parameter)
         client = boto3.client('cloudwatch', aws_access_key_id=self.get_acccess_key(),
                             aws_secret_access_key=self.get_secret_key(), region_name=region_name)
         now = datetime.utcnow()
-        start = now - timedelta(hours=3)
+        start = now - timedelta(hours=hours)
 
         metric_response = {}
-        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName='StatusCheckFailed_Instance',
+        response =  client.get_metric_statistics(Namespace='AWS/EC2', MetricName=parameter,
                                                  Dimensions=[{'Name': 'InstanceId', 'Value': instance_id},],
                                                  StartTime=start,EndTime=now, Period=120, Statistics=[ 'Average'])
         # print (response)
@@ -172,4 +173,4 @@ if __name__ == "__main__":
     #     aws.get_metrics(instance)
     # aws.launch_instance( "instance_Console", "us-west-2", "ami-4836a428","t2.micro", 1, 1,'keypair2',True)
     # aws.terminate_instance("i-0f8cd205ff577869e", "us-west-2")
-    aws.get_metrics("i-0cae18706985f552e", "us-west-2")
+    aws.get_metrics("i-0cae18706985f552e", "us-west-2", 1, "CPUUtilization")
