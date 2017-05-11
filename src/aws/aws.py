@@ -35,7 +35,7 @@ class AWS:
         for reservation in ec2_out['Reservations']:
             instance_id = reservation['Instances'][0]['InstanceId']
             list_instanceid.append(str(instance_id))
-        print "list is", list_instanceid
+        print "list is", list_instanceid, type, type(list_instanceid)
         return list_instanceid
 
     def describe_key_pair(self):
