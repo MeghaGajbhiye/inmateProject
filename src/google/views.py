@@ -113,10 +113,10 @@ def google_create(request):
 
     if request.method == 'POST':
         print "I am here inside post of google_create"
-        selectzone = request.POST.get("selectzone")
-        Pro_id = request.POST.get("Pro_id")
-        Buck_id = request.POST.get("Buck_id")
-        Inst_name = request.POST.get("Inst_name")
+        selectzone = str(request.POST.get("selectzone"))
+        Pro_id = str(request.POST.get("Pro_id"))
+        Buck_id = str(request.POST.get("Buck_id"))
+        Inst_name = str(request.POST.get("Inst_name"))
         print selectzone, Pro_id, Buck_id, Inst_name
         usr_id = request.user.id
         google_result = google_get_keys(request)
@@ -128,7 +128,7 @@ def google_create(request):
         refresh_token = decode(encoded_refresh_token)
         print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
-        google.create_instance(selectzone, Pro_id, Buck_id, Inst_name)
+        google.create_instance(Pro_id, selectzone,  Inst_name, Buck_id)
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
         return render_to_response("google_create.html", {}, context_instance=RequestContext(request))
@@ -213,9 +213,9 @@ def google_delete(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        selectzone = request.POST.get("selectzone")
-        Pro_id = request.POST.get("Pro_id")
-        Inst_name = request.POST.get("Inst_name")
+        selectzone = str(request.POST.get("selectzone"))
+        Pro_id = str(request.POST.get("Pro_id"))
+        Inst_name = str(request.POST.get("Inst_name"))
         google_result = google_get_keys(request)
         encoded_project_id = str(google_result["project_id"])
         project_id = decode(encoded_project_id)
@@ -225,7 +225,7 @@ def google_delete(request):
         refresh_token = decode(encoded_refresh_token)
         print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
-        google.delete_instance(selectzone, Pro_id, Inst_name)
+        google.delete_instance(Pro_id,selectzone, Inst_name)
         # print selectzone, Pro_id, Inst_name
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("google_delete.html", {}, context_instance=RequestContext(request))

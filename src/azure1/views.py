@@ -352,11 +352,6 @@ def azure_view(request):
         encoded_tenant_id = str(azure_result["tenant_id"])
         tenant_id = decode(encoded_tenant_id)
         print subscription_id, client_id, secret_key, tenant_id
-        azure = az(subscription_id, client_id, secret_key, tenant_id)
-        az.view_instances(view)
-        view = request.POST.get("view")
-        keys = azure_get_keys(request)
-        # print res_grp_name
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
 
@@ -376,12 +371,22 @@ def sub(request):
         client_id = keys["client_id"]
         secret_key = keys["secret_key"]
         tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        instance_db = azure_object.view_instances_sub()
         print "I got the azure keys"
 
-        # print res_grp_name
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
-    return render_to_response("sub.html", {}, context_instance=RequestContext(request))
+    else:
+        keys = azure_get_keys(request)
+
+        subscription_id = keys["subscription_id"]
+        client_id = keys["client_id"]
+        secret_key = keys["secret_key"]
+        tenant_id = keys["tenant_id"]
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        instance_db = azure_object.view_instances_sub()
+        print "I got the azure keys"
+        return render_to_response("sub.html", {'instance_db':instance_db}, context_instance=RequestContext(request))
 
 def res(request):
     print "resource group **************************"
@@ -397,12 +402,13 @@ def res(request):
         client_id = keys["client_id"]
         secret_key = keys["secret_key"]
         tenant_id = keys["tenant_id"]
-        azure = Azure(subscription_id, client_id, secret_key, tenant_id)
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        instance_db = azure_object.view_instances_rgroup_name()
 
         print "I got the azure keys"
 
         # print res_grp_name
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_home.html", {"instance_db" : instance_db}, context_instance=RequestContext(request))
     return render_to_response("res.html", {}, context_instance=RequestContext(request))
 
 

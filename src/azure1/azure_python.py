@@ -195,6 +195,7 @@ class Azure_class:
         for vm in self.compute_client.virtual_machines.list (resource_group_name):
             vm_list.append(vm.name)
             # print("\tVM: {}".format (vm.name))
+        print vm_list
         return vm_list
 
     def view_instances_sub(self):
@@ -202,6 +203,7 @@ class Azure_class:
         vm_list = []
         for vm in self.compute_client.virtual_machines.list_all ():
             vm_list.append(vm.name)
+        print vm_list
         return vm_list
             # print("\tVM: {}".format (vm.name))
 

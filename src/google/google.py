@@ -139,6 +139,7 @@ class Google:
     def delete_instance(self, project_id, zone, instance_name):
 
         print'*******************************************Deleting instance*******************************************'
+        print project_id, type(project_id), zone, type(zone), instance_name, type(instance_name)
         operation = self.compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
         self.operation_wait(project_id, zone, operation['name'])
 
@@ -152,7 +153,7 @@ class Google:
     def cloud_monitor(self, project_id):
         print "****************************************cloud monitor*************************************************"
  ##################
-        # self.google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
+        self.google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
         set_now = self.get_now_rfc3339 ()
         description = {"project": project_id,
                 "metric": self.GOOGLE_METRIC_NAME}
