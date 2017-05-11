@@ -12,7 +12,8 @@ from django.http import HttpResponse
 from django.db import connection
 import base64
 from aws import AWS
-
+from datetime import *
+from dateutil.tz import *
 
 def encode(value):
     key = "autum"
@@ -117,15 +118,15 @@ def aws_create(request):
         if request.method == 'POST':
             print "Inside post"
             inst_name = str(request.POST.get("inst_name"))
+            region = str(request.POST.get("region"))
             image = str(request.POST.get("image"))
             inst_type = str(request.POST.get("inst_type"))
             min = int(request.POST.get("min"))
             max = int(request.POST.get("max"))
-            key_name = int(request.POST.get("key_name"))
+            key_name = str(request.POST.get("key_name"))
+            check_status = eval(request.POST.get("check_status"))
 
-            check_status = int(request.POST.get("check_status"))
-
-            print inst_name, image, inst_type, min, max, key_name, check_status
+            print inst_name, region, image, inst_type, min, max, key_name, check_status
 
             aws_result = aws_get_keys(request)
             encoded_access_key = str(aws_result['access_key'])
@@ -138,7 +139,7 @@ def aws_create(request):
             aws = AWS(access_key, secret_key)
 
 
-            aws.launch_instance(inst_name, image, inst_type, min, max, key_name, check_status)
+            aws.launch_instance(inst_name, region, image, inst_type, min, max, key_name, check_status)
 
             print "here after aws setting keys"
             aws.launch_instance("image_id_check", "region_name", min, max, key_name, inst_type, check_status)
@@ -206,8 +207,8 @@ def aws_delete(request):
             print 'in delete post1234'
 
             # print "I am here inside post"
-            region = request.POST.get("region")
-            instance = request.POST.get("instance")
+            region = str(request.POST.get("region"))
+            instance = str(request.POST.get("instance"))
 
             print region, instance
             # Get AWS Access key and secret key from database
@@ -220,7 +221,7 @@ def aws_delete(request):
             print encoded_access_key, access_key, encoded_secret_key, secret_key
             print "I am here after encoding"
             aws = AWS(access_key, secret_key)
-            aws.terminate_instance(region, instance)
+            aws.terminate_instance(instance, region)
 
             return render_to_response("aws_delete.html", {}, context_instance=RequestContext(request))
     print "in get method"
@@ -367,9 +368,10 @@ def aws_monitor_list(request):
         print "it's ajax"
         if request.method == 'POST':
             print "I am here inside post"
-            instance = request.POST.get("instance")
+            region = str(request.POST.get("region"))
+            instance = str(request.POST.get("instance"))
 
-            print instance
+            print region, instance
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
             aws_result = aws_get_keys(request)
@@ -380,13 +382,11 @@ def aws_monitor_list(request):
             print encoded_access_key, access_key, encoded_secret_key, secret_key
             print "I am here after encoding"
             aws = AWS(access_key, secret_key)
-            aws.describe_instances(instance)
-            instance_list = aws.describe_instances(instance)
+            # aws.describe_instances(region, instance)
+            # instance_list = aws.describe_instances(region, instance)
             print "printing instance list in get"
-            print instance_list[0]
-            instance_db = instance_list
-            return render_to_response("aws_monitor.html", {'instance_db': instance_db})
-    print 'for get response'
+            aws_monitor(request)
+            # return render_to_response("aws_monitor.html", {}, context_instance=RequestContext(request))
     return render_to_response("aws_monitor_list.html", {}, context_instance=RequestContext(request))
 
 def aws_monitor(request):
@@ -401,6 +401,9 @@ def aws_monitor(request):
     print "I am here after encoding"
 
     aws = AWS(access_key, secret_key)
-    monitor_dict = aws.get_metrics(instance_id)
-    return render_to_response("aws_monitor.html",{"monitor_dict": monitor_dict}, context_instance=RequestContext(request))
+    data1 = aws.get_metrics("i-0cae18706985f552e", "us-west-2")
+    print "data1:::::::::::::::::::::::::::::::::::::", data1
+    # data1 = [['datetime.datetime(2017, 5, 10, 23, 30, tzinfo=tzutc())', 0.0], ['datetime.datetime(2017, 5, 11, 0, 30, tzinfo=tzutc())', 0.0]]
+    print data1
+    return render_to_response("aws_monitor.html",{"data1": data1}, context_instance=RequestContext(request))
 

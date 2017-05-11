@@ -470,7 +470,7 @@ def azure_monitor(request):
 
         # Instantiate azure class
     azure = az(subscription_id, client_id, secret_key, tenant_id)    
-    time = ['2017 - 04 - 29 00:00:00 + 00:00', '2017 - 04 - 29 01:00:00 + 00:00']
-    zone = [None, None]
-    data = zip(time,zone)
-    return render_to_response("azure_monitor.html", {'data':data})
+    data1 = [['2017 - 04 - 29 00:00:00 + 00:00', 0], ['2017 - 04 - 29 01:00:00 + 00:00', 0]]
+    # zone = [None, None]
+    # data = zip(time,zone)
+    return render_to_response("azure_monitor.html", {'data1':data1})
