@@ -159,7 +159,7 @@ def google_retrieve(request):
 
 def google_view(request):
     print "google_view **************************"
-    print pro_id, zone
+    global pro_id, zone
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
@@ -194,7 +194,7 @@ def google_view(request):
         google.list_instances(pro_id, zone)
 
         print "I am above instance_list"
-        instance_list = json.dumps(google.list_instances(pro_id, zone))
+        instance_list = google.list_instances(pro_id, zone)
         print "printing instance list in get"
         print instance_list[0]
         print instance_list
