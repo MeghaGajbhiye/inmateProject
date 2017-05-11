@@ -15,6 +15,9 @@ from aws import AWS
 from datetime import *
 from dateutil.tz import *
 region = ""
+instance = ""
+par = ""
+compute_hour = ""
 def encode(value):
     key = "autum"
     enc = []
@@ -338,7 +341,7 @@ def aws_get_keys(request):
 
 def aws_monitor_list(request):
     print "aws_monitor_list **************************"
-
+    global region, instance, par, compute_hour
     if request.is_ajax():
         print "it's ajax"
         if request.method == 'POST':
@@ -346,9 +349,8 @@ def aws_monitor_list(request):
             region = str(request.POST.get("region"))
             instance = str(request.POST.get("instance"))
             par = str(request.POST.get("par"))
-            hours = str(request.POST.get("hours"))
-
-            print region, instance, par, hours
+            compute_hour = int(request.POST.get("hours"))
+            print region, instance, par, compute_hour
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
             aws_result = aws_get_keys(request)
@@ -364,11 +366,12 @@ def aws_monitor_list(request):
             print "printing instance list in get"
             aws_monitor(request)
             # return render_to_response("aws_monitor.html", {}, context_instance=RequestContext(request))
-    return render_to_response("aws_monitor_list.html", {}, context_instance=RequestContext(request))
+    return render_to_response("aws_monitor_list.html", {"par": par}, context_instance=RequestContext(request))
 
 def aws_monitor(request):
 
-    instance_id = "abc"
+    global instance, region, par, compute_hour
+    print "inside aws monitor", instance, region, compute_hour, par
     aws_result = aws_get_keys(request)
     encoded_access_key = str(aws_result['access_key'])
     access_key = decode(encoded_access_key)
@@ -376,9 +379,8 @@ def aws_monitor(request):
     secret_key = decode(encoded_secret_key)
     print encoded_access_key, access_key, encoded_secret_key, secret_key
     print "I am here after encoding"
-
     aws = AWS(access_key, secret_key)
-    data1 = aws.get_metrics("i-0cae18706985f552e", "us-west-2")
+    data1 = aws.get_metrics(instance, region, compute_hour, par)
     print "data1:::::::::::::::::::::::::::::::::::::", data1
     # data1 = [['datetime.datetime(2017, 5, 10, 23, 30, tzinfo=tzutc())', 0.0], ['datetime.datetime(2017, 5, 11, 0, 30, tzinfo=tzutc())', 0.0]]
     print data1

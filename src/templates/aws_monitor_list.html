@@ -97,20 +97,14 @@
            </select></h3></td>
 
  <td>
-      <h3> Enter instance</h3>
-
-      <h3>  <select id="instance">
-
-            <option>Select an instance</option>
-            {% for i in instance_db %}
-   <option value="{{ i }}"> {{ i }}</option>
-{% endfor %}
-  </select></h3>
+     <h3> Enter Instance ID</h3>
+     <h3><input type="text" size="12" value="instance" id="instance"></h3>
 </td>
+
 
              <td><h3> Enter AWS monitoring parameter</h3>
            <h3><select id="par">
-                <option>Region</option>
+                <option>Monitoring Parameters</option>
            </select></h3></td>
 
  <td>
