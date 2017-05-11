@@ -96,12 +96,27 @@
                 <option>Region</option>
            </select></h3></td>
 
-
  <td>
-     <h3> Enter Instance ID</h3>
-     <h3><input type="text" size="12" value="instance" id="instance"></h3>
+      <h3> Enter instance</h3>
+
+      <h3>  <select id="instance">
+
+            <option>Select an instance</option>
+            {% for i in instance_db %}
+   <option value="{{ i }}"> {{ i }}</option>
+{% endfor %}
+  </select></h3>
 </td>
 
+             <td><h3> Enter AWS monitoring parameter</h3>
+           <h3><select id="par">
+                <option>Region</option>
+           </select></h3></td>
+
+ <td>
+     <h3> Enter number of hours</h3>
+     <h3><input type="text" size="12" value="hours" id="hours"></h3>
+</td>
 
     <script type="text/javascript">
 
@@ -125,22 +140,43 @@
             select.options[select.options.length] = new Option([index], myobject3[index]);
         }
         </script>
-        <script>
-        function myFunction() {
-            document.getElementById("region").innerHTML = "Region selected";
+        <script type="text/javascript">
 
-      }
-   </script>
+        var myobject4;
+        myobject4 = {
+            'CPU Utilization': 'CPUUtilization',
+            'Read Operations': 'DiskReadOps',
+            'Write Operations': 'DiskWriteOps',
+            'Bytes Read from all store Volumes': 'DiskReadBytes',
+            'Bytes written to all store volumes': 'DiskWriteBytes',
+            'Bytes received on all Network Interface': 'NetworkIn',
+            'Bytes sent out on all Network Interface': 'NetworkOut',
+            'Packets received on all Network Interface': 'NetworkPacketsIn',
+            'Packets sent out on all network interfaces': 'NetworkPacketsOut',
+            'Status Check': 'StatusCheckFailed',
+            'Instance Status Check': 'StatusCheckFailed_Instance',
+            'System Status Check': 'StatusCheckFailed_System',
+        };
+        var select = document.getElementById("par");
+        for (index in myobject4) {
+            select.options[select.options.length] = new Option([index], myobject3[index]);
+        }
+        </script>
+        
 
 
     <td><h2><a href="{% url 'aws_monitor' %}"><button style="background-color: #0e84b5; color: white;" onclick="myFunction()" id="del">Monitor</button></a></h2></td>
          <p id="region"></p>
         <p id="instance"></p>
+        <p id="par"></p>
+        <p id="hours"></p>
 
         <script type="text/javascript">
     function myFunction() {
         document.getElementById("region").innerHTML = "Region selected";
             document.getElementById("instance").innerHTML = "Instance name selected";
+             document.getElementById("par").innerHTML = "Region selected";
+            document.getElementById("hours").innerHTML = "Instance name selected";
             
         }
     </script>
@@ -156,7 +192,10 @@
                     csrfmiddlewaretoken: '{{ csrf_token }}',
                     region: $("#region").val(),
                     instance: $("#instance").val(),
+                    par: $("#par").val(),
+                    hours: $("#hours").val(),
 
+                    
                     
                    
                 },
