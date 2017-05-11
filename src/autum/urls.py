@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor, aws_view, aws_monitor_list, aws_view_list
-from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
+from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res, res_list
 from ibm.views import ibm, ibm_home
 
 from google.views import google, google_cp, google_create, google_retrieve, google_view, google_delete, google_home, google_monitor
@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^azure_view/$', azure_view, name='azure_view'),
     url(r'^sub/$', sub, name='sub'),
     url(r'^res/$', res, name='res'),
+    url(r'^res_list/$', res_list, name='res_list'),
     url(r'^azure_monitor/$', azure_monitor, name='azure_monitor'),
     url(r'^ibm/$', ibm, name='ibm'),
     url(r'^IBM_Home/$', ibm_home, name='ibm_home'),

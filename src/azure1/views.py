@@ -238,6 +238,7 @@ def azure_delete_vm(request):
             print "Gotcha instance"
             return render_to_response("azure_delete_vm.html", {}, context_instance=RequestContext(request))
     elif request.method == 'GET':
+        print "in get method of azure_del_vm"
         return render_to_response("azure_delete_vm.html", {})
 # return render_to_response("azure_delete_vm.html", {})
 
@@ -345,7 +346,7 @@ def azure_view(request):
         encoded_tenant_id = str(azure_result["tenant_id"])
         tenant_id = decode(encoded_tenant_id)
         print subscription_id, client_id, secret_key, tenant_id
-        return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+        return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
 
 
@@ -400,9 +401,47 @@ def sub(request):
         print "I got the azure keys"
         return render_to_response("sub.html", {'instance_db':instance_db}, context_instance=RequestContext(request))
 
+def res_list(request):
+    print "Resource List **************************"
+    global res_grp_name
+    if request.is_ajax():
+        print "it's ajax"
+        if request.method == 'POST':
+            print "I am here inside post"
+
+            print "I am here after encoding"
+            keys = azure_get_keys(request)
+
+            subscription_id = keys["subscription_id"]
+            client_id = keys["client_id"]
+            secret_key = keys["secret_key"]
+            tenant_id = keys["tenant_id"]
+            azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+
+            instance_list = azure_object.view_instances_rgroup_name(res_grp_name)
+            print "printing instance list"
+            print instance_list
+            return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        keys = azure_get_keys(request)
+
+        subscription_id = keys["subscription_id"]
+        client_id = keys["client_id"]
+        secret_key = keys["secret_key"]
+        tenant_id = keys["tenant_id"]
+        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
+        instance_list = azure_object.view_instances_rgroup_name(res_grp_name)
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("res_list.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
+
+
 def res(request):
     print "resource group **************************"
 
+    global res_grp_name
 
     if request.is_ajax():
         print "it's ajax"

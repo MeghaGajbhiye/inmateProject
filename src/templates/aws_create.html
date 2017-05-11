@@ -119,30 +119,39 @@
             <h4> Enter Instance Name
                 <input type="text" size="12" value="instance name" id="inst_name">
  <div class="tooltip12">?
-  <span class="tooltiptext12">view instances</span>
+  <span class="tooltiptext12">Name of the Instance you want to create</span>
 </div>
 
             </h4>
         </td>
-              <td><h3> Select Region</h3>
-           <h3><select id="region">
+              <td><h4> Select Region</h4>
+           <h4><select id="region">
                 <option>Region</option>
-           </select></h3></td>
+
+           </select><div class="tooltip12">?
+  <span class="tooltiptext12">Specify the region of your data center in which your instance should be created</span>
+</div></h4></td>
             <td><h4> Enter Image ID</h4>
            <h4><select id="image">
                 <option>Select image</option>
-           </select></h3></td>
+           </select><div class="tooltip12">?
+  <span class="tooltiptext12">The image ID of the Virtual Machine server you want to create</span>
+</div></h4></td>
         <td><h4> Enter Instance Type</h4>
            <h4><select id="inst_type">
                 <option>Select instance type</option>
-           </select></h4></td>
+           </select><div class="tooltip12">?
+  <span class="tooltiptext12">Select the type of the instance in terms of size, flavor, etc you want to create</span>
+</div></h4></td>
 
 
 
         <td>
 
             <h4> Enter Minimum Count
-                <input type="text" size="12" value="0" id="min">
+                <input type="text" size="12" value="0" id="min"><div class="tooltip12">?
+  <span class="tooltiptext12">specify the minimum count for your instance</span>
+</div>
               
 
             </h4>
@@ -150,14 +159,18 @@
         <td>
             <h4> Enter Maximum Count
 
-                <input type="text" size="12" value="0" id="max">
+                <input type="text" size="12" value="0" id="max"><div class="tooltip12">?
+  <span class="tooltiptext12">enter maximum count for your instance</span>
+</div>
 
                 
             </h4>
         </td>
         <td>
             <h4> Enter Key Name
-                <input type="text" size="12" value="Key Name" id="key_name">
+                <input type="text" size="12" value="Key Name" id="key_name"><div class="tooltip12">?
+  <span class="tooltiptext12">specify the unique key name for your instance</span>
+</div>
             </h4>
         </td>
         
@@ -165,7 +178,9 @@
             <h4> Monitoring Status
                 <select id="check_status">
                     <option>check status</option>
-                </select>
+                </select><div class="tooltip12">?
+  <span class="tooltiptext12">specify whether you want to monitor the instance you are creating or not</span>
+</div>
             </h4>
         </td>
             <h2><a href="{% url 'aws_home' %}"><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Create</button></a></h2>
