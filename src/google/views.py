@@ -69,6 +69,7 @@ def google(request):
 
 
 def google_cp(request):
+    usr_id = request.user.id
     if request.method == 'POST':
         print "it is post"
         form = GoogleForm(request.POST or None)
@@ -131,8 +132,8 @@ def google_create(request):
     elif request.method == 'GET':
         return render_to_response("google_create.html", {}, context_instance=RequestContext(request))
 
-def google_retrieve(request):
-    print "google_retrieve **************************"
+def google_update(request):
+    print "google_update **************************"
 
     if request.is_ajax():
         print "it's ajax"
@@ -151,8 +152,58 @@ def google_retrieve(request):
         google = G(project_id, client_secret, refresh_token)
         google.list_instances(selectzone, Pro_id)
         # print selectzone, Pro_id
-        return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
-    return render_to_response("google_retrieve.html", {}, context_instance=RequestContext(request))
+        return render_to_response("google_view.html", {}, context_instance=RequestContext(request))
+    return render_to_response("google_update.html", {}, context_instance=RequestContext(request))
+
+def google_view(request):
+    print "google_view **************************"
+    print "rackspace_view **************************"
+    if request.is_ajax():
+        print "it's ajax"
+    if request.method == 'POST':
+
+        print "I am here inside post"
+
+        google_result = google_get_keys(request)
+        encoded_project_id = str(google_result["project_id"])
+        project_id = decode(encoded_project_id)
+        encoded_client_secret = str(google_result["client_secret"])
+        client_secret = decode(encoded_client_secret)
+        encoded_refresh_token = str(google_result["refresh_token"])
+        refresh_token = decode(encoded_refresh_token)
+        print project_id, client_secret, refresh_token
+        google = G(project_id, client_secret, refresh_token)
+        google.list_instances()
+
+        print "I am above instance_list"
+        instance_list = json.dumps(google.list_instances())
+        print "printing instance list"
+        print instance_list
+        return render_to_response("rackspace_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+        google_result = google_get_keys(request)
+        encoded_project_id = str(google_result["project_id"])
+        project_id = decode(encoded_project_id)
+        encoded_client_secret = str(google_result["client_secret"])
+        client_secret = decode(encoded_client_secret)
+        encoded_refresh_token = str(google_result["refresh_token"])
+        refresh_token = decode(encoded_refresh_token)
+        print project_id, client_secret, refresh_token
+        google = G(project_id, client_secret, refresh_token)
+        google.list_instances()
+
+        print "I am above instance_list"
+        instance_list = json.dumps(google.list_instances())
+        print "printing instance list in get"
+        print instance_list[0]
+        print instance_list
+        instance_db = instance_list
+
+        return render_to_response("rackspace_view.html", {'instance_db': instance_db, "message": message},
+                                  context_instance=RequestContext(request))
+
+
 
 
 def google_delete(request):

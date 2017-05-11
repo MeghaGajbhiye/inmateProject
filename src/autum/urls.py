@@ -7,7 +7,7 @@ from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor
 from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res
 from ibm.views import ibm, ibm_home
 
-from google.views import google, google_cp, google_create, google_retrieve, google_delete, google_home, google_monitor
+from google.views import google, google_cp, google_create, google_update, google_view, google_delete, google_home, google_monitor
 from rackspace.views import rackspace, rackspace_cp, rackspace_create, rackspace_home, rackspace_update, rackspace_delete, rackspace_reboot, rackspace_view, rackspace_monitor
 
 urlpatterns = [
@@ -49,7 +49,8 @@ urlpatterns = [
     url(r'^google_cp/$', google_cp, name='google'),
     url(r'^google_home/$', google_home, name='google_home'),
     url(r'^google_create/$', google_create, name='google_create'),
-    url(r'^google_retrieve/$', google_retrieve, name='google_retrieve'),
+    url(r'^google_update/$', google_update, name='google_update'),
+    url(r'^google_view/$', google_view, name='google_view'),
     url(r'^google_delete/$', google_delete, name='google_delete'),
     url(r'^google_monitor/$', google_monitor, name='google_monitor'),
     url(r'^rackspace/$', rackspace, name='rackspace'),

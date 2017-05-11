@@ -50,6 +50,9 @@
             </button>
             <a class="navbar-brand" href="#">AUTUM <img
                     src={% static "img/autum.jpg" %} style="width:25px;height:25px"> </img></a>
+             <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/google_home/">Google Home</a></li>
+             </ul>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -79,59 +82,106 @@
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Google_Home</h1>
+            <h1 class="page-header">Google_Retrieve</h1>
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/images.png" %} width= 100 height=100></img>
-                    <h1> GOOGLE HOME</h1>
+                    <h1> Retrieve Google Instance</h1>
                 </div>
             </div>
 
-            <td>
-                <h2> Enter your option</h2>
-               <h2> <select id="selectOP">
-                    <option value="/google_create">create</option>
-                    <option value="/google_delete">delete</option>
-                    <option value="/google_update">Update</option>
-                   <option value="/google_view">View</option>
 
-            </select></td></h2>
-            </td>
-            <p id="selectOP"></p>
 
-           <h2><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Submit</button></h2>
-            <script type="text/javascript">
-                function myFunction() {
-                    document.getElementById("select").innerHTML = "Crud Operation selected";
+<td><h1> Enter your Information </h1></td>
+<td>
+    <h3> Enter your Zone
+        <select id="selectzone">
+            <option>Select a zone</option>
+        </select>
+<td>
+    <h3> Enter Project ID
+        <input type="text" size="13" value="project id" id="Pro_id">
+    </h3>
+</td>
 
-                }
 
-            </script>
-                <script type="text/javascript">
-                    function myFunction() {
-                        {#        $('.ajaxProgress').show();#}
-                        {#        $.ajax({#}
-                        {#            type: "POST",#}
-                        {#            url: "/aws_home/",#}
-                        {#            async: true,#}
-                        {#            data: {#}
-                        {#                csrfmiddlewaretoken: '{{ csrf_token }}',#}
-                        {#                selectOP: $("#selectOP").val(),#}
-                        {#            },#}
-                        {#            success: function (json) {#}
-                        {#                $('#output').html(json.message);#}
-                        {#                $('.ajaxProgress').hide();#}
-                        {#            },#}
-                        {#            fail: function () {#}
-                        {#                alert("failed");#}
-                        {#            }#}
-                        {#        });#}
+<script type="text/javascript">
+    var myobject = {
+        ValueA: 'us-west1-a',
+        ValueB: 'us-west1-b',
+        ValueC: 'us-central1-a',
+        ValueD: 'us-central1-b',
+        ValueE: 'us-central1-c',
+        ValueF: 'us-central1-f',
+        ValueG: 'us-east1-b',
+        ValueH: 'us-east1-c',
+        ValueI: 'us-east1-d',
+        ValueJ: 'europe-west1-b',
+        ValueK: 'europe-west1-c',
+        ValueL: 'europe-west1-d',
+        ValueM: 'asia-east1-a',
+        ValueN: 'asia-east1-b',
+        ValueO: 'asia-east1-c',
+        ValueP: 'asia-northeast1-a',
+        ValueQ: 'asia-northeast1-b',
+        ValueR: 'asia-northeast1-c',
+        ValueS: 'asia-southeast1-a',
+        ValueT: 'asia-southeast1-b',
+    };
 
-                        var value = $("#selectOP").val()
-                        location.href = value;
-                    }
-                </script>
-        </div>
-        {% include 'javascript.html' %}
+    var select = document.getElementById("selectzone");
+    for (index in myobject) {
+        select.options[select.options.length] = new Option(myobject[index], index);
+    }
+
+</script>
+
+<h1> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Retrieve</button></h1>
+
+<p id="zone"></p>
+<p id="pro_id"></p>
+
+<script>
+    function myFunction() {
+        document.getElementById("zone").innerHTML = "Zone selected";
+        document.getElementById("pro_id").innerHTML = "Project selected";
+        
+    }
+</script>
+<script type="text/javascript">
+    function myFunction() {
+        $('.ajaxProgress').show();
+        $.ajax({
+            type: "POST",
+            url: "/google_retrieve/",
+            async: true,
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                selectzone: $("#selectzone").val(),
+                Pro_id: $("#Pro_id").val(),
+                
+            },
+            success: function (json) {
+                $('#output').html(json.message);
+                $('.ajaxProgress').hide();
+            },
+            fail: function () {
+                alert("failed")
+            }
+        });
+    }
+</script>
+
+
+<!-- FOOTER -->
+<footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2017 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+</footer>
+
+</div><!-- /.container -->
+</div>
+
+{% include 'javascript.html' %}
 </body>
 </html>

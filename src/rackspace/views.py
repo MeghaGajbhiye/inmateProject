@@ -270,11 +270,15 @@ def rackspace_view(request):
         encoded_api_key = str(rackspace_result['api_key'])
         api_key = decode(encoded_api_key)
         rackspace = r(username, api_key)
-        instance_list = rackspace.view_instances()
+        try:
+            instance_list = rackspace.view_instances()
+        except:
+            if instance_list is None:
+                message = "You don't have any instance."
         print "printing instance list in get"
         print instance_list[0]
         instance_db = instance_list
-        return render_to_response("rackspace_view.html", {'instance_db': instance_db},
+        return render_to_response("rackspace_view.html", {'instance_db': instance_db, "message": message},
                                   context_instance=RequestContext(request))
 
 

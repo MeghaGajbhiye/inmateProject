@@ -251,36 +251,50 @@ def aws_delete(request):
 #     else:
 #         print 'google'
 #         return render_to_response("aws_view_delete.html",{})
-
-
 def aws_view(request):
-    print "aws_region **************************"
-
+    print "aws_view **************************"
     if request.is_ajax():
         print "it's ajax"
-        if request.method == 'POST':
-            print "I am here inside post"
-            region = str(request.POST.get("region"))
+    if request.method == 'POST':
 
-            print region
-            # Get AWS Access key and secret key from database
-            # Instantiate AWS class aws->aws.py and calling the launch_instance function
-            aws_result = aws_get_keys(request)
-            encoded_access_key = str(aws_result['access_key'])
-            access_key = decode(encoded_access_key)
-            encoded_secret_key = str(aws_result['secret_key'])
-            secret_key = decode(encoded_secret_key)
-            print encoded_access_key, access_key, encoded_secret_key, secret_key
-            print "I am here after encoding"
-            aws = AWS(access_key, secret_key)
-            # aws.describe_instances(region)
-            instance_list = aws.describe_instances(region)
-            print "printing instance list in get"
-            print instance_list
-            instance_db = instance_list
-            return render_to_response("aws_view.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
-    print 'for get response'
-    return render_to_response("aws_view.html", {}, context_instance=RequestContext(request))
+        print "I am here inside post"
+        region = str(request.POST.get("region"))
+
+        print region
+        aws_result = aws_get_keys(request)
+        encoded_access_key = str(aws_result['access_key'])
+        access_key = decode(encoded_access_key)
+        encoded_secret_key = str(aws_result['secret_key'])
+        secret_key = decode(encoded_secret_key)
+        print encoded_access_key, access_key, encoded_secret_key, secret_key
+        print "I am here after encoding"
+        aws = AWS(access_key, secret_key)
+        print "I am above instance_list"
+        instance_list = json.dumps(aws.describe_instances(region))
+        print "printing instance list"
+        print instance_list
+        return render_to_response("aws_home.html", {}, context_instance=RequestContext(request))
+    else:
+        print "in get"
+
+        aws_result = aws_get_keys(request)
+        encoded_access_key = str(aws_result['access_key'])
+        access_key = decode(encoded_access_key)
+        encoded_secret_key = str(aws_result['secret_key'])
+        secret_key = decode(encoded_secret_key)
+        print encoded_access_key, access_key, encoded_secret_key, secret_key
+        print "I am here after encoding"
+        aws = AWS(access_key, secret_key)
+        instance_list = json.dumps(aws.describe_instances(list))
+        print "printing instance list in get"
+        print instance_list[0]
+        instance_db = instance_list
+        return render_to_response("aws_view.html", {},
+                                  context_instance=RequestContext(request))
+
+
+
+
 
 
 
