@@ -23,6 +23,31 @@
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
+   <style>
+    .tooltip12 {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip12 .tooltiptext12 {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip12:hover .tooltiptext12 {
+    visibility: visible;
+}
+</style>
 
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -93,58 +118,80 @@
     <h3> Enter your Choice</h3>
        <h3> <select id="choice">
             <option>Select choice</option>
-        </select></h3>
+        </select><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the flavor of the instance you want to create</span>
+</div></h3>
 <td>
     <td>
             <h3> Enter Username
-                <input type="text" size="12" value="Username" id="user">
+                <input type="text" size="12" value="Username" id="user"><div class="tooltip12">?
+  <span class="tooltiptext12">Give a unique username of 8 characters minimum</span>
+</div>
             </h3>
         </td>
     <td>
             <h3> Enter Password
-                <input type="password" size="12" value="Password" id="password">
+                <input type="password" size="12" value="Password" id="password"><div class="tooltip12">?
+  <span class="tooltiptext12">Give a unique password which contains minimum 6 characters of numericals, alphabets and atleast one special character</span>
+</div>
             </h3>
         </td>
         <td>
             <h3> Enter Resource Group Name
-                <input type="text" size="12" value="Resource Group" id="res_grp_name">
+                <input type="text" size="12" value="Resource Group" id="res_grp_name"><div class="tooltip12">?
+  <span class="tooltiptext12">Give a unique resource group name</span>
+</div>
             </h3>
         </td>
         <td>
             <h3> Enter Virtual Machine Name
-                <input type="text" size="12" value="Virtual Machine" id="vm_name">
+                <input type="text" size="12" value="Virtual Machine" id="vm_name"><div class="tooltip12">?
+  <span class="tooltiptext12"> Enter the name of the virtual machine you want to create</span>
+</div>
             </h3>
         </td>
         <td>
-            <h3> Enter Location
+            <h3> Enter Location</h3>
                 <h3><select id="loc">
                     <option>Select Location</option>
-                </select></h3>
+                </select><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the location of the data center in which you want to host your instance</span>
+</div></h3>
             </h3>
         </td>
         <td>
             <h3> Enter Virtual Network Name
-                <input type="text" size="12" value="Virtual Network" id="vnet_name">
+                <input type="text" size="12" value="Virtual Network" id="vnet_name"><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the name of your instance virtual network</span>
+</div>
             </h3>
         </td>
         <td>
             <h3> Enter Sub Network Name
-                <input type="text" size="12" value="Sub Network" id="snet_name">
+                <input type="text" size="12" value="Sub Network" id="snet_name"><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the name of your instance sub network</span>
+</div>
             </h3>
         </td>
         <td>
             <h3> Enter Nic Name
                 <input type="text" size="12" value="Nic Name" id="nic_name">
-            </h3>
-        </td>
+            <div class="tooltip12">?
+  <span class="tooltiptext12">Enter the name of your instance nic</span>
+</div>
+            </h3></td>
         <td>
             <h3> Enter Ip Configuration Name
-                <input type="text" size="12" value="IP" id="ip_con">
+                <input type="text" size="12" value="IP" id="ip_con"><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the IP configuration name of your instance</span>
+</div>
             </h3>
         </td>
         <td>
             <h3> Enter Disk Name
-                <input type="text" size="12" value="OS Disk" id="d_name">
+                <input type="text" size="12" value="OS Disk" id="d_name"><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the name of your virtual os disk</span>
+</div>
             </h3>
         </td>
         <script type="text/javascript">

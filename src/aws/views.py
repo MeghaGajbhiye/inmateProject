@@ -345,8 +345,10 @@ def aws_monitor_list(request):
             print "I am here inside post"
             region = str(request.POST.get("region"))
             instance = str(request.POST.get("instance"))
+            par = str(request.POST.get("par"))
+            hours = str(request.POST.get("hours"))
 
-            print region, instance
+            print region, instance, par, hours
             # Get AWS Access key and secret key from database
             # Instantiate AWS class aws->aws.py and calling the launch_instance function
             aws_result = aws_get_keys(request)

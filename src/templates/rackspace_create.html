@@ -24,7 +24,31 @@
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
 
+<style>
+    .tooltip12 {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.tooltip12 .tooltiptext12 {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip12:hover .tooltiptext12 {
+    visibility: visible;
+}
+</style>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     {#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
@@ -92,7 +116,9 @@
 
         <td>
             <h3> Enter Instance Name</h3>
-            <h3><input type="text" size="10" value="instance" id="instance"></h3>
+            <h3><input type="text" size="10" value="instance" id="instance"><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the name of the instance you want to create</span>
+</div></h3>
         </td>
 
 
@@ -102,12 +128,16 @@
         <td><h3> Enter your RAM</h3>
             <h3><select id="selectram" width = "24px">
                 <option>Select a RAM size</option>
-            </select></h3>
+            </select><div class="tooltip12">?
+  <span class="tooltiptext12">Enter the ram size of the instance you want to create</span>
+</div></h3>
         </td>
         <td><h3> Enter an image</h3>
           <h3><select id="selectimage" width = "24px">
                 <option>Select an image</option>
-          </select></h3>
+          </select><div class="tooltip12">?
+              <span class="tooltiptext12">Enter the name of the location of the data center in which you want to host your instance</span></div>
+</h3>
         </td>
             <script>
                 var myobject = {
