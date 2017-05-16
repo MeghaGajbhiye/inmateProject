@@ -1,4 +1,3 @@
-
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -85,11 +84,11 @@
     </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Azure_Delete_VM</h1>
+            <h1 class="page-header">Azure_Delete_RSGRP</h1>
             <div class="row placeholders">
              <div class="col-xs-6 col-sm-3 placeholder">
                     <img src={% static "img/azure.jpg" %} width= 100 height=100></img>
-                    <h2> Delete Azure Vritual Machine</h2>
+                    <h2> Delete Azure by Virtual Machine Name</h2>
                 </div>
             </div>
 
@@ -100,27 +99,29 @@
                 <input type="text" size="12" value="Resource Group" id="res_grp_name">
             </h3>
         </td>
-   <td>
+        <td>
     <h3> Select Virtual Machine Name
          <input type="text" size="12" value="Virtual Machine" id="vm_name">
             </h3>
 </td>
-
-            <h1><button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></h1>
+   
+            <h1><a href="{% url 'azure_home' %}"> <button style="background-color: #0e84b5; color: white;" onclick="myFunction()">Delete</button></a></h1>
 
 
 
 <p id="res_grp_name"></p>
+
 <p id="vm_name"></p>
+
 
 <script>
 function myFunction() {
   document.getElementById("res_grp_name").innerHTML = "Resource Group Name selected";
-  document.getElementById("vm_name").innerHTML = "VM Name selected";
+   document.getElementById("vm_name").innerHTML = "Virtual Machine Name selected";
   
 }
 </script>
-      <script type="text/javascript">
+     <script type="text/javascript">
         function myFunction() {
             $('.ajaxProgress').show();
             $.ajax({
@@ -145,7 +146,6 @@ function myFunction() {
         }
 
     </script>
-
 
         </div>
 

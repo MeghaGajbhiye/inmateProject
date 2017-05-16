@@ -194,7 +194,7 @@ def google_view(request):
         google.list_instances(pro_id, zone)
 
         print "I am above instance_list"
-        instance_list = google.list_instances(pro_id, zone)
+        instance_list = google.list_instances("autum-165318", "us-central1-f")
         print "printing instance list in get"
         print instance_list[0]
         print instance_list
@@ -253,5 +253,5 @@ def google_monitor(request):
     print project_id, client_secret, refresh_token
     google = G(project_id, client_secret, refresh_token)
     
-    data1 = [['2015-05-01 T 17:23:00', 45235.0], ['2015-05-01 T 19:23:00', 56535.0]]
+    data1 = [['2017-05-13 T 00:00:00', 0.0], ['2017-05-01 T 11:0:00', 0.0]]
     return render_to_response("google_monitor.html", {'data1': data1})

@@ -204,11 +204,11 @@ class Google:
 
 if __name__ == '__main__':
     gc= Google("32555940559.apps.googleusercontent.com", "ZmssLNjJy2998hD4CTg2ejr2", "1/Czt1brCXjU5UzTRfVrE4OUmHUL9RfUHRHd-K1HelXPo")
-    # gc.list_instances("autum-165318", "us-central1-f")
+    gc.list_instances("autum-165318", "us-central1-f")
     # gc.set_pid("autum-165318")
     # gc.set_bucket_name("autum")
     # gc.set_zone("us-central1-f")
     # gc.set_instance_name("autumtest2")
-    # gc.create_instance("autum-165318","us-central1-f","autumtest-3","autum3" )
-    # gc.delete_instance("autum-165318", "us-central1-f", "autumtest-3")
-    gc.cloud_monitor("autum-165318")
+    # gc.create_instance("autum-165318","us-central1-f","autum_demo","autum" )
+    # gc.delete_instance("autum-165318", "us-central1-f", "autumtest-4")
+    # gc.cloud_monitor("autum-165318")

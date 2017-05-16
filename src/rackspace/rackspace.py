@@ -252,9 +252,10 @@ class Rackspace:
 if __name__ == "__main__":
     r = Rackspace ("achal126", "9ac58056270b4447a6154662d160ef9f")
     sn = r.view_instances()
-    monitoring = r.monitoring ("instance_test", "CPU","megha.gajbhiye@sjsu.edu")
+    # monitoring = r.monitoring ("instance_test", "CPU","megha.gajbhiye@sjsu.edu")
     # print sn
-    # r.launch_instance("instance_test", "Debian 7 (Wheezy) (PVHVM)", 1024)
+    r.launch_instance("vm1", "Debian 7 (Wheezy) (PVHVM)", 2048)
     # print r.update_instance("test2", 2048)
     # result = r.delete_instance("instance_test")
     # print result
+    # r.instance_reboot("vm1","h")
