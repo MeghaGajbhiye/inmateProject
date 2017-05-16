@@ -65,6 +65,7 @@ def rackspace(request):
 
 
 def rackspace_cp(request):
+    usr_id = request.user.id
     if request.method == 'POST':
         print "it is post"
         form = RackspaceForm(request.POST or None)

@@ -12,6 +12,7 @@ from azure_python import Azure_class as az
 import base64
 par = ""
 days = 0
+res_grp_name = ""
 group_name= ""
 vm_name1 = ""
 # Create your views here.
@@ -59,13 +60,13 @@ def azure_cp(request):
             print "it is post"
             form = AzureForm(request.POST or None)
             if form.is_valid():
-                subscription_id = form.cleaned_data['subscription_id']
+                subscription_id = str(form.cleaned_data['subscription_id'])
                 encoded_subscription_id = encode(subscription_id)
-                client_id = form.cleaned_data['client_id']
+                client_id = str(form.cleaned_data['client_id'])
                 encoded_client_id = encode(client_id)
-                secret_key = form.cleaned_data['secret_key']
+                secret_key = str(form.cleaned_data['secret_key'])
                 encoded_secret_key = encode(secret_key)
-                tenant_id = form.cleaned_data['tenant_id']
+                tenant_id = str(form.cleaned_data['tenant_id'])
                 encoded_tenant_id = encode(tenant_id)
                 print subscription_id, client_id, secret_key, tenant_id
                 keys = Azure(id=usr_id, subscription_id=encoded_subscription_id, client_id=encoded_client_id,
@@ -337,18 +338,6 @@ def azure_view(request):
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        selectOP = request.POST.get("selectOP")
-        print selectOP
-        azure_result = azure_get_keys(request)
-        encoded_subscription_id = str(azure_result["subscription_id"])
-        subscription_id = decode(encoded_subscription_id)
-        encoded_client_id = str(azure_result["client_id"])
-        client_id = decode(encoded_client_id)
-        encoded_secret_key = str(azure_result["secret_key"])
-        secret_key = decode(encoded_secret_key)
-        encoded_tenant_id = str(azure_result["tenant_id"])
-        tenant_id = decode(encoded_tenant_id)
-        print subscription_id, client_id, secret_key, tenant_id
         return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
     return render_to_response("azure_view.html", {}, context_instance=RequestContext(request))
 
@@ -413,26 +402,39 @@ def res_list(request):
             print "I am here inside post"
 
             print "I am here after encoding"
-            keys = azure_get_keys(request)
-
-            subscription_id = keys["subscription_id"]
-            client_id = keys["client_id"]
-            secret_key = keys["secret_key"]
-            tenant_id = keys["tenant_id"]
+            azure_result = azure_get_keys(request)
+            print "after getting keys"
+            encoded_subscription_id = str(azure_result["subscription_id"])
+            print "encoded_subscription_id", encoded_subscription_id
+            subscription_id = decode(encoded_subscription_id)
+            print "subsc_id", subscription_id
+            encoded_client_id = str(azure_result["client_id"])
+            print
+            client_id = decode(encoded_client_id)
+            encoded_secret_key = str(azure_result["secret_key"])
+            secret_key = decode(encoded_secret_key)
+            encoded_tenant_id = str(azure_result["tenant_id"])
+            tenant_id = decode(encoded_tenant_id)
+            print subscription_id, client_id, secret_key, tenant_id
             azure_object = az(subscription_id, client_id, secret_key, tenant_id)
 
-            instance_list = azure_object.view_instances_rgroup_name(res_grp_name)
-            print "printing instance list"
-            print instance_list
             return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     else:
         print "in get"
-        keys = azure_get_keys(request)
-
-        subscription_id = keys["subscription_id"]
-        client_id = keys["client_id"]
-        secret_key = keys["secret_key"]
-        tenant_id = keys["tenant_id"]
+        azure_result = azure_get_keys(request)
+        print "after getting keys"
+        encoded_subscription_id = str(azure_result["subscription_id"])
+        print "encoded_subscription_id", encoded_subscription_id
+        subscription_id = decode(encoded_subscription_id)
+        print "subsc_id", subscription_id
+        encoded_client_id = str(azure_result["client_id"])
+        print
+        client_id = decode(encoded_client_id)
+        encoded_secret_key = str(azure_result["secret_key"])
+        secret_key = decode(encoded_secret_key)
+        encoded_tenant_id = str(azure_result["tenant_id"])
+        tenant_id = decode(encoded_tenant_id)
+        print subscription_id, client_id, secret_key, tenant_id
         azure_object = az(subscription_id, client_id, secret_key, tenant_id)
         instance_list = azure_object.view_instances_rgroup_name(res_grp_name)
         print "printing instance list in get"
@@ -443,9 +445,7 @@ def res_list(request):
 
 def res(request):
     print "resource group **************************"
-
     global res_grp_name
-
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
@@ -470,35 +470,19 @@ def res(request):
         instance_db = azure_object.view_instances_sub()
         return render_to_response("azure_home.html", {}, context_instance=RequestContext(request))
     else:
-        azure_result = azure_get_keys(request)
-        print "after getting keys"
-        encoded_subscription_id = str(azure_result["subscription_id"])
-        print "encoded_subscription_id", encoded_subscription_id
-        subscription_id = decode(encoded_subscription_id)
-        print "subsc_id", subscription_id
-        encoded_client_id = str(azure_result["client_id"])
-        print
-        client_id = decode(encoded_client_id)
-        encoded_secret_key = str(azure_result["secret_key"])
-        secret_key = decode(encoded_secret_key)
-        encoded_tenant_id = str(azure_result["tenant_id"])
-        tenant_id = decode(encoded_tenant_id)
-        print subscription_id, client_id, secret_key, tenant_id
-        azure_object = az(subscription_id, client_id, secret_key, tenant_id)
-        instance_db = azure_object.view_instances_rgroup_name(res_grp_name)
         print "I got the azure keys"
-        return render_to_response("res.html", {'instance_db': instance_db}, context_instance=RequestContext(request))
+        return render_to_response("res.html",{}, context_instance=RequestContext(request))
 
 
 def azure_reboot(request):
     print "azure_reboot **************************"
-
+    global res_grp_name
     if request.is_ajax():
         print "it's ajax"
     if request.method == 'POST':
         print "I am here inside post"
-        res_grp_name = request.POST.get("res_grp_name")
-        vm_name = request.POST.get("vm_name")
+        res_grp_name = str(request.POST.get("res_grp_name"))
+        vm_name = str(request.POST.get("vm_name"))
         print res_grp_name, vm_name
         azure_result = azure_get_keys(request)
         print "I got the azure keys"
@@ -574,6 +558,7 @@ def azure_monitor_list(request):
 
 
 def azure_monitor(request):
+    global par, days, group_name, vm_name1
     azure_result = azure_get_keys(request)
     print "I got the azure keys"
     encoded_subscription_id = str(azure_result["subscription_id"])
