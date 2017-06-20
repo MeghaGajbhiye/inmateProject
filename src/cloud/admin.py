@@ -9,4 +9,3 @@ class SignUpAdmin(admin.ModelAdmin):
 
 admin.site.register(SignUp, SignUpAdmin)
 
-# Register your models here.

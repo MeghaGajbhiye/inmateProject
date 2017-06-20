@@ -52,12 +52,10 @@ class Azure_class:
 
     def create_resource_group(self, resource_group_name, location):
         """create resource group"""
-        print('\nCreate Resource Group')
         self.resource_client.resource_groups.create_or_update (resource_group_name, {'location': location})
 
     def create_storage_account(self, resource_group_name, location):
         """ Create a storage account """
-        print('\nCreate a storage account')
         storage_async_operation = self.storage_client.storage_accounts.create (
             resource_group_name,
             self.STORAGE_ACC_NAME,
@@ -72,10 +70,6 @@ class Azure_class:
     def create_instance(self, choice, admin_username, admin_password, resource_group_name, vm_name, location,
                         vnet_name, subnet_name, nic_name, ip_config_name, os_disk_name):
         """Create instance"""
-
-        print "*****************************************inside create instance**********************************"
-        print self.SUB_ID, self.CLIENT_ID, self.TENANT_ID, self.SECRET_KEY, choice, admin_username, admin_password, resource_group_name, vm_name, location, vnet_name
-        subnet_name, nic_name, ip_config_name, os_disk_name
         self.create_resource_group (resource_group_name, location)
         self.create_storage_account (resource_group_name, location)
         self.create_vnet (self.network_client, resource_group_name, vnet_name, location)
@@ -84,14 +78,12 @@ class Azure_class:
                                ip_config_name)
 
         if choice == 'linux':
-            # Launching Linux Virtual Machine
             vm_params = self.create_parameters (nic.id, self.VM_OS['linux'], location, vm_name,
                                                 admin_username, admin_password, os_disk_name)
             vm_creation = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name, vm_name, vm_params)
             vm_creation.wait ()
 
-            # Tag the Virtual Machine
             vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
@@ -105,7 +97,6 @@ class Azure_class:
             )
             vm_update.wait ()
 
-            # Attach the data disk to virtual machine.
             vm_update = self.compute_client.virtual_machines.create_or_update (
                 resource_group_name,
                 vm_name,
@@ -128,8 +119,6 @@ class Azure_class:
             vm_update.wait ()
 
         elif self.choice == 'windows':
-            # Create Windows VM
-            print('\nCreating Windows Virtual Machine')
             vm_params = self.create_parameters (nic.id, self.VM_OS['windows'], location, vm_name,
                                                 admin_username, admin_password, os_disk_name)
             vm_creation = self.compute_client.virtual_machines.create_or_update (
@@ -137,16 +126,12 @@ class Azure_class:
             vm_creation.wait ()
 
     def update_instance(self, add_size, resource_group_name, vm_name):
-        print add_size, type(add_size),resource_group_name,type(resource_group_name), vm_name, type(resource_group_name)
-        # Get one the virtual machine by name
-        print('\nGet Virtual Machine by Name')
+        '''updating instance as per size'''
         virtual_machine = self.compute_client.virtual_machines.get (
             resource_group_name,
             vm_name
         )
 
-        # Detach data disk
-        print('\nDetach Data Disk')
         data_disks = virtual_machine.storage_profile.data_disks
         data_disks[:] = [disk for disk in data_disks if disk.name != 'mydatadisk1']
         async_vm_update = self.compute_client.virtual_machines.create_or_update (
@@ -155,13 +140,8 @@ class Azure_class:
             virtual_machine
         )
         virtual_machine = async_vm_update.result ()
-
-        # Deallocating the VM (resize prepare)
-        print('\nDeallocating the VM (resize prepare)')
         async_vm_deallocate = self.compute_client.virtual_machines.deallocate (resource_group_name, vm_name)
         async_vm_deallocate.wait ()
-
-        print('\nUpdate OS disk size')
         if not virtual_machine.storage_profile.os_disk.disk_size_gb:
             virtual_machine.storage_profile.os_disk.disk_size_gb = 256
 
@@ -174,55 +154,45 @@ class Azure_class:
         virtual_machine = async_vm_update.result ()
 
     def start_vm(self, resource_group_name, vm_name):
-        print('\nStart VM inside file')
+        '''start virtual machine'''
         async_vm_start = self.compute_client.virtual_machines.start (resource_group_name, vm_name)
         async_vm_start.wait ()
 
     def restart_vm(self, resource_group_name, vm_name):
-        print('\nRestart VM')
+        '''restart virtual machine'''
         async_vm_restart = self.compute_client.virtual_machines.restart (resource_group_name, vm_name)
         async_vm_restart.wait ()
 
     def stop_vm(self, resource_group_name, vm_name):
-        print('\n*********************************Stop VM**************************************')
+        '''stop virtual machine'''
         async_vm_stop = self.compute_client.virtual_machines.power_off (resource_group_name, vm_name)
         async_vm_stop.wait ()
 
     def view_instances_rgroup_name(self, resource_group_name):
         '''List VM in resource group'''
-        print('\nList VMs in resource group')
         vm_list = []
         for vm in self.compute_client.virtual_machines.list (resource_group_name):
             vm_list.append(vm.name)
-            # print("\tVM: {}".format (vm.name))
-        print vm_list
         return vm_list
 
     def view_instances_sub(self):
-        print('\nList VMs in subscription')
         vm_list = []
         for vm in self.compute_client.virtual_machines.list_all ():
             vm_list.append(vm.name)
-        print vm_list
         return vm_list
-            # print("\tVM: {}".format (vm.name))
-
+            
     def delete_vm(self, resource_group_name, vm_name):
-        print('\n************************Delete VM***************************************')
+        '''delete virtual machine'''
         async_vm_delete = self.compute_client.virtual_machines.delete (resource_group_name, vm_name)
         async_vm_delete.wait()
 
     def delete_resource_group(self, resource_group_name):
-        # Delete Resource group and everything in it
-        print('\nDelete Resource Group')
+        '''Delete Resource group and all it's resources'''
         delete_async_operation = self.resource_client.resource_groups.delete (resource_group_name)
         delete_async_operation.wait()
-        print("\nDeleted: {}".format(resource_group_name))
-
+        
     def create_nic(self, network_client, subnet_info, resource_group_name, nic_name, location, ip_config_name):
         """Create a Network Interface for a VM."""
-
-        print('\nCreate NIC')
         async_nic_creation = network_client.network_interfaces.create_or_update (
             resource_group_name,
             nic_name,
@@ -236,11 +206,10 @@ class Azure_class:
                 }]
             }
         )
-        print "reached here in NIC"
         return async_nic_creation.result ()
 
     def create_vnet(self, network_client, resource_group_name, vnet_name, location):
-        print('\nCreate Vnet')
+        '''to create virtual network'''
         async_vnet_creation = network_client.virtual_networks.create_or_update (
             resource_group_name,
             vnet_name,
@@ -254,9 +223,7 @@ class Azure_class:
         async_vnet_creation.wait ()
 
     def create_subnet(self, network_client, resource_group_name, vnet_name, subnet_name):
-
         # Create Subnet
-        print('\nCreate Subnet')
         async_subnet_creation = network_client.subnets.create_or_update (
             resource_group_name,
             vnet_name,
@@ -268,8 +235,7 @@ class Azure_class:
 
     def create_parameters(self, nic_id, vm_reference, location, vm_name, admin_username, admin_password,
                              os_disk_name):
-        """Create the VM parameters structure.
-        """
+        """Create the VM parameters structure."""
         return {
             'location': location,
             'os_profile': {
@@ -304,79 +270,13 @@ class Azure_class:
             },
         }
 
-    def cloud_monitor(self):
-        print "I am here"
-        today = datetime.datetime.now ().date ()
-        filter = " and ".join ([
-            "eventTimestamp ge {}".format (today),
-            "resourceGroupName eq 'ResourceGroupName'"
-        ])
-        select = ",".join ([
-            "eventName",
-            "operationName"
-        ])
-
-        activity_logs = self.monitor_client.activity_logs.list (
-            filter=filter,
-            select=select
-        )
-        print activity_logs
-
-        for log in activity_logs:
-            # assert isinstance(log, azure.monitor.models.EventData)
-            print(" ".join ([
-                log.event_name.localized_value,
-                log.operation_name.localized_value
-            ]))
-
-
     def cloud_monitoring_metrics(self, resource_group_name, vm_name, parameter, days):
-        print resource_group_name, vm_name, parameter, days
+        ''' cloud monitoring steps'''
         resource_id = (
             "subscriptions/{}/"
             "resourceGroups/{}/"
             "providers/Microsoft.Compute/virtualMachines/{}"
         ).format (self.subscription_id, resource_group_name, vm_name)
-
-        for metric in self.monitor_client.metric_definitions.list (resource_id):
-            print("{}: id={}, unit={}".format (
-                metric.name.localized_value,
-                metric.name.value,
-                metric.unit
-            ))
-        #
-        # Percentage
-        # CPU: id = Percentage
-        # CPU, unit = Unit.percent
-        # Network
-        # In: id = Network
-        # In, unit = Unit.bytes
-        # Network
-        # Out: id = Network
-        # Out, unit = Unit.bytes
-        # Disk
-        # Read
-        # Bytes: id = Disk
-        # Read
-        # Bytes, unit = Unit.bytes
-        # Disk
-        # Write
-        # Bytes: id = Disk
-        # Write
-        # Bytes, unit = Unit.bytes
-        # Disk
-        # Read
-        # Operations / Sec: id = Disk
-        # Read
-        # Operations / Sec, unit = Unit.count_per_second
-        # Disk
-        # Write
-        # Operations / Sec: id = Disk
-        # Write
-        # Operations / Sec, unit = Unit.count_per_second
-
-        # Get CPU total of yesterday for this VM, by hour
-
         today = datetime.datetime.now ().date ()
         yesterday = today - datetime.timedelta (days=days)
 
@@ -394,58 +294,9 @@ class Azure_class:
         )
         metric_list = []
         for item in metrics_data:
-            # azure.monitor.models.Metric
-            print("{} ({})".format (item.name.localized_value, item.unit.name))
-
             for data in item.data:
                 key_string = str(data.time_stamp)
                 value_int = int(0 if data.total is None else data.total)
                 metric_list.append([key_string, value_int])
-        # print metric_list
         return metric_list
-#     def azure_offers(self):
-#         print "inside azure offers"
-#         region = 'eastus2'
-#         result_list_pub = self.compute_client.virtual_machine_images.list_publishers (region,)
-#         for publisher in result_list_pub:
-#             result_list_offers = self.compute_client.virtual_machine_images.list_offers(region, publisher.name,)
-#             for offer in result_list_offers:
-#                 result_list_skus = self.compute_client.virtual_machine_images.list_skus (region, publisher.name,offer.name,)
-#                 for sku in result_list_skus:
-#                     result_list = self.compute_client.virtual_machine_images.list(region,publisher.name,offer.name,sku.name,)
-#                     for version in result_list:
-#                         result_get = self.compute_client.virtual_machine_images.get (region,publisher.name,offer.name,sku.name,version.name,)
-#                         print('PUBLISHER: {0}, OFFER: {1}, SKU: {2}, VERSION: {3}'.format (publisher.name,offer.name,sku.name,version.name,))
-#
-#
-#     def create_snapshot(self, resource_group_name, disk_name):
-#         managed_disk = self.compute_client.disks.get (resource_group_name, disk_name)
-#         async_snapshot_creation = self.compute_client.snapshots.create_or_update (
-#             'my_resource_group',
-#             'mySnapshot',
-#             {
-#                 'location': 'westus',
-#                 'creation_data': {
-#                     'create_option': 'Copy',
-#                     'source_uri': managed_disk.id
-#                 }
-#             }
-#         )
-#         snapshot = async_snapshot_creation.result ()
-#
-if __name__ == "__main__":
-    az = Azure_class('7197d513-b8a1-425e-9065-2cf1cb785455', 'ad6f5554-f2ae-420d-af5d-831cdc7ce984', 'F5bL1mmVolS999DO8mxoLhqQa8te3Pge5JQF8T70YLo=', '98eccb32-1911-4822-a103-1d2a2db59a9e')
 
-    # az.create_snapshot("group1", "osdisk1")
-    # az.azure_offers()
-    # az.cloud_monitor()
-    # az.cloud_monitoring_metrics("group1","vm1", "Percentage CPU", 1)
-    # az.delete_resource_group("autum_group_demo")
-    # az.start_vm("group1", "vm1")
-    # az.restart_vm("group1", "vm1")
-    # az.update_instance(10,"group1","vm1")
-    # az.view_instances_rgroup_name("group1")
-    # az.view_instances_sub()
-    # az.update_instance(100, "autum_group_demo", "vm2")
-    # az.create_instance("linux", "megha", "Pgajbhiye@1234", "autum_group_demo", "vm2", "westus", "vnet2", "subnet2", "nic2", "ipconfig2", "osdisk2")
-    az.delete_vm("autum_group_demo", "vm2")

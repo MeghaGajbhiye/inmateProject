@@ -14,7 +14,6 @@ class ContactForm(forms.Form):
         if not domain == "sjsu":
             raise forms.ValidationError("Please use a valid SJSU email address")
         if not extension == "edu":
-            # if not "edu" in email:
             raise forms.ValidationError("Please use a valid .EDU email address")
         return email
 
@@ -33,9 +32,5 @@ class SignUpForm(forms.ModelForm):
         if not domain == "sjsu":
             raise forms.ValidationError("Please use a valid SJSU email address")
         if not extension == "edu":
-            # if not "edu" in email:
             raise forms.ValidationError("Please use a valid .EDU email address")
         return email
-
-    # def clean_full_name(self):
-    # 	full_name = self.cleaned_data.get('full_name')

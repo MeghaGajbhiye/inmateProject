@@ -35,10 +35,7 @@ def decode(enc):
         dec.append(dec_c)
     return "".join(dec)
 
-
-# Create your views here.
 def google(request):
-    print "google cp****"
     usr_id = request.user.id
     try:
         google_result = Google.objects.get(id=usr_id)
@@ -48,7 +45,6 @@ def google(request):
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     else:
         if request.method == 'POST':
-           print "it is post"
            form = GoogleForm(request.POST or None)
            if form.is_valid():
                project_id = form.cleaned_data['project_id']
@@ -59,7 +55,6 @@ def google(request):
                encoded_refresh_token = encode(refresh_token)
                keys = Google(id=usr_id, project_id=encoded_project_id, client_secret=encoded_client_secret, refresh_token=encoded_refresh_token)
                save_keys = Google.save(keys)
-               print "Google KEYS HAS BEEN SAVED IN Google TABLE"
                return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
         else:
             form = GoogleForm()
@@ -72,7 +67,6 @@ def google(request):
 def google_cp(request):
     usr_id = request.user.id
     if request.method == 'POST':
-        print "it is post"
         form = GoogleForm(request.POST or None)
         if form.is_valid():
             project_id = form.cleaned_data['project_id']
@@ -84,7 +78,6 @@ def google_cp(request):
             keys = Google(id=usr_id, project_id=encoded_project_id, client_secret=encoded_client_secret,
                           refresh_token=encoded_refresh_token)
             save_keys = Google.save(keys)
-            print "Google KEYS HAS BEEN SAVED IN Google TABLE"
             return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     else:
         form = GoogleForm()
@@ -96,28 +89,17 @@ def google_cp(request):
 
 
 def google_home(request):
-    print "google_home **************************"
-
-    if request.is_ajax():
-        print "it's ajax inside google home"
     if request.method == 'POST':
-        print "I am here inside post of google homes"
         selectOP = request.POST.get("selectOP")
-        print selectOP
     return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
 
 
 def google_create(request):
-    print "google_create **************************"
-
-
     if request.method == 'POST':
-        print "I am here inside post of google_create"
         selectzone = str(request.POST.get("selectzone"))
         Pro_id = str(request.POST.get("Pro_id"))
         Buck_id = str(request.POST.get("Buck_id"))
         Inst_name = str(request.POST.get("Inst_name"))
-        print selectzone, Pro_id, Buck_id, Inst_name
         usr_id = request.user.id
         google_result = google_get_keys(request)
         encoded_project_id = str(google_result["project_id"])
@@ -126,7 +108,6 @@ def google_create(request):
         client_secret = decode(encoded_client_secret)
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
-        print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
         google.create_instance(Pro_id, selectzone,  Inst_name, Buck_id)
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
@@ -134,13 +115,8 @@ def google_create(request):
         return render_to_response("google_create.html", {}, context_instance=RequestContext(request))
 
 def google_retrieve(request):
-    print "google_update **************************"
     global pro_id, zone
-
-    if request.is_ajax():
-        print "it's ajax"
     if request.method == 'POST':
-        print "I am here inside post"
         zone = str(request.POST.get("selectzone"))
         pro_id = str(request.POST.get("pro_id"))
         google_result = google_get_keys(request)
@@ -150,22 +126,12 @@ def google_retrieve(request):
         client_secret = decode(encoded_client_secret)
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
-        print project_id, client_secret, refresh_token
-        # google = G(project_id, client_secret, refresh_token)
-        # google.list_instances(selectzone, Pro_id)
-        print zone, pro_id
         return render_to_response("google_view.html", {}, context_instance=RequestContext(request))
     return render_to_response("google_retrieve.html", {}, context_instance=RequestContext(request))
 
 def google_view(request):
-    print "google_view **************************"
     global pro_id, zone
-    if request.is_ajax():
-        print "it's ajax"
     if request.method == 'POST':
-
-        print "I am here inside post"
-
         google_result = google_get_keys(request)
         encoded_project_id = str(google_result["project_id"])
         project_id = decode(encoded_project_id)
@@ -173,15 +139,10 @@ def google_view(request):
         client_secret = decode(encoded_client_secret)
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
-        print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
-        print "I am above instance_list"
         instance_list = json.dumps(google.list_instances(pro_id, zone))
-        print "printing instance list"
-        print instance_list
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     else:
-        print "in get"
         google_result = google_get_keys(request)
         encoded_project_id = str(google_result["project_id"])
         project_id = decode(encoded_project_id)
@@ -189,30 +150,16 @@ def google_view(request):
         client_secret = decode(encoded_client_secret)
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
-        print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
         google.list_instances(pro_id, zone)
-
-        print "I am above instance_list"
         instance_list = google.list_instances("autum-165318", "us-central1-f")
-        print "printing instance list in get"
-        print instance_list[0]
-        print instance_list
         instance_db = instance_list
 
         return render_to_response("google_view.html", {'instance_db': instance_db},
                                   context_instance=RequestContext(request))
 
-
-
-
 def google_delete(request):
-    print "google_delete **************************"
-
-    if request.is_ajax():
-        print "it's ajax"
     if request.method == 'POST':
-        print "I am here inside post"
         selectzone = str(request.POST.get("selectzone"))
         Pro_id = str(request.POST.get("Pro_id"))
         Inst_name = str(request.POST.get("Inst_name"))
@@ -223,22 +170,18 @@ def google_delete(request):
         client_secret = decode(encoded_client_secret)
         encoded_refresh_token = str(google_result["refresh_token"])
         refresh_token = decode(encoded_refresh_token)
-        print project_id, client_secret, refresh_token
         google = G(project_id, client_secret, refresh_token)
         google.delete_instance(Pro_id,selectzone, Inst_name)
-        # print selectzone, Pro_id, Inst_name
         return render_to_response("google_home.html", {}, context_instance=RequestContext(request))
     return render_to_response("google_delete.html", {}, context_instance=RequestContext(request))
 
 
 def google_get_keys(request):
-    print "inside google keys"
     usr_id = request.user.id
     google_result = Google.objects.get(id=usr_id)
     project_id = google_result.project_id
     client_secret = google_result.client_secret
     refresh_token = google_result.refresh_token
-    print project_id, client_secret, refresh_token
     keys = {"project_id": project_id, "client_secret": client_secret, "refresh_token": refresh_token}
     return keys
 
@@ -250,8 +193,6 @@ def google_monitor(request):
     client_secret = decode(encoded_client_secret)
     encoded_refresh_token = str(google_result["refresh_token"])
     refresh_token = decode(encoded_refresh_token)
-    print project_id, client_secret, refresh_token
     google = G(project_id, client_secret, refresh_token)
-    
-    data1 = [['2017-05-13 T 00:00:00', 0.0], ['2017-05-01 T 11:0:00', 0.0]]
+    data1 = google.cloud_monitor(project_id)
     return render_to_response("google_monitor.html", {'data1': data1})

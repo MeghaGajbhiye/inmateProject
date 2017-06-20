@@ -5,32 +5,32 @@ from django.conf import settings
 from cloud.views import home, contact, dashboard, about, acknowledgement, support, migration, monitor, cpfinal, instance
 from aws.views import aws, aws_cp, aws_home, aws_delete, aws_create, aws_monitor, aws_view, aws_monitor_list, aws_view_list
 from azure1.views import azure_cp, azure_cp1, azure_home, azure_create, azure_update, azure_delete, azure_delete_vm, azure_delete_rsgrp, azure_start, azure_stop, azure_reboot, azure_view, azure_monitor, sub, res, res_list, azure_monitor_list
-from ibm.views import ibm, ibm_home
-
 from google.views import google, google_cp, google_create, google_retrieve, google_view, google_delete, google_home, google_monitor
 from rackspace.views import rackspace, rackspace_cp, rackspace_create, rackspace_home, rackspace_update, \
     rackspace_delete, rackspace_reboot, rackspace_view, rackspace_monitor
+from oracle.views import oracle, oracle_cp, oracle_home, oracle_create, oracle_delete
 
 urlpatterns = [
-    # Examples:
     url(r'^$', home, name='home'),
     url(r'^acknowledgement/$', acknowledgement, name='acknowledgement'),
     url(r'^dashboard/$', dashboard, name='dashboard'),
-    # url(r'^cp_final/$', cp_final, name='cp_final'),
     url(r'^cpfinal/$', cpfinal, name='cpfinal'),
+    url(r'^oracle/$', oracle, name='oracle'),
+    url(r'^oracle_cp/$', oracle_cp, name='oracle_cp'),
+    url(r'^oracle_create/$', oracle_create, name='oracle_create'),
+    url(r'^oracle_delete/$', oracle_delete, name='oracle_delete'),
+    url(r'^oracle_home/$', oracle_home, name='oracle_home'),
     url(r'^aws/$', aws, name='aws'),
     url(r'^aws_cp/$', aws_cp, name='aws'),
     url(r'^aws_create/$', aws_create, name='aws_create'),
     url(r'^aws_home/$', aws_home, name='aws_home'),
     url(r'^aws_delete/$', aws_delete, name='aws_delete'),
     url(r'^aws_view/$', aws_view, name='aws_view'),
-    # url(r'^aws_view_delete/$', aws_view_delete, name='aws_view_delete'),
     url(r'^aws_view_list/$', aws_view_list, name='aws_view_list'),
     url(r'^aws_monitor/$', aws_monitor, name='aws_monitor'),
     url(r'^azure/$', azure_cp, name='azure_cp'),
     url(r'^azure_cp/$', azure_cp1, name='azure_cp'),
     url(r'^aws_monitor_list/$', aws_monitor_list, name='aws_monitor_list'),
-    # url(r'^Azure_Home/$',azure_home,name='azure'),
     url(r'^azure_home/$', azure_home, name='azure_home'),
     url(r'^azure_start/$', azure_start, name='azure_start'),
     url(r'^azure_stop/$', azure_stop, name='azure_stop'),
@@ -46,8 +46,6 @@ urlpatterns = [
     url(r'^res_list/$', res_list, name='res_list'),
     url(r'^azure_monitor/$', azure_monitor, name='azure_monitor'),
     url(r'^azure_monitor_list/$', azure_monitor_list, name='azure_monitor_list'),
-    url(r'^ibm/$', ibm, name='ibm'),
-    url(r'^IBM_Home/$', ibm_home, name='ibm_home'),
     url(r'^google/$', google, name='google'),
     url(r'^google_cp/$', google_cp, name='google'),
     url(r'^google_home/$', google_home, name='google_home'),
@@ -70,9 +68,6 @@ urlpatterns = [
     url(r'^migration/$', migration, name='migration'),
     url(r'^monitor/$', monitor, name='monitor'),
     url(r'^instance/$', instance, name='instance'),
-
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]

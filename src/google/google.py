@@ -33,7 +33,6 @@ class Google:
         self.compute = build('compute', 'v1', credentials=google_credentials)
 
     def operation_wait(self, project_id, google_zone, operation_name):
-        print('Waiting for operation to finish...')
         while True:
             compute_result = self.compute.zoneOperations().get(
                 project=project_id,
@@ -41,7 +40,6 @@ class Google:
                 operation=operation_name).execute()
 
             if compute_result['status'] == 'DONE':
-                print("done.")
                 if 'error' in compute_result:
                     raise Exception(compute_result['error'])
                 return compute_result
@@ -49,15 +47,9 @@ class Google:
             time.sleep(1)
 
     def create_instance(self, project_id, zone, instance_name, bucket_name ):
-
-        print('********************************Creating instance*********************************')
-        print project_id, zone, instance_name, bucket_name
-        # getting latest debian-8 image.
         image_result = self.compute.images().getFromFamily(
             project='debian-cloud', family='debian-8').execute()
         disk_image = image_result['selfLink']
-
-        # Configuring the virtual machine with machine type, startup script, and image configurations.
         machine_type = "zones/%s/machineTypes/n1-standard-1" % zone
         google_startup_script = open(
             os.path.join(
@@ -68,8 +60,6 @@ class Google:
         config = {
             'name': instance_name,
             'machineType': machine_type,
-
-            # Configuring boot disk.
             'disks': [
                 {
                     'boot': True,
@@ -79,16 +69,12 @@ class Google:
                     }
                 }
             ],
-
-            # COnfiguring network interface
             'networkInterfaces': [{
                 'network': 'global/networks/default',
                 'accessConfigs': [
                     {'type': 'ONE_TO_ONE_NAT', 'name': 'External NAT'}
                 ]
             }],
-
-            # COnfiguring scope.
             'serviceAccounts': [{
                 'email': 'default',
                 'scopes': [
@@ -96,8 +82,6 @@ class Google:
                     'https://www.googleapis.com/auth/logging.write'
                 ]
             }],
-
-            # configuring metadata
             'metadata': {
                 'items': [{
                     'key': 'startup-script',
@@ -121,25 +105,17 @@ class Google:
             body=config).execute()
 
         self.operation_wait(project_id, zone, operation['name'])
-###############
 
     def list_instances(self, project_id, zone):
-        print "*******************************************list_instances*********************************************"
-        print project_id,type(project_id), zone, type(zone)
         compute_result = self.compute.instances().list(project=project_id, zone=zone).execute()
         google_instances = compute_result['items']
-        print('Instances in project %s and zone %s:' % (project_id, zone))
         instance_list = []
         for google_instance in google_instances:
             instance_list.append(google_instance['name'])
-        print instance_list
         return instance_list
 
 
     def delete_instance(self, project_id, zone, instance_name):
-
-        print'*******************************************Deleting instance*******************************************'
-        print project_id, type(project_id), zone, type(zone), instance_name, type(instance_name)
         operation = self.compute.instances().delete(project=project_id, zone=zone, instance=instance_name).execute()
         self.operation_wait(project_id, zone, operation['name'])
 
@@ -151,8 +127,6 @@ class Google:
         return self.format_rfc3339 (datetime.datetime.utcnow ())
 
     def cloud_monitor(self, project_id):
-        print "****************************************cloud monitor*************************************************"
- ##################
         self.google_client = googleapiclient.discovery.build ('cloudmonitoring', 'v2beta2')
         set_now = self.get_now_rfc3339 ()
         description = {"project": project_id,
@@ -160,19 +134,14 @@ class Google:
         point = {"start": set_now,
                  "end": set_now,
                  "doubleValue": os.getpid ()}
-        print("Writing {} at {}".format (point["doubleValue"], set_now))
-
-        # Write a new data point.
         try:
             write_request = self.google_monitor_client.timeseries ().write (
                 project=project_id,
                 body={"timeseries": [{"timeseriesDesc": description, "point": point}]})
-            write_request.execute ()  # Ignore the response.
+            write_request.execute ()  
         except Exception as e:
-            print("Failed to write custom metric data: exception={}".format (e))
             raise
 
-        print("Reading data from custom metric timeseries...")
         read_request = self.google_monitor_client.timeseries ().list (
             project=project_id,
             metric=self.GOOGLE_METRIC_NAME,
@@ -193,22 +162,3 @@ class Google:
                     print("Failed to read custom metric data, aborting: "
                           "exception={}".format (e))
                     raise
-######################
-    #
-    # Point:  2017 - 05 - 01
-    # T05:17:23.000
-    # Z: 43495.0
-    # Point:  2017 - 05 - 01
-    # T05:12:10.000
-    # Z: 40906.0
-
-if __name__ == '__main__':
-    gc= Google("32555940559.apps.googleusercontent.com", "ZmssLNjJy2998hD4CTg2ejr2", "1/Czt1brCXjU5UzTRfVrE4OUmHUL9RfUHRHd-K1HelXPo")
-    gc.list_instances("autum-165318", "us-central1-f")
-    # gc.set_pid("autum-165318")
-    # gc.set_bucket_name("autum")
-    # gc.set_zone("us-central1-f")
-    # gc.set_instance_name("autumtest2")
-    # gc.create_instance("autum-165318","us-central1-f","autum_demo","autum" )
-    # gc.delete_instance("autum-165318", "us-central1-f", "autumtest-4")
-    # gc.cloud_monitor("autum-165318")
