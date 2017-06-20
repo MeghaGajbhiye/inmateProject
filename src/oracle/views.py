@@ -97,7 +97,7 @@ def oracle_cp(request):
         context = {
             "form": form,
         }
-        return render_to_response("oracle_CP.html", context, context_instance=RequestContext(request))
+        return render_to_response("oracle_cp.html", context, context_instance=RequestContext(request))
 
 
 def oracle_create(request):
