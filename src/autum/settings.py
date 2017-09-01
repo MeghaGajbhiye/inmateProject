@@ -26,6 +26,8 @@ INSTALLED_APPS = (
     #'djdatadog',
     #My Apps
     'cloud',
+    'inmate_admin',
+    'visitor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,16 +69,16 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    'default':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydatabase',
-        'USER': 'root',
-        'PASSWORD': 'Oracle#123',
-        'HOST':'129.158.64.67',
-        'PORT':'3306',
-    }
-}
+# DATABASES = {
+#     'default':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mydatabase',
+#         'USER': 'root',
+#         'PASSWORD': 'Oracle#123',
+#         'HOST':'129.158.64.67',
+#         'PORT':'3306',
+#     }
+# }
 
 
 LANGUAGE_CODE = 'en-us'

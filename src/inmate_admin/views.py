@@ -19,6 +19,8 @@ def inmate(request):
 
 def associate_inmate(request):
     if request.method == 'GET':
+        associate_id = str(request.POST.get("associate_id"))
+        associate_id = 1
         cursor = connection.cursor()
         associate_inmate = cursor.execute("SELECT inmate_id from inmate_associates where associate_id = "+associate_id)
         row = cursor.fetchall()
@@ -34,7 +36,7 @@ def associate_schedule(request):
         inmate_id = str(request.POST.get("inmate_id"))
         associate_id = str(request.POST.get("associate_id"))
         visit_start_time = str(request.POST.get("visit_start_time"))
-        visit_end_time = str(request.POST.get("visit_start_time"))
+        visit_end_time = str(request.POST.get("visit_end_time"))
         visit_type = str(request.POST.get("visit_type"))
         associate_schedule = cursor.execute(
             "INSERT INTO inmate_associates_visits(inmate_id, associate_id, visit_start_time, visit_end_time, visit_type) "
@@ -53,5 +55,10 @@ def associate_schedule(request):
         print associate_schedule_list
         return render_to_response("associate_schedule.html", {'associate_schedule_list': associate_inmate_list},
                                   context_instance=RequestContext(request))
+
+def warden_approved(request):
+    if request.method == 'POST':
+        cursor = connection.cursor()
+        warden_approved = cursor.execute("INSERT INTO inmate_warden()")
 
 

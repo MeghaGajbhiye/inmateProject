@@ -2,12 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6841807-97db-4fde-a773-50971ecf04d6" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/IBM_CP.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/templates/IBM_Home.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/db.sqlite3" afterPath="$PROJECT_DIR$/src/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/autum/settings.py" afterPath="$PROJECT_DIR$/src/autum/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/autum/urls.py" afterPath="$PROJECT_DIR$/src/autum/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/CP_final.html" afterPath="$PROJECT_DIR$/src/templates/CP_final.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/inmate_admin/views.py" afterPath="$PROJECT_DIR$/src/inmate_admin/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/Dash_2_final.html" afterPath="$PROJECT_DIR$/src/templates/Dash_2_final.html" />
     </list>
     <ignored path="autum1.iws" />
@@ -32,14 +33,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cloud/forms.py">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/autum/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-266">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="385">
+              <caret line="81" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/visitor/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="331">
+              <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
               <folding>
-                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#0#35#0" expanded="true" />
+                <marker date="1504242123855" expanded="true" signature="717:739" ph="INSERT INTO associates... " />
+                <marker date="1504242123855" expanded="true" signature="717:803" ph="INSERT INTO associates... " />
+                <marker date="1504242123855" expanded="true" signature="717:817" ph="INSERT INTO associates... " />
+                <marker date="1504242123855" expanded="true" signature="717:829" ph="INSERT INTO associates... " />
+                <marker date="1504242123855" expanded="true" signature="963:1008" ph="SELECT * fro... associates" />
+                <marker date="1504242123855" expanded="true" signature="963:1009" ph="SELECT * fro... associates" />
+                <marker date="1504242123855" expanded="true" signature="1515:1641" ph="INSERT INTO associates... " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="associate_schedule.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/associate_schedule.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="117" column="47" lean-forward="false" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="associate.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/associate.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="386">
+              <caret line="175" column="15" lean-forward="false" selection-start-line="175" selection-start-column="14" selection-end-line="175" selection-end-column="15" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -47,9 +85,11 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/autum/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
-              <folding />
+            <state relative-caret-position="331">
+              <caret line="19" column="78" lean-forward="false" selection-start-line="19" selection-start-column="78" selection-end-line="19" selection-end-column="78" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -57,66 +97,37 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cloud/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="-134">
+              <caret line="48" column="20" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/cloud/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/inmate_admin/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="inmate_admin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/inmate_admin/inmate_admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/inmate_admin/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+            <state relative-caret-position="-131">
+              <caret line="37" column="52" lean-forward="false" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="52" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <marker date="1504231389695" expanded="true" signature="383:429" ph="SELECT inmat... inmate" />
-                <marker date="1504231389695" expanded="true" signature="825:840" ph="SELECT inmat... inmate_associates" />
-                <marker date="1504231389695" expanded="true" signature="825:886" ph="SELECT inmat... inmate" />
-                <marker date="1504231389695" expanded="true" signature="825:900" ph="SELECT inmat... inmate" />
-                <marker date="1504231389695" expanded="true" signature="825:901" ph="SELECT inmat... inmate_associates" />
-                <marker date="1504231389695" expanded="true" signature="1692:1799" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1823" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1837" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1854" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1875" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1894" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1909" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="1692:1912" ph="INSERT INTO row... " />
-                <marker date="1504231389695" expanded="true" signature="1692:2051" ph="INSERT INTO inmate_associates_visits... " />
-                <marker date="1504231389695" expanded="true" signature="2180:2287" ph="SELECT inmat... inmate_associates" />
-                <marker date="1504231389695" expanded="true" signature="2180:2329" ph="SELECT inmat... inmate_associates_visits" />
+                <marker date="1504236812932" expanded="true" signature="383:429" ph="SELECT inmat... inmate" />
+                <marker date="1504236812932" expanded="true" signature="911:926" ph="SELECT inmat... inmate_associates" />
+                <marker date="1504236812932" expanded="true" signature="911:972" ph="SELECT inmat... inmate" />
+                <marker date="1504236812932" expanded="true" signature="911:986" ph="SELECT inmat... inmate" />
+                <marker date="1504236812932" expanded="true" signature="911:987" ph="SELECT inmat... inmate_associates" />
+                <marker date="1504236812932" expanded="true" signature="1776:1883" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1907" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1921" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1938" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1959" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1978" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1993" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="1776:1996" ph="INSERT INTO row... " />
+                <marker date="1504236812932" expanded="true" signature="1776:2135" ph="INSERT INTO inmate_associates_visits... " />
+                <marker date="1504236812932" expanded="true" signature="2264:2371" ph="SELECT inmat... inmate_associates" />
+                <marker date="1504236812932" expanded="true" signature="2264:2413" ph="SELECT inmat... inmate_associates_visits" />
+                <marker date="1504236812932" expanded="true" signature="2923:2950" ph="INSERT INTO inmate_warden... " />
               </folding>
             </state>
           </provider>
@@ -126,7 +137,7 @@
         <entry file="file://$PROJECT_DIR$/src/templates/inmate.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4242">
-              <caret line="202" column="0" lean-forward="true" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
+              <caret line="202" column="0" lean-forward="false" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -135,8 +146,8 @@
       <file leaf-file-name="Dash_2_final.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/templates/Dash_2_final.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="75" column="36" lean-forward="false" selection-start-line="75" selection-start-column="36" selection-end-line="75" selection-end-column="36" />
+            <state relative-caret-position="204">
+              <caret line="74" column="39" lean-forward="false" selection-start-line="74" selection-start-column="39" selection-end-line="74" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -146,7 +157,7 @@
         <entry file="file://$PROJECT_DIR$/src/inmate_admin/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <caret line="7" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -167,6 +178,11 @@
       <find>aws</find>
       <find>AWS</find>
       <find>Register</find>
+      <find>azure</find>
+      <find>dash</find>
+      <find>visi</find>
+      <find>visitor</find>
+      <find>visito</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,14 +195,18 @@
         <option value="$PROJECT_DIR$/src/templates/AWS_Home.html" />
         <option value="$PROJECT_DIR$/price.py" />
         <option value="$PROJECT_DIR$/src/cloud.py" />
-        <option value="$PROJECT_DIR$/src/autum/settings.py" />
         <option value="$PROJECT_DIR$/src/templates/CP_final.html" />
         <option value="$PROJECT_DIR$/src/inmate_admin/inmate_admin.py" />
         <option value="$PROJECT_DIR$/src/templates/inmate.html" />
-        <option value="$PROJECT_DIR$/src/templates/Dash_2_final.html" />
-        <option value="$PROJECT_DIR$/src/autum/urls.py" />
         <option value="$PROJECT_DIR$/src/inmate_admin/models.py" />
         <option value="$PROJECT_DIR$/src/inmate_admin/views.py" />
+        <option value="$PROJECT_DIR$/src/autum/settings.py" />
+        <option value="$PROJECT_DIR$/src/templates/visitor.html" />
+        <option value="$PROJECT_DIR$/src/templates/associate_schedule.html" />
+        <option value="$PROJECT_DIR$/src/templates/associate.html" />
+        <option value="$PROJECT_DIR$/src/autum/urls.py" />
+        <option value="$PROJECT_DIR$/src/templates/Dash_2_final.html" />
+        <option value="$PROJECT_DIR$/src/visitor/views.py" />
       </list>
     </option>
   </component>
@@ -196,7 +216,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-7" />
     <option name="y" value="-7" />
     <option name="width" value="1546" />
@@ -252,6 +272,12 @@
               <item name="autum" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="autum" type="b2602c69:ProjectViewProjectNode" />
+              <item name="autum" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="visitor" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -547,18 +573,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1551" height="839" extended-state="6" />
+    <frame x="-7" y="-7" width="1551" height="839" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24885994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24885994" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -567,7 +594,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -592,7 +618,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/autum/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2121">
+        <state relative-caret-position="2222">
           <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
           <folding />
         </state>
@@ -600,9 +626,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/autum/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -618,23 +646,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/autum/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2222">
-          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/autum/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -664,7 +678,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -716,7 +732,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -838,14 +856,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/autum/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-812">
-          <caret line="50" column="24" lean-forward="false" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/CP_final.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1954">
@@ -875,7 +885,7 @@
     <entry file="file://$PROJECT_DIR$/src/cloud/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -906,34 +916,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cloud/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/inmate.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4242">
-          <caret line="202" column="0" lean-forward="true" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/Dash_2_final.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="75" column="36" lean-forward="false" selection-start-line="75" selection-start-column="36" selection-end-line="75" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/autum/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="23" lean-forward="false" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
+          <caret line="202" column="0" lean-forward="false" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -941,33 +927,101 @@
     <entry file="file://$PROJECT_DIR$/src/inmate_admin/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <caret line="7" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/autum/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="81" column="0" lean-forward="true" selection-start-line="71" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cloud/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-134">
+          <caret line="48" column="20" lean-forward="false" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/associate_schedule.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="117" column="47" lean-forward="false" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/autum/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="19" column="78" lean-forward="false" selection-start-line="19" selection-start-column="78" selection-end-line="19" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/associate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="175" column="15" lean-forward="false" selection-start-line="175" selection-start-column="14" selection-end-line="175" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/inmate_admin/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+        <state relative-caret-position="-131">
+          <caret line="37" column="52" lean-forward="false" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="52" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <marker date="1504231389695" expanded="true" signature="383:429" ph="SELECT inmat... inmate" />
-            <marker date="1504231389695" expanded="true" signature="825:840" ph="SELECT inmat... inmate_associates" />
-            <marker date="1504231389695" expanded="true" signature="825:886" ph="SELECT inmat... inmate" />
-            <marker date="1504231389695" expanded="true" signature="825:900" ph="SELECT inmat... inmate" />
-            <marker date="1504231389695" expanded="true" signature="825:901" ph="SELECT inmat... inmate_associates" />
-            <marker date="1504231389695" expanded="true" signature="1692:1799" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1823" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1837" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1854" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1875" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1894" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1909" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="1692:1912" ph="INSERT INTO row... " />
-            <marker date="1504231389695" expanded="true" signature="1692:2051" ph="INSERT INTO inmate_associates_visits... " />
-            <marker date="1504231389695" expanded="true" signature="2180:2287" ph="SELECT inmat... inmate_associates" />
-            <marker date="1504231389695" expanded="true" signature="2180:2329" ph="SELECT inmat... inmate_associates_visits" />
+            <marker date="1504236812932" expanded="true" signature="383:429" ph="SELECT inmat... inmate" />
+            <marker date="1504236812932" expanded="true" signature="911:926" ph="SELECT inmat... inmate_associates" />
+            <marker date="1504236812932" expanded="true" signature="911:972" ph="SELECT inmat... inmate" />
+            <marker date="1504236812932" expanded="true" signature="911:986" ph="SELECT inmat... inmate" />
+            <marker date="1504236812932" expanded="true" signature="911:987" ph="SELECT inmat... inmate_associates" />
+            <marker date="1504236812932" expanded="true" signature="1776:1883" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1907" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1921" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1938" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1959" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1978" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1993" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="1776:1996" ph="INSERT INTO row... " />
+            <marker date="1504236812932" expanded="true" signature="1776:2135" ph="INSERT INTO inmate_associates_visits... " />
+            <marker date="1504236812932" expanded="true" signature="2264:2371" ph="SELECT inmat... inmate_associates" />
+            <marker date="1504236812932" expanded="true" signature="2264:2413" ph="SELECT inmat... inmate_associates_visits" />
+            <marker date="1504236812932" expanded="true" signature="2923:2950" ph="INSERT INTO inmate_warden... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/Dash_2_final.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="74" column="39" lean-forward="false" selection-start-line="74" selection-start-column="39" selection-end-line="74" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visitor/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <marker date="1504242123855" expanded="true" signature="717:739" ph="INSERT INTO associates... " />
+            <marker date="1504242123855" expanded="true" signature="717:803" ph="INSERT INTO associates... " />
+            <marker date="1504242123855" expanded="true" signature="717:817" ph="INSERT INTO associates... " />
+            <marker date="1504242123855" expanded="true" signature="717:829" ph="INSERT INTO associates... " />
+            <marker date="1504242123855" expanded="true" signature="963:1008" ph="SELECT * fro... associates" />
+            <marker date="1504242123855" expanded="true" signature="963:1009" ph="SELECT * fro... associates" />
+            <marker date="1504242123855" expanded="true" signature="1515:1641" ph="INSERT INTO associates... " />
           </folding>
         </state>
       </provider>
