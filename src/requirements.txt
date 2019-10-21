@@ -44,7 +44,7 @@ datadog==0.15.0
 debtcollector==1.13.0
 decorator==4.0.11
 display==1.0.0
-Django==1.8
+Django==1.11.23
 django-crispy-forms==1.6.1
 django-registration-redux==1.4
 django-storages==1.5.2
