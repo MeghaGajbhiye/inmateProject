@@ -17,7 +17,7 @@ enum34==1.1.6
 funcsigs==1.0.2
 futures==3.0.5
 gcs-oauth2-boto-plugin==1.14
-httplib2==0.10.3
+httplib2==0.19.0
 idna==2.5
 ip-associations-python-novaclient-ext==0.2
 ipaddress==1.0.18
