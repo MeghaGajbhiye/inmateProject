@@ -113,7 +113,7 @@ requests==2.13.0
 requests-oauthlib==0.8.0
 retry-decorator==1.1.0
 rfc3986==0.4.1
-rsa==3.3
+rsa==4.1
 s3transfer==0.1.10
 simplejson==3.10.0
 six==1.10.0
