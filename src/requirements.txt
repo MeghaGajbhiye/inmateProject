@@ -121,7 +121,7 @@ SocksiPy-branch==1.1
 SoftLayer==5.2.4
 stevedore==1.21.0
 uritemplate==3.0.0
-urllib3==1.11
+urllib3==1.26.5
 virtualenv==15.1.0
 wcwidth==0.1.7
 wrapt==1.10.10
