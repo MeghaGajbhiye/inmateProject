@@ -31,7 +31,7 @@ azure-nspkg==2.0.0
 azure-servicebus==0.20.3
 azure-servicemanagement-legacy==0.20.4
 azure-storage==0.33.0
-Babel==2.4.0
+Babel==2.9.1
 boto==2.46.1
 boto3==1.4.4
 botocore==1.5.43
